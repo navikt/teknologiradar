@@ -11,9 +11,6 @@ COPY --chown=nextjs:nodejs .next/standalone ./
 COPY --chown=nextjs:nodejs public ./public/
 COPY --chown=nextjs:nodejs .next/static ./.next/static
 
-RUN mkdir -p ./.next/cache/images
-RUN chmod -R 666 ./.next/cache/images
-
 USER nextjs
 EXPOSE 3000
 

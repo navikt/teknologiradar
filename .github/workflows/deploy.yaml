@@ -1,0 +1,74 @@
+name: Deploy job
+
+on:
+  push:
+    branches:
+      - main
+
+env:
+  IMAGE_BASE: ghcr.io/${{github.repository}}
+
+jobs:
+  build-and-push:
+    name: Build and push
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        name: Checkout
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 18
+
+      - name: Cache dependencies
+        uses: actions/cache@v3
+        env:
+          cache-name: cache-node-modules
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-build-${{ env.cache-name }}-
+            ${{ runner.os }}-build-
+            ${{ runner.os }}-
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Install dependencies
+        run: npm run build
+
+      - name: Lag tag for image
+        run: echo "TAG=$(git log -1 --pretty='%ad_%h' --date=format:'%Y%m%d%H%M%S')" >> $GITHUB_ENV
+
+      - name: Lag full image referanse
+        run: echo "IMAGE=$IMAGE_BASE:$TAG" >> $GITHUB_ENV
+
+      - name: Build app and publish Docker image
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          echo ${GITHUB_TOKEN} | docker login ghcr.io -u ${GITHUB_REPOSITORY} --password-stdin
+          docker build --pull --tag ${IMAGE} .
+          docker push ${IMAGE}
+
+  deploy:
+    name: Deploy to nais
+    needs: build-and-push
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+        name: Checkout
+
+      - name: Lag tag for image
+        run: echo "TAG=$(git log -1 --pretty='%ad_%h' --date=format:'%Y%m%d%H%M%S')" >> $GITHUB_ENV
+
+      - name: Lag full image referanse
+        run: echo "IMAGE=$IMAGE_BASE:$TAG" >> $GITHUB_ENV
+
+      - name: Deploy
+        uses: nais/deploy/actions/deploy@master
+        env:
+          APIKEY: ${{ secrets.NAIS_DEPLOY_APIKEY }}
+          CLUSTER: dev-gcp
+          RESOURCE: .nais/nais.yaml
+          VARS: .nais/dev-gcp.yaml

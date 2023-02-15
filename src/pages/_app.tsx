@@ -3,7 +3,6 @@ import "@navikt/ds-css";
 import "@navikt/ds-css-internal";
 import type { AppProps } from "next/app";
 import Head from "next/head";
-import Image from "next/image";
 import { Header } from "@navikt/ds-react-internal";
 import NextLink from "next/link";
 
@@ -16,11 +15,11 @@ export default function App({ Component, pageProps }: AppProps) {
       <Header>
         <Header.Title as="h1">
           <NextLink className="header--link" href={"/"}>
-            <Image
+            <img
               src={"/img/fagtorsdag.png"}
               alt={"Fagtorsdag logo"}
-              width={25}
-              height={25}
+              width={"25px"}
+              height={"25px"}
             />
             Fagtorsdag
           </NextLink>

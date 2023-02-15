@@ -1,4 +1,3 @@
-import Image from "next/image";
 import Link from "next/link";
 
 const parseLocation = (
@@ -44,11 +43,11 @@ export const ActivityLocation = ({ location }: { location: string }) => {
   return (
     <span className={"activity--location"}>
       {loc.icon && (
-        <Image
+        <img
           src={loc.icon}
           alt={loc.iconAlt!}
-          width={iconSize}
-          height={iconSize}
+          width={`${iconSize}px`}
+          height={`${iconSize}px`}
         />
       )}
       {loc.link ? (

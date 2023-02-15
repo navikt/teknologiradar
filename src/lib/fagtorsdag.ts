@@ -8,6 +8,10 @@ import {
 } from "date-fns";
 import { formatInTimeZone, utcToZonedTime } from "date-fns-tz";
 
+export const FORMS_LINK =
+  "https://forms.office.com/Pages/ResponsePage.aspx?id=NGU2YsMeYkmIaZtVNSedCyKMKHMBvzVPtRUZDMBRSnxUNlpWQjZBVDRZNUgwV0I4QTU1R1Q0T1paQi4u";
+export const KOMITÈ_LINK =
+  "https://teamkatalog.nav.no/team/6332f6a3-2ee1-4698-8a0d-164aafb0594b";
 export const LOCAL_TIMEZONE = "Europe/Oslo";
 export const FAGTORSDAG_ISO_DAY = 4;
 

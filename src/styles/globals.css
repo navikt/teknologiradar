@@ -10,13 +10,17 @@
   justify-items: flex-start;
 }
 
-.home--link,
-.home--link:visited {
+.header--link {
   color: white;
   text-decoration: none;
+  display: flex;
+  gap: 5px;
 }
-.home--link:hover,
-.home--link:active {
+.header--link:visited {
+  color: white;
+}
+.header--link:hover,
+.header--link:active {
   text-decoration: underline;
 }
 

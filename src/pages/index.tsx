@@ -1,66 +1,26 @@
-import { Star, System } from "@navikt/ds-icons";
-import { Button, Heading, Link } from "@navikt/ds-react";
-import { Dropdown, Header } from "@navikt/ds-react-internal";
 import type { NextPage } from "next";
-import Head from "next/head";
-import NextLink from "next/link";
+import {
+  getNextFagtorsdag,
+  isFagtorsdag,
+  isFagtorsdagDay,
+  LOCAL_TIMEZONE,
+} from "@/lib/fagtorsdag";
+import { formatInTimeZone, utcToZonedTime } from "date-fns-tz";
+import { FagtorsdagCountdown } from "@/components/FagtorsdagCountdown";
+import { Heading } from "@navikt/ds-react";
 
 const Home: NextPage = () => {
-  return (
-    <div>
-      <Head>
-        <title>Designsystem-demo</title>
-      </Head>
-      <Header>
-        <Header.Title as="h1">Demo</Header.Title>
-        <Dropdown>
-          <Header.Button as={Dropdown.Toggle} className="ml-auto">
-            <System
-              style={{ fontSize: "1.5rem" }}
-              title="Systemer og oppslagsverk"
-            />
-          </Header.Button>
+  const now = utcToZonedTime(new Date(), LOCAL_TIMEZONE);
 
-          <Dropdown.Menu>
-            <Dropdown.Menu.GroupedList>
-              <Dropdown.Menu.GroupedList.Heading>
-                Dokumentasjon
-              </Dropdown.Menu.GroupedList.Heading>
-              <Dropdown.Menu.GroupedList.Item
-                as="a"
-                href="https://aksel.nav.no/"
-              >
-                Aksel.nav.no
-              </Dropdown.Menu.GroupedList.Item>
-            </Dropdown.Menu.GroupedList>
-          </Dropdown.Menu>
-        </Dropdown>
-      </Header>
-      <main className="layout">
-        <div>
-          <Heading spacing level="2" size="medium">
-            Button med ikon
-          </Heading>
-          <Button icon={<Star aria-hidden />}>Klikk meg!</Button>
-        </div>
-        <div>
-          <Heading spacing level="2" size="medium">
-            Bruk av Nextjs-lenker
-          </Heading>
-          <NextLink passHref href="/#">
-            Lenke til en side
-          </NextLink>
-        </div>
-        <div>
-          <Heading spacing level="2" size="medium">
-            OverridableComponent
-          </Heading>
-          <NextLink passHref href="/">
-            <Button>{`Knapp med "a"-tag`}</Button>
-          </NextLink>
-        </div>
-      </main>
-    </div>
+  return (
+    <>
+      <Heading level={"1"} size={"large"}>
+        Fagtorsdag – åpen delingsarena for alle
+      </Heading>
+      <Heading level={"2"} size={"medium"}>
+        <FagtorsdagCountdown currentDate={now} />
+      </Heading>
+    </>
   );
 };
 

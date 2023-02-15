@@ -7,54 +7,60 @@ import NextLink from "next/link";
 
 const Home: NextPage = () => {
   return (
-      <div>
-        <Head>
-          <title>Designsystem-demo</title>
-        </Head>
-        <Header>
-          <Header.Title as="h1">Demo</Header.Title>
-          <Dropdown>
-            <Header.Button as={Dropdown.Toggle} className="ml-auto">
-              <System style={{ fontSize: "1.5rem" }} title="Systemer og oppslagsverk" />
-            </Header.Button>
+    <div>
+      <Head>
+        <title>Designsystem-demo</title>
+      </Head>
+      <Header>
+        <Header.Title as="h1">Demo</Header.Title>
+        <Dropdown>
+          <Header.Button as={Dropdown.Toggle} className="ml-auto">
+            <System
+              style={{ fontSize: "1.5rem" }}
+              title="Systemer og oppslagsverk"
+            />
+          </Header.Button>
 
-            <Dropdown.Menu>
-              <Dropdown.Menu.GroupedList>
-                <Dropdown.Menu.GroupedList.Heading>
-                  Dokumentasjon
-                </Dropdown.Menu.GroupedList.Heading>
-                <Dropdown.Menu.GroupedList.Item as="a" href="https://aksel.nav.no/">
-                  Aksel.nav.no
-                </Dropdown.Menu.GroupedList.Item>
-              </Dropdown.Menu.GroupedList>
-            </Dropdown.Menu>
-          </Dropdown>
-        </Header>
-        <main className="layout">
-          <div>
-            <Heading spacing level="2" size="medium">
-              Button med ikon
-            </Heading>
-            <Button icon={<Star aria-hidden />}>Klikk meg!</Button>
-          </div>
-          <div>
-            <Heading spacing level="2" size="medium">
-              Bruk av Nextjs-lenker
-            </Heading>
-            <NextLink passHref href="/#">
-              Lenke til en side
-            </NextLink>
-          </div>
-          <div>
-            <Heading spacing level="2" size="medium">
-              OverridableComponent
-            </Heading>
-            <NextLink passHref href="/">
-              <Button>{`Knapp med "a"-tag`}</Button>
-            </NextLink>
-          </div>
-        </main>
-      </div>
+          <Dropdown.Menu>
+            <Dropdown.Menu.GroupedList>
+              <Dropdown.Menu.GroupedList.Heading>
+                Dokumentasjon
+              </Dropdown.Menu.GroupedList.Heading>
+              <Dropdown.Menu.GroupedList.Item
+                as="a"
+                href="https://aksel.nav.no/"
+              >
+                Aksel.nav.no
+              </Dropdown.Menu.GroupedList.Item>
+            </Dropdown.Menu.GroupedList>
+          </Dropdown.Menu>
+        </Dropdown>
+      </Header>
+      <main className="layout">
+        <div>
+          <Heading spacing level="2" size="medium">
+            Button med ikon
+          </Heading>
+          <Button icon={<Star aria-hidden />}>Klikk meg!</Button>
+        </div>
+        <div>
+          <Heading spacing level="2" size="medium">
+            Bruk av Nextjs-lenker
+          </Heading>
+          <NextLink passHref href="/#">
+            Lenke til en side
+          </NextLink>
+        </div>
+        <div>
+          <Heading spacing level="2" size="medium">
+            OverridableComponent
+          </Heading>
+          <NextLink passHref href="/">
+            <Button>{`Knapp med "a"-tag`}</Button>
+          </NextLink>
+        </div>
+      </main>
+    </div>
   );
 };
 

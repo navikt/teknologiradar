@@ -9,3 +9,47 @@
     gap: 1.5rem;
     justify-items: flex-start;
 }
+
+.activity {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.time-label {
+    font-size: 0.8em;
+    background-color: #eee;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    padding: 0 5px;
+    font-weight: normal;
+}
+
+.activity--header {
+    display: flex;
+    gap: 10px;
+}
+
+.activity--ingress {
+    white-space: pre-wrap;
+    border-top: 1px solid #aaa;
+    padding-top: 10px;
+}
+
+.activity--image {
+    float: right;
+    width: 120px;
+    margin-left: 20px;
+}
+
+.activity--locations {
+    padding-top: 10px;
+    display: flex;
+    gap: 10px;
+}
+
+.activity--location {
+    display: flex;
+    gap: 3px;
+}

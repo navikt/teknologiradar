@@ -3,6 +3,7 @@ import {
   isActivityCard,
   mapTrelloCardToActivity,
 } from "@/lib/trello";
+import { Cache } from "@/lib/cache";
 
 export enum RecurringInterval {
   ONE_TIME,
@@ -26,21 +27,51 @@ export interface LearningActivity {
   locations: string[];
 }
 
-export const getCurrentActivities = async () => {
-  const { TRELLO_BOARD_ID, TRELLO_API_KEY, TRELLO_API_TOKEN } = process.env;
-  if (!TRELLO_API_KEY || !TRELLO_API_TOKEN || !TRELLO_BOARD_ID) {
-    return exampleData;
-  }
-
+async function fetchActivities({
+  trelloBoardId,
+  trelloApiToken,
+  trelloApiKey,
+}: {
+  trelloBoardId: string;
+  trelloApiToken: string;
+  trelloApiKey: string;
+}) {
   const cards = await getTrelloCards({
-    trelloBoardId: TRELLO_BOARD_ID,
-    trelloApiToken: TRELLO_API_TOKEN,
-    trelloApiKey: TRELLO_API_KEY,
+    trelloBoardId,
+    trelloApiToken,
+    trelloApiKey,
   });
   return cards
     .filter((card) => isActivityCard(card))
     .map((card) => mapTrelloCardToActivity(card));
-};
+}
+
+export const getCurrentActivities = (() => {
+  const { TRELLO_BOARD_ID, TRELLO_API_KEY, TRELLO_API_TOKEN } = process.env;
+  if (!TRELLO_API_KEY || !TRELLO_API_TOKEN || !TRELLO_BOARD_ID) {
+    console.log("Trello API not set up, falling back to example data");
+    return () => exampleData;
+  }
+  const fetchIntervalMs = 5 * 60 * 1000;
+
+  const activitiesCache = new Cache({
+    loader: async () =>
+      fetchActivities({
+        trelloBoardId: TRELLO_BOARD_ID,
+        trelloApiKey: TRELLO_API_KEY,
+        trelloApiToken: TRELLO_API_TOKEN,
+      }),
+    onError: (err) => console.error("Error fetching Trello cards", err),
+    fetchIntervalMs,
+  });
+
+  console.log(`Trello API configured, with cache of ${fetchIntervalMs}`);
+
+  return async () => {
+    const currentTime = Date.now();
+    return await activitiesCache.get(currentTime);
+  };
+})();
 
 const exampleData: LearningActivity[] = [
   {

@@ -1,7 +1,14 @@
 import type { GetServerSideProps, NextPage } from "next";
-import { Detail, Heading, Ingress, Panel } from "@navikt/ds-react";
-import { getExampleData, LearningActivity } from "@/lib/activities";
+import { Detail, Heading, Ingress } from "@navikt/ds-react";
+import {
+  getExampleData,
+  LearningActivity,
+  RecurringInterval,
+} from "@/lib/activities";
 import { ActivityLocation } from "@/components/ActivityLocation";
+import { isFagtorsdagDay, LOCAL_TIMEZONE } from "@/lib/fagtorsdag";
+import { formatInTimeZone } from "date-fns-tz";
+import noNb from "date-fns/locale/nb";
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const id = context.query["id"];
@@ -23,17 +30,67 @@ const ActivityPage: NextPage<{ activity: LearningActivity }> = ({
   );
 };
 
-const TimeLabel = ({ time }: { time: string }) => {
-  return <span className={"time-label"}>{time}</span>;
+const formatTimeAndDate = ({
+  date,
+  time,
+  recurring,
+}: {
+  date?: string;
+  time?: string;
+  recurring: RecurringInterval;
+}) => {
+  if (!date && !time) return null;
+
+  if (recurring === RecurringInterval.ONE_TIME) {
+    const parts = [];
+    if (date)
+      parts.push(
+        formatInTimeZone(date, LOCAL_TIMEZONE, "d. MMMM", { locale: noNb })
+      );
+    if (time) parts.push(`kl. ${time}`);
+    return parts.join(", ");
+  }
+
+  if (
+    recurring === RecurringInterval.BI_WEEKLY &&
+    date &&
+    isFagtorsdagDay(new Date(date))
+  ) {
+    return time ? `Hver fagtorsdag, kl. ${time}` : `Hver fagtorsdag`;
+  }
+  return null;
+};
+
+const TimeAndDate = ({
+  date,
+  time,
+  recurring,
+}: {
+  date?: string;
+  time?: string;
+  recurring: RecurringInterval;
+}) => {
+  const dtString = formatTimeAndDate({ date, time, recurring });
+  if (!dtString) return null;
+
+  return (
+    <Heading level="2" size={"medium"} className={"activity--datetime"}>
+      {dtString}
+    </Heading>
+  );
 };
 
 const ActivityEntry = ({ activity }: { activity: LearningActivity }) => {
   return (
-    <Panel border className={"activity"}>
-      <Heading level="2" size={"large"} className={"activity--header"}>
-        {activity.timeStart && <TimeLabel time={activity.timeStart} />}
+    <>
+      <Heading level="1" size={"large"} className={"activity--header"}>
         {activity.title}
       </Heading>
+      <TimeAndDate
+        date={activity.date}
+        time={activity.timeStart}
+        recurring={activity.recurringInterval}
+      />
       <Detail className={"activity--contact"}>
         <b>{activity.contactName}</b>, {activity.contactRole}
       </Detail>
@@ -52,7 +109,7 @@ const ActivityEntry = ({ activity }: { activity: LearningActivity }) => {
           <ActivityLocation key={idx} location={loc} />
         ))}
       </Detail>
-    </Panel>
+    </>
   );
 };
 

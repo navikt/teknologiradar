@@ -4,6 +4,7 @@ import "@navikt/ds-css-internal";
 import type { AppProps } from "next/app";
 import Head from "next/head";
 import { Header } from "@navikt/ds-react-internal";
+import NextLink from "next/link";
 
 export default function App({ Component, pageProps }: AppProps) {
   return (
@@ -12,7 +13,11 @@ export default function App({ Component, pageProps }: AppProps) {
         <title>Fagtorsdag</title>
       </Head>
       <Header>
-        <Header.Title as="h1">Fagtorsdag</Header.Title>
+        <Header.Title as="h1">
+          <NextLink className="home--link" href={"/"}>
+            Fagtorsdag
+          </NextLink>
+        </Header.Title>
       </Header>
       <main className="layout">
         <Component {...pageProps} />

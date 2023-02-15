@@ -10,6 +10,16 @@
   justify-items: flex-start;
 }
 
+.home--link,
+.home--link:visited {
+  color: white;
+  text-decoration: none;
+}
+.home--link:hover,
+.home--link:active {
+  text-decoration: underline;
+}
+
 .activity {
   width: 100%;
   display: flex;

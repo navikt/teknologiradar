@@ -27,13 +27,14 @@ export interface LearningActivity {
   locations: string[];
 }
 
-function getActivities(): LearningActivity[] {
-  return [];
+export async function getServerSideProps() {
+  const activities = [];
+  return { props: { activities } };
 }
 
-const ActivitiesPage: NextPage = () => {
-  const activities = getActivities();
-
+const ActivitiesPage: NextPage<{ activities: LearningActivity[] }> = ({
+  activities,
+}) => {
   return (
     <div>
       <Head>

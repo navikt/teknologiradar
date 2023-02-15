@@ -123,7 +123,7 @@ const ActivityEntry = ({ activity }: { activity: LearningActivity }) => {
         {activity.title}
       </Heading>
       <Detail className={"activity--contact"}>
-        {activity.contactName}, {activity.contactRole}
+        <b>{activity.contactName}</b>, {activity.contactRole}
       </Detail>
       <Ingress className={"activity--ingress"}>
         {activity.imageUrl && (

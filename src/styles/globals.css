@@ -24,6 +24,7 @@
   border-radius: 10px;
   padding: 0 5px;
   font-weight: normal;
+  align-self: start;
 }
 
 .activity--header {

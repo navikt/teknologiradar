@@ -28,7 +28,7 @@ export interface LearningActivity {
 }
 
 export async function getServerSideProps() {
-  const activities = [];
+  const activities: LearningActivity[] = [];
   return { props: { activities } };
 }
 

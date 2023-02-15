@@ -1,7 +1,5 @@
 import type { NextPage } from "next";
 import { Detail, Heading, Ingress, Panel } from "@navikt/ds-react";
-import Link from "next/link";
-import Image from "next/image";
 import { getExampleData, LearningActivity } from "@/lib/activities";
 import { ActivityLocation } from "@/components/ActivityLocation";
 

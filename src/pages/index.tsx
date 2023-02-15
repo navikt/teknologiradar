@@ -1,11 +1,72 @@
 import type { NextPage } from "next";
 import { FORMS_LINK, KOMITÈ_LINK, LOCAL_TIMEZONE } from "@/lib/fagtorsdag";
-import { utcToZonedTime } from "date-fns-tz";
+import { formatInTimeZone, utcToZonedTime } from "date-fns-tz";
 import { FagtorsdagCountdown } from "@/components/FagtorsdagCountdown";
-import { Heading, Ingress } from "@navikt/ds-react";
+import { Heading, Ingress, Table } from "@navikt/ds-react";
 import Link from "next/link";
+import { getExampleData, LearningActivity } from "@/lib/activities";
+import { ActivityLocation } from "@/components/ActivityLocation";
+import noNb from "date-fns/locale/nb";
 
-const Home: NextPage = () => {
+export async function getServerSideProps() {
+  const activities: LearningActivity[] = await getExampleData();
+  return { props: { activities } };
+}
+
+const formatDate = (dateString?: string, timeStart?: string): string => {
+  const parts: string[] = [];
+  if (timeStart) parts.push(timeStart);
+  if (dateString)
+    parts.push(
+      formatInTimeZone(dateString, LOCAL_TIMEZONE, "d.MMM", { locale: noNb })
+    );
+  return parts.join("\n");
+};
+
+const ActivityRow = ({ activity }: { activity: LearningActivity }) => {
+  return (
+    <Table.Row>
+      <Table.HeaderCell scope={"row"}>
+        {formatDate(activity.date, activity.timeStart)}
+      </Table.HeaderCell>
+      <Table.DataCell>{activity.title}</Table.DataCell>
+      <Table.DataCell>
+        {activity.contactName}, {activity.contactRole}
+      </Table.DataCell>
+      <Table.DataCell>
+        {activity.locations.map((location, idx) => (
+          <ActivityLocation key={idx} location={location} />
+        ))}
+      </Table.DataCell>
+    </Table.Row>
+  );
+};
+
+const ActivityOverview = ({
+  activities,
+}: {
+  activities: LearningActivity[];
+}) => {
+  return (
+    <Table>
+      <Table.Header>
+        <Table.Row>
+          <Table.HeaderCell scope="col">Når</Table.HeaderCell>
+          <Table.HeaderCell scope="col">Hva</Table.HeaderCell>
+          <Table.HeaderCell scope="col">Hvem</Table.HeaderCell>
+          <Table.HeaderCell scope="col">Hvor</Table.HeaderCell>
+        </Table.Row>
+      </Table.Header>
+      <Table.Body>
+        {activities.map((activity, idx) => (
+          <ActivityRow activity={activity} key={idx} />
+        ))}
+      </Table.Body>
+    </Table>
+  );
+};
+
+const Home: NextPage<{ activities: LearningActivity[] }> = ({ activities }) => {
   const now = utcToZonedTime(new Date(), LOCAL_TIMEZONE);
 
   return (
@@ -13,16 +74,25 @@ const Home: NextPage = () => {
       <Heading level={"1"} size={"large"}>
         Fagtorsdag – åpen delingsarena for alle
       </Heading>
-      <Heading level={"2"} size={"medium"}>
-        <FagtorsdagCountdown currentDate={now} />
-      </Heading>
+      <section>
+        <Heading level={"2"} size={"medium"} spacing>
+          <FagtorsdagCountdown currentDate={now} />
+        </Heading>
 
-      <Ingress>
-        Har du noe å dele? Kanskje en presentasjon eller et kurs du vil holde?
-        Eller en faggruppe eller lesesirkel du ønsker å starte?{" "}
-        <Link href={FORMS_LINK}>Meld det inn</Link> i dag, så vil{" "}
-        <Link href={KOMITÈ_LINK}>komitéen</Link> hjelpe deg komme i gang.
-      </Ingress>
+        <Ingress>
+          Har du noe å dele? Kanskje en presentasjon eller et kurs du vil holde?
+          Eller en faggruppe eller lesesirkel du ønsker å starte?{" "}
+          <Link href={FORMS_LINK}>Meld det inn</Link> i dag, så vil{" "}
+          <Link href={KOMITÈ_LINK}>komitéen</Link> hjelpe deg komme i gang.
+        </Ingress>
+      </section>
+
+      <section>
+        <Heading level={"2"} size={"medium"}>
+          Hva skjer fremover?
+        </Heading>
+        <ActivityOverview activities={activities} />
+      </section>
     </>
   );
 };

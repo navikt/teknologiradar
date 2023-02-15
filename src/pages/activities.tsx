@@ -1,6 +1,4 @@
-import { Header } from "@navikt/ds-react-internal";
 import type { NextPage } from "next";
-import Head from "next/head";
 import { Detail, Heading, Ingress, Panel } from "@navikt/ds-react";
 import Link from "next/link";
 import Image from "next/image";

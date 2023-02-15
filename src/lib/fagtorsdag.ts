@@ -2,7 +2,6 @@ import {
   addWeeks,
   getISODay,
   getISOWeek,
-  setDay,
   setHours,
   setISODay,
   startOfHour,

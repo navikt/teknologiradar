@@ -1,11 +1,6 @@
 import type { NextPage } from "next";
-import {
-  getNextFagtorsdag,
-  isFagtorsdag,
-  isFagtorsdagDay,
-  LOCAL_TIMEZONE,
-} from "@/lib/fagtorsdag";
-import { formatInTimeZone, utcToZonedTime } from "date-fns-tz";
+import { LOCAL_TIMEZONE } from "@/lib/fagtorsdag";
+import { utcToZonedTime } from "date-fns-tz";
 import { FagtorsdagCountdown } from "@/components/FagtorsdagCountdown";
 import { Heading } from "@navikt/ds-react";
 

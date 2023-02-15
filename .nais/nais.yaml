@@ -1,0 +1,29 @@
+apiVersion: 'nais.io/v1alpha1'
+kind: 'Application'
+metadata:
+  name: fagtorsdag-web
+  namespace: fagtorsdag
+  labels:
+    team: fagtorsdag
+spec:
+  image: {{image}}
+  port: 3000
+  replicas:
+    min: 2
+    max: 2
+    cpuThresholdPercentage: 50
+  resources:
+    limits:
+      cpu: 500m
+      memory: 256Mi
+    requests:
+      cpu: 200m
+      memory: 256Mi
+  liveness:
+    path: /api/healthy
+  readiness:
+    path: /api/healthy
+  ingresses:
+  {{#each ingresses as |url|}}
+     - {{url}}
+  {{/each}}

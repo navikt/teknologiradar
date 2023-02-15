@@ -22,6 +22,8 @@ spec:
     requests:
       cpu: 200m
       memory: 256Mi
+  envFrom:
+    - secret: fagtorsdag-slackbot-secrets
   liveness:
     path: /api/healthy
   readiness:

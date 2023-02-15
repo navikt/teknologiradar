@@ -15,19 +15,11 @@ const ActivitiesPage: NextPage<{ activities: LearningActivity[] }> = ({
   activities,
 }) => {
   return (
-    <div>
-      <Head>
-        <title>Aktiviteter</title>
-      </Head>
-      <Header>
-        <Header.Title as="h1">Fagtorsdag</Header.Title>
-      </Header>
-      <main className="layout">
-        {activities.map((activity, idx) => (
-          <ActivityEntry activity={activity} key={idx} />
-        ))}
-      </main>
-    </div>
+    <>
+      {activities.map((activity, idx) => (
+        <ActivityEntry activity={activity} key={idx} />
+      ))}
+    </>
   );
 };
 

@@ -2,6 +2,7 @@ import type { NextPage } from "next";
 import { Detail, Heading, Ingress, Panel } from "@navikt/ds-react";
 import { getExampleData, LearningActivity } from "@/lib/activities";
 import { ActivityLocation } from "@/components/ActivityLocation";
+import NextLink from "next/link";
 
 export async function getServerSideProps() {
   const activities: LearningActivity[] = await getExampleData();
@@ -29,7 +30,9 @@ const ActivityEntry = ({ activity }: { activity: LearningActivity }) => {
     <Panel border className={"activity"}>
       <Heading level="2" size={"large"} className={"activity--header"}>
         {activity.timeStart && <TimeLabel time={activity.timeStart} />}
-        {activity.title}
+        <NextLink href={`/activities/${activity.id}`}>
+          {activity.title}
+        </NextLink>
       </Heading>
       <Detail className={"activity--contact"}>
         <b>{activity.contactName}</b>, {activity.contactRole}

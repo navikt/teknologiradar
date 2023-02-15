@@ -7,6 +7,7 @@ import Link from "next/link";
 import { getExampleData, LearningActivity } from "@/lib/activities";
 import { ActivityLocation } from "@/components/ActivityLocation";
 import noNb from "date-fns/locale/nb";
+import NextLink from "next/link";
 
 export async function getServerSideProps() {
   const activities: LearningActivity[] = await getExampleData();
@@ -29,7 +30,11 @@ const ActivityRow = ({ activity }: { activity: LearningActivity }) => {
       <Table.HeaderCell scope={"row"}>
         {formatDate(activity.date, activity.timeStart)}
       </Table.HeaderCell>
-      <Table.DataCell>{activity.title}</Table.DataCell>
+      <Table.DataCell>
+        <NextLink href={`/activities/${activity.id}`}>
+          {activity.title}
+        </NextLink>
+      </Table.DataCell>
       <Table.DataCell>
         {activity.contactName}, {activity.contactRole}
       </Table.DataCell>

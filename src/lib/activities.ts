@@ -27,17 +27,20 @@ export interface LearningActivity {
 }
 
 export const getCurrentActivities = async () => {
+  const { TRELLO_BOARD_ID, TRELLO_API_KEY, TRELLO_API_TOKEN } = process.env;
+  if (!TRELLO_API_KEY || !TRELLO_API_TOKEN || !TRELLO_BOARD_ID) {
+    return exampleData;
+  }
+
   const cards = await getTrelloCards({
-    trelloBoardId: process.env.TRELLO_BOARD_ID!,
-    trelloApiToken: process.env.TRELLO_API_TOKEN!,
-    trelloApiKey: process.env.TRELLO_API_KEY!,
+    trelloBoardId: TRELLO_BOARD_ID,
+    trelloApiToken: TRELLO_API_TOKEN,
+    trelloApiKey: TRELLO_API_KEY,
   });
   return cards
     .filter((card) => isActivityCard(card))
     .map((card) => mapTrelloCardToActivity(card));
 };
-
-export const getExampleData = async () => exampleData;
 
 const exampleData: LearningActivity[] = [
   {

@@ -4,31 +4,10 @@ import Head from "next/head";
 import { Detail, Heading, Ingress, Panel } from "@navikt/ds-react";
 import Link from "next/link";
 import Image from "next/image";
-
-export enum RecurringInterval {
-  ONE_TIME,
-  WEEKLY,
-  BI_WEEKLY,
-  MONTHLY,
-}
-
-export interface LearningActivity {
-  id: string;
-  date?: string;
-  recurringInterval: RecurringInterval;
-  timeStart?: string;
-  durationMinutes: number | null;
-  title: string;
-  emoji: string;
-  contactName: string;
-  contactRole: string;
-  imageUrl?: string;
-  description: string;
-  locations: string[];
-}
+import { getExampleData, LearningActivity } from "@/lib/activities";
 
 export async function getServerSideProps() {
-  const activities: LearningActivity[] = [];
+  const activities: LearningActivity[] = await getExampleData();
   return { props: { activities } };
 }
 

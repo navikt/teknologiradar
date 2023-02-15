@@ -1,7 +1,7 @@
 import type { GetServerSideProps, NextPage } from "next";
 import { Detail, Heading, Ingress } from "@navikt/ds-react";
 import {
-  getExampleData,
+  getCurrentActivities,
   LearningActivity,
   RecurringInterval,
 } from "@/lib/activities";
@@ -13,7 +13,7 @@ import noNb from "date-fns/locale/nb";
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const id = context.query["id"];
 
-  const activities: LearningActivity[] = await getExampleData();
+  const activities: LearningActivity[] = await getCurrentActivities();
   const activity = activities.find((activity) => activity.id === id);
   if (!activity) return { notFound: true };
 
@@ -35,8 +35,8 @@ const formatTimeAndDate = ({
   time,
   recurring,
 }: {
-  date?: string;
-  time?: string;
+  date: string | null;
+  time: string | null;
   recurring: RecurringInterval;
 }) => {
   if (!date && !time) return null;
@@ -66,8 +66,8 @@ const TimeAndDate = ({
   time,
   recurring,
 }: {
-  date?: string;
-  time?: string;
+  date: string | null;
+  time: string | null;
   recurring: RecurringInterval;
 }) => {
   const dtString = formatTimeAndDate({ date, time, recurring });
@@ -99,7 +99,7 @@ const ActivityEntry = ({ activity }: { activity: LearningActivity }) => {
           <img
             className={"activity--image"}
             src={activity.imageUrl!}
-            alt={activity.contactName}
+            alt={activity.contactName ?? activity.contactRole ?? activity.title}
           />
         )}
         {activity.description}

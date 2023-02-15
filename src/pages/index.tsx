@@ -4,17 +4,21 @@ import { formatInTimeZone, utcToZonedTime } from "date-fns-tz";
 import { FagtorsdagCountdown } from "@/components/FagtorsdagCountdown";
 import { Heading, Ingress, Table } from "@navikt/ds-react";
 import Link from "next/link";
-import { getExampleData, LearningActivity } from "@/lib/activities";
+import NextLink from "next/link";
+import { getCurrentActivities, LearningActivity } from "@/lib/activities";
 import { ActivityLocation } from "@/components/ActivityLocation";
 import noNb from "date-fns/locale/nb";
-import NextLink from "next/link";
+import { Linkify } from "@/components/Linkify";
 
 export async function getServerSideProps() {
-  const activities: LearningActivity[] = await getExampleData();
+  const activities: LearningActivity[] = await getCurrentActivities();
   return { props: { activities } };
 }
 
-const formatDate = (dateString?: string, timeStart?: string): string => {
+const formatDate = (
+  dateString: string | null,
+  timeStart: string | null
+): string => {
   const parts: string[] = [];
   if (timeStart) parts.push(timeStart);
   if (dateString)
@@ -22,6 +26,17 @@ const formatDate = (dateString?: string, timeStart?: string): string => {
       formatInTimeZone(dateString, LOCAL_TIMEZONE, "d.MMM", { locale: noNb })
     );
   return parts.join("\n");
+};
+
+const ContactInfo = ({ name, role }: { name: string; role: string | null }) => {
+  return (
+    <span>
+      <span className={"activity--contact-name"}>
+        <Linkify text={name} />
+      </span>
+      {role && <span className={"activity--contact-role"}>, {role}</span>}
+    </span>
+  );
 };
 
 const ActivityRow = ({ activity }: { activity: LearningActivity }) => {
@@ -36,7 +51,12 @@ const ActivityRow = ({ activity }: { activity: LearningActivity }) => {
         </NextLink>
       </Table.DataCell>
       <Table.DataCell>
-        {activity.contactName}, {activity.contactRole}
+        {activity.contactName && (
+          <ContactInfo
+            name={activity.contactName}
+            role={activity.contactRole}
+          />
+        )}
       </Table.DataCell>
       <Table.DataCell>
         {activity.locations.map((location, idx) => (

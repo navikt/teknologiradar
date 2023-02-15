@@ -1,11 +1,12 @@
 import type { NextPage } from "next";
 import { Detail, Heading, Ingress, Panel } from "@navikt/ds-react";
-import { getExampleData, LearningActivity } from "@/lib/activities";
+import { getCurrentActivities, LearningActivity } from "@/lib/activities";
 import { ActivityLocation } from "@/components/ActivityLocation";
 import NextLink from "next/link";
+import { Linkify } from "@/components/Linkify";
 
 export async function getServerSideProps() {
-  const activities: LearningActivity[] = await getExampleData();
+  const activities: LearningActivity[] = await getCurrentActivities();
   return { props: { activities } };
 }
 
@@ -25,6 +26,17 @@ const TimeLabel = ({ time }: { time: string }) => {
   return <span className={"time-label"}>{time}</span>;
 };
 
+const ContactInfo = ({ name, role }: { name: string; role: string | null }) => {
+  return (
+    <span>
+      <span className={"activity--contact-name"}>
+        <Linkify text={name} />
+      </span>
+      {role && <span className={"activity--contact-role"}>, {role}</span>}
+    </span>
+  );
+};
+
 const ActivityEntry = ({ activity }: { activity: LearningActivity }) => {
   return (
     <Panel border className={"activity"}>
@@ -34,15 +46,20 @@ const ActivityEntry = ({ activity }: { activity: LearningActivity }) => {
           {activity.title}
         </NextLink>
       </Heading>
-      <Detail className={"activity--contact"}>
-        <b>{activity.contactName}</b>, {activity.contactRole}
-      </Detail>
+      {activity.contactName && (
+        <Detail className={"activity--contact"}>
+          <ContactInfo
+            name={activity.contactName}
+            role={activity.contactRole}
+          />
+        </Detail>
+      )}
       <Ingress className={"activity--ingress"}>
         {activity.imageUrl && (
           <img
             className={"activity--image"}
             src={activity.imageUrl!}
-            alt={activity.contactName}
+            alt={activity.contactName ?? activity.contactRole ?? activity.title}
           />
         )}
         {activity.description}

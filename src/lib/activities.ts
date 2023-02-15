@@ -1,3 +1,9 @@
+import {
+  getTrelloCards,
+  isActivityCard,
+  mapTrelloCardToActivity,
+} from "@/lib/trello";
+
 export enum RecurringInterval {
   ONE_TIME,
   WEEKLY,
@@ -7,18 +13,29 @@ export enum RecurringInterval {
 
 export interface LearningActivity {
   id: string;
-  date?: string;
+  date: string | null;
   recurringInterval: RecurringInterval;
-  timeStart?: string;
+  timeStart: string | null;
   durationMinutes: number | null;
   title: string;
-  emoji: string;
-  contactName: string;
-  contactRole: string;
-  imageUrl?: string;
+  emoji: string | null;
+  contactName: string | null;
+  contactRole: string | null;
+  imageUrl: string | null;
   description: string;
   locations: string[];
 }
+
+export const getCurrentActivities = async () => {
+  const cards = await getTrelloCards({
+    trelloBoardId: process.env.TRELLO_BOARD_ID!,
+    trelloApiToken: process.env.TRELLO_API_TOKEN!,
+    trelloApiKey: process.env.TRELLO_API_KEY!,
+  });
+  return cards
+    .filter((card) => isActivityCard(card))
+    .map((card) => mapTrelloCardToActivity(card));
+};
 
 export const getExampleData = async () => exampleData;
 
@@ -35,6 +52,7 @@ const exampleData: LearningActivity[] = [
     durationMinutes: 90,
     contactName: "Enel P.",
     contactRole: "Data Scientist",
+    imageUrl: null,
     emoji: "🤖",
   },
   {

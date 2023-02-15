@@ -46,6 +46,10 @@
   gap: 10px;
 }
 
+.activity--contact-name {
+  font-weight: bold;
+}
+
 .activity--ingress {
   white-space: pre-wrap;
   border-top: 1px solid #aaa;

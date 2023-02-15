@@ -65,7 +65,7 @@ export const getCurrentActivities = (() => {
     fetchIntervalMs,
   });
 
-  console.log(`Trello API configured, with cache of ${fetchIntervalMs}`);
+  console.log(`Trello API configured, caching data for ${fetchIntervalMs} ms`);
 
   return async () => {
     const currentTime = Date.now();

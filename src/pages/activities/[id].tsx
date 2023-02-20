@@ -9,6 +9,7 @@ import { ActivityLocation } from "@/components/ActivityLocation";
 import { isFagtorsdagDay, LOCAL_TIMEZONE } from "@/lib/fagtorsdag";
 import { formatInTimeZone } from "date-fns-tz";
 import noNb from "date-fns/locale/nb";
+import { ActivityContact } from "@/components/ActivityContact";
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const id = context.query["id"];
@@ -91,14 +92,14 @@ const ActivityEntry = ({ activity }: { activity: LearningActivity }) => {
         time={activity.timeStart}
         recurring={activity.recurringInterval}
       />
-      <Detail className={"activity--contact"}>
-        <span className={"activity--contact-name"}>{activity.contactName}</span>
-        {activity.contactRole && (
-          <span className={"activity--contact-role"}>
-            , {activity.contactRole}
-          </span>
-        )}
-      </Detail>
+      {activity.contactName && (
+        <Detail className={"activity--contact"}>
+          <ActivityContact
+            name={activity.contactName}
+            role={activity.contactRole}
+          />
+        </Detail>
+      )}
       <Ingress className={"activity--ingress"}>
         {activity.imageUrl && (
           <img

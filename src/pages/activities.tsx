@@ -4,6 +4,7 @@ import { getCurrentActivities, LearningActivity } from "@/lib/activities";
 import { ActivityLocation } from "@/components/ActivityLocation";
 import NextLink from "next/link";
 import { Linkify } from "@/components/Linkify";
+import { ActivityContact } from "@/components/ActivityContact";
 
 export async function getServerSideProps() {
   const activities: LearningActivity[] = await getCurrentActivities();
@@ -26,17 +27,6 @@ const TimeLabel = ({ time }: { time: string }) => {
   return <span className={"time-label"}>{time}</span>;
 };
 
-const ContactInfo = ({ name, role }: { name: string; role: string | null }) => {
-  return (
-    <span>
-      <span className={"activity--contact-name"}>
-        <Linkify text={name} />
-      </span>
-      {role && <span className={"activity--contact-role"}>, {role}</span>}
-    </span>
-  );
-};
-
 const ActivityEntry = ({ activity }: { activity: LearningActivity }) => {
   return (
     <Panel border className={"activity"}>
@@ -48,7 +38,7 @@ const ActivityEntry = ({ activity }: { activity: LearningActivity }) => {
       </Heading>
       {activity.contactName && (
         <Detail className={"activity--contact"}>
-          <ContactInfo
+          <ActivityContact
             name={activity.contactName}
             role={activity.contactRole}
           />

@@ -92,7 +92,12 @@ const ActivityEntry = ({ activity }: { activity: LearningActivity }) => {
         recurring={activity.recurringInterval}
       />
       <Detail className={"activity--contact"}>
-        <b>{activity.contactName}</b>, {activity.contactRole}
+        <span className={"activity--contact-name"}>{activity.contactName}</span>
+        {activity.contactRole && (
+          <span className={"activity--contact-role"}>
+            , {activity.contactRole}
+          </span>
+        )}
       </Detail>
       <Ingress className={"activity--ingress"}>
         {activity.imageUrl && (

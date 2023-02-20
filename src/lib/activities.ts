@@ -64,7 +64,10 @@ function activityComparator(
   a: NextLearningActivity,
   b: NextLearningActivity
 ): number {
-  return (a.nextOccurrenceAt ?? 0) - (b.nextOccurrenceAt ?? 0);
+  if (a.nextOccurrenceAt === b.nextOccurrenceAt) return 0;
+  if (a.nextOccurrenceAt === null) return 1;
+  if (b.nextOccurrenceAt === null) return -1;
+  return a.nextOccurrenceAt - b.nextOccurrenceAt;
 }
 
 export const getCurrentActivities = (() => {

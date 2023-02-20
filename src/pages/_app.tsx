@@ -24,11 +24,6 @@ export default function App({ Component, pageProps }: AppProps) {
             Fagtorsdag
           </NextLink>
         </Header.Title>
-        <Header.Title as="h2">
-          <NextLink className="header--link" href={"/activities"}>
-            Kalender
-          </NextLink>
-        </Header.Title>
       </Header>
       <main className="layout">
         <Component {...pageProps} />

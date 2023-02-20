@@ -1,17 +1,17 @@
 import type { NextPage } from "next";
 import { Detail, Heading, Ingress, Panel } from "@navikt/ds-react";
-import { getCurrentActivities, LearningActivity } from "@/lib/activities";
+import { getCurrentActivities, NextLearningActivity } from "@/lib/activities";
 import { ActivityLocation } from "@/components/ActivityLocation";
 import NextLink from "next/link";
 import { Linkify } from "@/components/Linkify";
 import { ActivityContact } from "@/components/ActivityContact";
 
 export async function getServerSideProps() {
-  const activities: LearningActivity[] = await getCurrentActivities();
+  const activities: NextLearningActivity[] = await getCurrentActivities();
   return { props: { activities } };
 }
 
-const ActivitiesPage: NextPage<{ activities: LearningActivity[] }> = ({
+const ActivitiesPage: NextPage<{ activities: NextLearningActivity[] }> = ({
   activities,
 }) => {
   return (
@@ -27,7 +27,7 @@ const TimeLabel = ({ time }: { time: string }) => {
   return <span className={"time-label"}>{time}</span>;
 };
 
-const ActivityEntry = ({ activity }: { activity: LearningActivity }) => {
+const ActivityEntry = ({ activity }: { activity: NextLearningActivity }) => {
   return (
     <Panel border className={"activity"}>
       <Heading level="2" size={"large"} className={"activity--header"}>

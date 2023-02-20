@@ -5,27 +5,21 @@ import { FagtorsdagCountdown } from "@/components/FagtorsdagCountdown";
 import { Heading, Ingress, Table } from "@navikt/ds-react";
 import Link from "next/link";
 import NextLink from "next/link";
-import { getCurrentActivities, LearningActivity } from "@/lib/activities";
+import { getCurrentActivities, NextLearningActivity } from "@/lib/activities";
 import { ActivityLocation } from "@/components/ActivityLocation";
 import noNb from "date-fns/locale/nb";
 import { Linkify } from "@/components/Linkify";
 
 export async function getServerSideProps() {
-  const activities: LearningActivity[] = await getCurrentActivities();
+  const activities: NextLearningActivity[] = await getCurrentActivities();
   return { props: { activities } };
 }
 
-const formatDate = (
-  dateString: string | null,
-  timeStart: string | null
-): string => {
-  const parts: string[] = [];
-  if (timeStart) parts.push(timeStart);
-  if (dateString)
-    parts.push(
-      formatInTimeZone(dateString, LOCAL_TIMEZONE, "d.MMM", { locale: noNb })
-    );
-  return parts.join("\n");
+const formatDate = (nextOccurrenceAt: number): string => {
+  const dt = new Date(nextOccurrenceAt);
+  const date = formatInTimeZone(dt, LOCAL_TIMEZONE, "d.MMM", { locale: noNb });
+  const time = formatInTimeZone(dt, LOCAL_TIMEZONE, "HH.mm", { locale: noNb });
+  return `${time}\n${date}`;
 };
 
 const ContactInfo = ({ name, role }: { name: string; role: string | null }) => {
@@ -39,11 +33,13 @@ const ContactInfo = ({ name, role }: { name: string; role: string | null }) => {
   );
 };
 
-const ActivityRow = ({ activity }: { activity: LearningActivity }) => {
+const ActivityRow = ({ activity }: { activity: NextLearningActivity }) => {
   return (
     <Table.Row>
       <Table.HeaderCell scope={"row"}>
-        {formatDate(activity.date, activity.timeStart)}
+        {activity.nextOccurrenceAt
+          ? formatDate(activity.nextOccurrenceAt)
+          : "Uplanlagt"}
       </Table.HeaderCell>
       <Table.DataCell>
         <NextLink href={`/activities/${activity.id}`}>
@@ -70,7 +66,7 @@ const ActivityRow = ({ activity }: { activity: LearningActivity }) => {
 const ActivityOverview = ({
   activities,
 }: {
-  activities: LearningActivity[];
+  activities: NextLearningActivity[];
 }) => {
   return (
     <Table>
@@ -91,7 +87,9 @@ const ActivityOverview = ({
   );
 };
 
-const Home: NextPage<{ activities: LearningActivity[] }> = ({ activities }) => {
+const Home: NextPage<{ activities: NextLearningActivity[] }> = ({
+  activities,
+}) => {
   const now = utcToZonedTime(new Date(), LOCAL_TIMEZONE);
 
   return (

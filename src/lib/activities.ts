@@ -4,6 +4,7 @@ import {
   mapTrelloCardToActivity,
 } from "@/lib/trello";
 import { Cache } from "@/lib/cache";
+import { getActivityNextStartDate } from "@/lib/scheduling";
 
 export enum RecurringInterval {
   ONE_TIME,
@@ -27,6 +28,10 @@ export interface LearningActivity {
   locations: string[];
 }
 
+export type NextLearningActivity = LearningActivity & {
+  nextOccurrenceAt: number | null;
+};
+
 async function fetchActivities({
   trelloBoardId,
   trelloApiToken,
@@ -46,11 +51,32 @@ async function fetchActivities({
     .map((card) => mapTrelloCardToActivity(card));
 }
 
+function mapToNextLearningActivity(
+  activity: LearningActivity,
+  currentTime: Date
+) {
+  const nextOccurrenceAt =
+    getActivityNextStartDate(activity, currentTime)?.getTime() ?? null;
+  return { ...activity, nextOccurrenceAt } as NextLearningActivity;
+}
+
+function activityComparator(
+  a: NextLearningActivity,
+  b: NextLearningActivity
+): number {
+  return (a.nextOccurrenceAt ?? 0) - (b.nextOccurrenceAt ?? 0);
+}
+
 export const getCurrentActivities = (() => {
   const { TRELLO_BOARD_ID, TRELLO_API_KEY, TRELLO_API_TOKEN } = process.env;
   if (!TRELLO_API_KEY || !TRELLO_API_TOKEN || !TRELLO_BOARD_ID) {
     console.log("Trello API not set up, falling back to example data");
-    return () => exampleData;
+    return () => {
+      const currentTime = new Date();
+      return exampleData.map((activity) =>
+        mapToNextLearningActivity(activity, currentTime)
+      );
+    };
   }
   const fetchIntervalMs = 5 * 60 * 1000;
 
@@ -68,8 +94,13 @@ export const getCurrentActivities = (() => {
   console.log(`Trello API configured, caching data for ${fetchIntervalMs} ms`);
 
   return async () => {
-    const currentTime = Date.now();
-    return await activitiesCache.get(currentTime);
+    const currentTime = new Date();
+    const activities = await activitiesCache.get(currentTime.getTime());
+    const mapped = activities.map((activity) =>
+      mapToNextLearningActivity(activity, currentTime)
+    );
+    mapped.sort(activityComparator);
+    return mapped;
   };
 })();
 

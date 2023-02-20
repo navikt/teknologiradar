@@ -64,7 +64,9 @@ function activityComparator(
   a: NextLearningActivity,
   b: NextLearningActivity
 ): number {
-  if (a.nextOccurrenceAt === b.nextOccurrenceAt) return 0;
+  if (a.nextOccurrenceAt === b.nextOccurrenceAt) {
+    return a.recurringInterval - b.recurringInterval;
+  }
   if (a.nextOccurrenceAt === null) return 1;
   if (b.nextOccurrenceAt === null) return -1;
   return a.nextOccurrenceAt - b.nextOccurrenceAt;

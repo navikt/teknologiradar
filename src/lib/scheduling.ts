@@ -22,7 +22,10 @@ export function getActivityNextStartDate(
     activity.timeStart
   );
 
-  if (activity.recurringInterval === RecurringInterval.ONE_TIME) {
+  if (
+    activity.recurringInterval === RecurringInterval.ONE_TIME ||
+    isBefore(currentDate, initialDate)
+  ) {
     return initialDate;
   }
 

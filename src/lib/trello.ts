@@ -152,5 +152,6 @@ export function mapTrelloCardToActivity(
     contactRole: contactRole ?? null,
     imageUrl,
     emoji,
+    editUrl: trelloCard.shortUrl,
   };
 }

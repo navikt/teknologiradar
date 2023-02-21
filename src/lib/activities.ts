@@ -26,6 +26,7 @@ export interface LearningActivity {
   imageUrl: string | null;
   description: string;
   locations: string[];
+  editUrl: string;
 }
 
 export type NextLearningActivity = LearningActivity & {
@@ -124,6 +125,7 @@ const exampleData: LearningActivity[] = [
     contactRole: "Data Scientist",
     imageUrl: null,
     emoji: "🤖",
+    editUrl: "https://example.com",
   },
   {
     id: "c1556fb4-18ef-4928-9598-ed43698e6410",
@@ -139,6 +141,7 @@ const exampleData: LearningActivity[] = [
     contactRole: "Utvikler og Security Champion",
     imageUrl: "/img/fagtorsdag.png",
     emoji: ":hackerman:",
+    editUrl: "https://example.com",
   },
   {
     id: "5c607139-0422-4387-80d0-0036337bd7c2",
@@ -154,5 +157,6 @@ const exampleData: LearningActivity[] = [
     contactRole: "med flere",
     imageUrl: "/img/fagtorsdag.png",
     emoji: "☕️",
+    editUrl: "https://example.com",
   },
 ];

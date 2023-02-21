@@ -46,6 +46,12 @@
   gap: 10px;
 }
 
+.activity--contact {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}
+
 .activity--contact-name {
   font-weight: bold;
 }

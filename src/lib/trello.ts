@@ -84,7 +84,11 @@ function parseCustomFields(customFields: CustomFieldItem[]) {
 }
 
 export function extractDescription(cardDescription: string) {
-  const m = /## Ingress:\s+(.+?)(\n\n|$)/s.exec(cardDescription);
+  if (!/^#/m.test(cardDescription)) {
+    return cardDescription ?? "";
+  }
+
+  const m = /## Ingress:\s+(.+?)(\n\n#|\n---|$)/s.exec(cardDescription);
   if (!m) {
     return "";
   }

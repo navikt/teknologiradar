@@ -93,7 +93,7 @@ const ActivityEntry = ({ activity }: { activity: LearningActivity }) => {
         time={activity.timeStart}
         recurring={activity.recurringInterval}
       />
-      <Detail className={"activity--contact"}>
+      <Detail className={"activity--details"}>
         {activity.contactName && (
           <ActivityContact
             name={activity.contactName}

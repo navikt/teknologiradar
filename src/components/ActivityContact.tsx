@@ -8,7 +8,7 @@ export const ActivityContact = ({
   role: string | null;
 }) => {
   return (
-    <span>
+    <span className={"activity--contact"}>
       <span className={"activity--contact-name"}>
         <Linkify text={name} />
       </span>

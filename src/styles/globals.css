@@ -46,10 +46,13 @@
   gap: 10px;
 }
 
-.activity--contact {
+.activity--details {
   display: flex;
-  justify-content: space-between;
   width: 100%;
+}
+
+.activity--contact {
+  flex-grow: 1;
 }
 
 .activity--contact-name {

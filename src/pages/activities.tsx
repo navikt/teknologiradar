@@ -37,7 +37,7 @@ const ActivityEntry = ({ activity }: { activity: NextLearningActivity }) => {
         </NextLink>
       </Heading>
       {activity.contactName && (
-        <Detail className={"activity--contact"}>
+        <Detail className={"activity--details"}>
           <ActivityContact
             name={activity.contactName}
             role={activity.contactRole}

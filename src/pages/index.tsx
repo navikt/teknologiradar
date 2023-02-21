@@ -10,7 +10,11 @@ import { FagtorsdagCountdown } from "@/components/FagtorsdagCountdown";
 import { Heading, Ingress, Table } from "@navikt/ds-react";
 import Link from "next/link";
 import NextLink from "next/link";
-import { getCurrentActivities, NextLearningActivity } from "@/lib/activities";
+import {
+  getCurrentActivities,
+  NextLearningActivity,
+  RecurringInterval,
+} from "@/lib/activities";
 import { ActivityLocation } from "@/components/ActivityLocation";
 import noNb from "date-fns/locale/nb";
 import { Linkify } from "@/components/Linkify";
@@ -75,7 +79,7 @@ const ActivityOverview = ({
   activities: NextLearningActivity[];
 }) => {
   return (
-    <Table>
+    <Table className={"activity--table"}>
       <Table.Header>
         <Table.Row>
           <Table.HeaderCell scope="col">Når</Table.HeaderCell>
@@ -107,6 +111,13 @@ const Home: NextPage<{ activities: NextLearningActivity[] }> = ({
     );
   });
 
+  const upcomingOneTimeActivities = upcomingActivities.filter(
+    (activity) => activity.recurringInterval === RecurringInterval.ONE_TIME
+  );
+  const upcomingRecurringActivities = upcomingActivities.filter(
+    (activity) => activity.recurringInterval !== RecurringInterval.ONE_TIME
+  );
+
   return (
     <>
       <Heading level={"1"} size={"large"}>
@@ -127,9 +138,13 @@ const Home: NextPage<{ activities: NextLearningActivity[] }> = ({
 
       <section className={"activity--overview"}>
         <Heading level={"2"} size={"medium"}>
-          Plan for førstkommende fagtorsdag:
+          Aktiviteter førstkommende fagtorsdag:
         </Heading>
-        <ActivityOverview activities={upcomingActivities} />
+        <ActivityOverview activities={upcomingOneTimeActivities} />
+        <Heading level={"2"} size={"medium"}>
+          Faste aktiviterer:
+        </Heading>
+        <ActivityOverview activities={upcomingRecurringActivities} />
       </section>
     </>
   );

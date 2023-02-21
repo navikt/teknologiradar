@@ -30,6 +30,10 @@
   width: 100%;
 }
 
+.activity--table {
+  margin-bottom: 40px;
+}
+
 .activity {
   width: 100%;
   display: flex;

@@ -140,7 +140,7 @@ const Home: NextPage<{ activities: NextLearningActivity[] }> = ({
         </Heading>
         <ActivityOverview activities={upcomingOneTimeActivities} />
         <Heading level={"2"} size={"medium"}>
-          Faste aktiviteter:
+          Faste aktiviteter hver fagtorsdag:
         </Heading>
         <ActivityOverview activities={upcomingRecurringActivities} />
       </section>

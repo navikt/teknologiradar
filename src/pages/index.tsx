@@ -27,9 +27,7 @@ export async function getServerSideProps() {
 
 const formatDate = (nextOccurrenceAt: number): string => {
   const dt = new Date(nextOccurrenceAt);
-  const date = formatInTimeZone(dt, LOCAL_TIMEZONE, "d.MMM", { locale: noNb });
-  const time = formatInTimeZone(dt, LOCAL_TIMEZONE, "HH.mm", { locale: noNb });
-  return `${time}\n${date}`;
+  return formatInTimeZone(dt, LOCAL_TIMEZONE, "HH.mm", { locale: noNb });
 };
 
 const ContactInfo = ({ name, role }: { name: string; role: string | null }) => {

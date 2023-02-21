@@ -4,7 +4,8 @@
 
 .layout {
   margin: 1rem auto;
-  max-width: 80ch;
+  padding: 0 20px;
+  max-width: 100ch;
   display: grid;
   gap: 1.5rem;
   justify-items: flex-start;

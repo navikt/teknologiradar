@@ -1,5 +1,10 @@
 import type { NextPage } from "next";
-import { FORMS_LINK, KOMITÈ_LINK, LOCAL_TIMEZONE } from "@/lib/fagtorsdag";
+import {
+  FORMS_LINK,
+  getNextFagtorsdag,
+  KOMITÈ_LINK,
+  LOCAL_TIMEZONE,
+} from "@/lib/fagtorsdag";
 import { formatInTimeZone, utcToZonedTime } from "date-fns-tz";
 import { FagtorsdagCountdown } from "@/components/FagtorsdagCountdown";
 import { Heading, Ingress, Table } from "@navikt/ds-react";
@@ -9,6 +14,7 @@ import { getCurrentActivities, NextLearningActivity } from "@/lib/activities";
 import { ActivityLocation } from "@/components/ActivityLocation";
 import noNb from "date-fns/locale/nb";
 import { Linkify } from "@/components/Linkify";
+import { isBefore, isSameDay } from "date-fns";
 
 export async function getServerSideProps() {
   const activities: NextLearningActivity[] = await getCurrentActivities();
@@ -92,6 +98,15 @@ const Home: NextPage<{ activities: NextLearningActivity[] }> = ({
 }) => {
   const now = utcToZonedTime(new Date(), LOCAL_TIMEZONE);
 
+  const upcomingFagtorsdag = getNextFagtorsdag(now);
+  const upcomingActivities = activities.filter((activity) => {
+    if (!activity.nextOccurrenceAt) return false;
+    const date = new Date(activity.nextOccurrenceAt);
+    return (
+      isSameDay(date, upcomingFagtorsdag) || isBefore(date, upcomingFagtorsdag)
+    );
+  });
+
   return (
     <>
       <Heading level={"1"} size={"large"}>
@@ -112,9 +127,9 @@ const Home: NextPage<{ activities: NextLearningActivity[] }> = ({
 
       <section className={"activity--overview"}>
         <Heading level={"2"} size={"medium"}>
-          Hva skjer fremover?
+          Plan for førstkommende fagtorsdag:
         </Heading>
-        <ActivityOverview activities={activities} />
+        <ActivityOverview activities={upcomingActivities} />
       </section>
     </>
   );

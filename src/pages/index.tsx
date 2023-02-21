@@ -110,7 +110,7 @@ const Home: NextPage<{ activities: NextLearningActivity[] }> = ({
         </Ingress>
       </section>
 
-      <section>
+      <section className={"activity--overview"}>
         <Heading level={"2"} size={"medium"}>
           Hva skjer fremover?
         </Heading>

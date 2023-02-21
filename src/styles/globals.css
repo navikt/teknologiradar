@@ -25,6 +25,11 @@
   text-decoration: underline;
 }
 
+.activity--overview {
+  overflow-x: auto;
+  width: 100%;
+}
+
 .activity {
   width: 100%;
   display: flex;

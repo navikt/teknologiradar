@@ -95,8 +95,8 @@ const Label = ({ label }: { label: ActivityLabel }) => {
 const LabelList = ({ labels }: { labels: ActivityLabel[] }) => {
   return (
     <div className={"activity--label-list"}>
-      {labels.map((label) => (
-        <Label label={label} />
+      {labels.map((label, idx) => (
+        <Label key={idx} label={label} />
       ))}
     </div>
   );

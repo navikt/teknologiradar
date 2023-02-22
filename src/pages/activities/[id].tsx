@@ -1,6 +1,7 @@
 import type { GetServerSideProps, NextPage } from "next";
 import { Detail, Heading, Ingress } from "@navikt/ds-react";
 import {
+  ActivityLabel,
   getCurrentActivities,
   LearningActivity,
   RecurringInterval,
@@ -11,6 +12,7 @@ import { formatInTimeZone } from "date-fns-tz";
 import noNb from "date-fns/locale/nb";
 import { ActivityContact } from "@/components/ActivityContact";
 import { ExternalLink } from "@navikt/ds-icons";
+import activities from "@/pages/activities";
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const id = context.query["id"];
@@ -82,17 +84,42 @@ const TimeAndDate = ({
   );
 };
 
+const Label = ({ label }: { label: ActivityLabel }) => {
+  return (
+    <div className={"activity--label"} style={{ backgroundColor: label.color }}>
+      {label.name}
+    </div>
+  );
+};
+
+const LabelList = ({ labels }: { labels: ActivityLabel[] }) => {
+  return (
+    <div className={"activity--label-list"}>
+      {labels.map((label) => (
+        <Label label={label} />
+      ))}
+    </div>
+  );
+};
+
 const ActivityEntry = ({ activity }: { activity: LearningActivity }) => {
   return (
     <>
       <Heading level="1" size={"large"} className={"activity--header"}>
         {activity.title}
       </Heading>
-      <TimeAndDate
-        date={activity.date}
-        time={activity.timeStart}
-        recurring={activity.recurringInterval}
-      />
+      <div className={"activity--subtext"}>
+        <TimeAndDate
+          date={activity.date}
+          time={activity.timeStart}
+          recurring={activity.recurringInterval}
+        />
+        <span className={"activity--edit-link"}>
+          <a href={activity.editUrl}>
+            Trello-kort <ExternalLink />
+          </a>
+        </span>
+      </div>
       <Detail className={"activity--details"}>
         {activity.contactName && (
           <ActivityContact
@@ -100,11 +127,8 @@ const ActivityEntry = ({ activity }: { activity: LearningActivity }) => {
             role={activity.contactRole}
           />
         )}
-        <span className={"activity--edit-link"}>
-          <a href={activity.editUrl}>
-            Trello-kort <ExternalLink />
-          </a>
-        </span>
+
+        {activity.labels.length && <LabelList labels={activity.labels} />}
       </Detail>
       <Ingress className={"activity--ingress"}>
         {activity.imageUrl && (

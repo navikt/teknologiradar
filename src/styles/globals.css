@@ -41,6 +41,15 @@
   gap: 5px;
 }
 
+.activity--subtext {
+  display: flex;
+  width: 100%;
+}
+
+.activity--datetime {
+  flex-grow: 1;
+}
+
 .time-label {
   font-size: 0.8em;
   background-color: #eee;
@@ -49,6 +58,18 @@
   padding: 0 5px;
   font-weight: normal;
   align-self: start;
+}
+
+.activity--label-list {
+  display: flex;
+  gap: 10px;
+}
+
+.activity--label {
+  display: inline-block;
+  padding: 5px 10px;
+  border-radius: 20px;
+  text-align: center;
 }
 
 .activity--header {
@@ -63,6 +84,8 @@
 
 .activity--contact {
   flex-grow: 1;
+  display: flex;
+  align-items: center;
 }
 
 .activity--contact-name {

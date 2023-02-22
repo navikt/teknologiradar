@@ -1,5 +1,9 @@
 import { utcToZonedTime } from "date-fns-tz";
-import { LearningActivity, RecurringInterval } from "@/lib/activities";
+import {
+  ActivityLabel,
+  LearningActivity,
+  RecurringInterval,
+} from "@/lib/activities";
 import { LOCAL_TIMEZONE } from "@/lib/fagtorsdag";
 
 export interface Label {
@@ -49,6 +53,40 @@ const customFieldNameById: { [key: string]: string } = {
   "63db5708ca241eb9df2b28fe": "LengthMinutes",
   "63db5bb599475d70574891f8": "ImageURL",
   "63db5cf637a137fc31ab2040": "Emoji",
+};
+
+const TRELLO_FALLBACK_COLOR = "#AAAAAA";
+const TRELLO_COLORS: { [key: string]: string } = {
+  green_light: "#EEF6EC",
+  green: "#D6ECD2",
+  green_dark: "#B7DDB0",
+  yellow_light: "#FDFAE5",
+  yellow: "#FAF3C0",
+  yellow_dark: "#F5EA92",
+  orange_light: "#FDF4E7",
+  orange: "#FCE6C6",
+  orange_dark: "#FAD29C",
+  red: "#F5D3CE",
+  red_light: "#FBEDEB",
+  red_dark: "#EFB3AB",
+  purple_light: "#F7F0FA",
+  purple: "#EDDBF4",
+  purple_dark: "#DFC0EB",
+  blue_light: "#E4F0F6",
+  blue: "#BCD9EA",
+  blue_dark: "#8BBDD9",
+  sky_light: "#E4F7FA",
+  sky: "#BDECF3",
+  sky_dark: "#8FDFEB",
+  lime_light: "#ECFBF3",
+  lime: "#D3F6E4",
+  lime_dark: "#B3F1D0",
+  pink_light: "#FEF1F9",
+  pink: "#FCDCEF",
+  pink_dark: "#F9C2E4",
+  black_light: "#EBECF0",
+  black: "#DFE1E6",
+  black_dark: "#C1C7D0",
 };
 
 export async function getTrelloCards({
@@ -139,6 +177,11 @@ export function mapTrelloCardToActivity(
 
   const description = extractDescription(trelloCard.desc);
 
+  const labels: ActivityLabel[] = trelloCard.labels.map((trelloLabel) => ({
+    name: trelloLabel.name,
+    color: TRELLO_COLORS[trelloLabel.color] ?? TRELLO_FALLBACK_COLOR,
+  }));
+
   return {
     id: trelloCard.id,
     title: trelloCard.name,
@@ -153,5 +196,6 @@ export function mapTrelloCardToActivity(
     imageUrl,
     emoji,
     editUrl: trelloCard.shortUrl,
+    labels,
   };
 }

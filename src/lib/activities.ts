@@ -13,6 +13,11 @@ export enum RecurringInterval {
   MONTHLY,
 }
 
+export interface ActivityLabel {
+  name: string;
+  color: string;
+}
+
 export interface LearningActivity {
   id: string;
   date: string | null;
@@ -27,6 +32,7 @@ export interface LearningActivity {
   description: string;
   locations: string[];
   editUrl: string;
+  labels: ActivityLabel[];
 }
 
 export type NextLearningActivity = LearningActivity & {
@@ -126,6 +132,7 @@ const exampleData: LearningActivity[] = [
     imageUrl: null,
     emoji: "🤖",
     editUrl: "https://example.com",
+    labels: [],
   },
   {
     id: "c1556fb4-18ef-4928-9598-ed43698e6410",
@@ -142,6 +149,7 @@ const exampleData: LearningActivity[] = [
     imageUrl: "/img/fagtorsdag.png",
     emoji: ":hackerman:",
     editUrl: "https://example.com",
+    labels: [],
   },
   {
     id: "5c607139-0422-4387-80d0-0036337bd7c2",
@@ -158,5 +166,6 @@ const exampleData: LearningActivity[] = [
     imageUrl: "/img/fagtorsdag.png",
     emoji: "☕️",
     editUrl: "https://example.com",
+    labels: [],
   },
 ];

@@ -1,12 +1,12 @@
 import type { NextPage } from "next";
 import { getCurrentActivities, NextLearningActivity } from "@/lib/activities";
 import { parseLocation } from "@/components/ActivityLocation";
-import { utcToZonedTime } from "date-fns-tz";
+import { formatInTimeZone, utcToZonedTime } from "date-fns-tz";
 import { getNextFagtorsdag, LOCAL_TIMEZONE } from "@/lib/fagtorsdag";
 import { isBefore, isSameDay } from "date-fns";
 import NextLink from "next/link";
-import { Header } from "@navikt/ds-react-internal";
 import { Heading } from "@navikt/ds-react";
+import noNb from "date-fns/locale/nb";
 
 export async function getServerSideProps() {
   const activities: NextLearningActivity[] = await getCurrentActivities();
@@ -61,7 +61,10 @@ const CalendarPage: NextPage<{ activities: NextLearningActivity[] }> = ({
   return (
     <>
       <Heading level={"1"} size={"large"}>
-        Timeplan for Fyrstikkalléen 1
+        Timeplan for Fyrstikkalléen,{" "}
+        {formatInTimeZone(upcomingFagtorsdag, LOCAL_TIMEZONE, "dd. MMMM", {
+          locale: noNb,
+        })}
       </Heading>
       <section className={"calendar"}>
         <div className={"calendar--timeline"}>

@@ -43,7 +43,7 @@ const CalendarPage: NextPage<{ activities: NextLearningActivity[] }> = ({
   const startHour = 10;
   const endHour = 16;
 
-  const timeSlots: string[] = [];
+  const timeSlots: string[] = ["Rom"];
   for (let i = startHour; i <= endHour; i++) timeSlots.push(`${i}.00`);
   const hourWidth = 100 / timeSlots.length;
 
@@ -95,6 +95,12 @@ const CalendarPage: NextPage<{ activities: NextLearningActivity[] }> = ({
                   </span>
                 ))}
               </div>
+              <div
+                className={"calendar--room-label"}
+                style={{ width: hourWidth + "%" }}
+              >
+                {roomName}
+              </div>
               {activities.map((activity, idx) => (
                 <NextLink
                   className={"calendar--activity"}
@@ -103,7 +109,7 @@ const CalendarPage: NextPage<{ activities: NextLearningActivity[] }> = ({
                   title={`${activity.timeStart} i ${roomName}: ${activity.title}`}
                   style={{
                     width: (activity.durationMinutes! / 60.0) * hourWidth + "%",
-                    left: timeStartToLeft(activity.timeStart) + "%",
+                    left: timeStartToLeft(activity.timeStart) + hourWidth + "%",
                   }}
                 >
                   <span className={"calendar--activity-title"}>

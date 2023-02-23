@@ -114,3 +114,65 @@
   display: flex;
   gap: 3px;
 }
+
+.calendar {
+  width: 100%;
+  border-right: 1px solid black;
+  border-bottom: 1px solid black;
+}
+
+.calendar--timeline {
+  border-bottom: 1px solid black;
+  border-top: 1px solid black;
+  font-weight: bold;
+  background-color: #ccc;
+}
+
+.calendar--timegrid .calendar--timeline-slot {
+  min-height: 100px;
+}
+
+.calendar--row {
+  position: relative;
+}
+
+.calendar--row:nth-child(even) {
+  background-color: #eee;
+}
+
+.calendar--timeline-slot {
+  display: inline-block;
+  border-left: 1px solid black;
+  padding-left: 5px;
+}
+
+.calendar--activity {
+  position: absolute;
+  left: 0;
+  top: 0;
+  padding-left: 5px;
+  border: 1px solid rgb(55, 55, 128);
+  background-color: rgb(83, 83, 229);
+  margin: 5px 0;
+  min-height: 90px;
+  max-height: 100px;
+  color: white;
+  border-radius: 5px;
+  display: flex;
+  flex-direction: column;
+}
+
+.calendar--activity-title {
+  width: 100%;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow-x: hidden;
+  display: inline-block;
+  font-size: 0.8em;
+}
+
+.calendar--activity-room {
+  font-size: 0.8em;
+  color: #ccc;
+  display: inline-block;
+}

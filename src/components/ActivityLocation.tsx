@@ -1,6 +1,6 @@
 import Link from "next/link";
 
-const parseLocation = (
+export const parseLocation = (
   location: string
 ): { label: string; link?: string; icon?: string; iconAlt?: string } => {
   if (/\.zoom\.us/.test(location)) {

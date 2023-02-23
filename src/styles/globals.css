@@ -175,4 +175,7 @@
   font-size: 0.8em;
   color: #ccc;
   display: inline-block;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow-x: hidden;
 }

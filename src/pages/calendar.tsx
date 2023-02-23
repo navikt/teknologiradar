@@ -100,7 +100,7 @@ const CalendarPage: NextPage<{ activities: NextLearningActivity[] }> = ({
                   className={"calendar--activity"}
                   href={`/activities/${activity.id}`}
                   key={idx}
-                  title={`${activity.timeStart}: ${activity.title}`}
+                  title={`${activity.timeStart} i ${roomName}: ${activity.title}`}
                   style={{
                     width: (activity.durationMinutes! / 60.0) * hourWidth + "%",
                     left: timeStartToLeft(activity.timeStart) + "%",

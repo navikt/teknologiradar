@@ -115,7 +115,9 @@ const CalendarPage: NextPage<{ activities: NextLearningActivity[] }> = ({
                   <span className={"calendar--activity-title"}>
                     {activity.title}
                   </span>
-                  <span className={"calendar--activity-room"}>{roomName}</span>
+                  <span className={"calendar--activity-room"}>
+                    {activity.contactName}
+                  </span>
                 </NextLink>
               ))}
             </div>

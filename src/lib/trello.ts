@@ -44,6 +44,7 @@ export interface TrelloCard {
 const listNameById: { [key: string]: string } = {
   "6307156d7ca6b4004424fb43": "UpcomingFagtorsdag",
   "630c8bb1d847e5016e5ffe39": "RecurringEveryFagtorsdag",
+  "63071581bbd9350032142ad9": "CompletedActivities",
 };
 
 const customFieldNameById: { [key: string]: string } = {

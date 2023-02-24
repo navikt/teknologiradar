@@ -25,7 +25,8 @@ import { occursOnOrAfter, occursOnOrBefore } from "@/lib/scheduling";
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const date = context.query["date"] ?? null;
   const activities: NextLearningActivity[] = await getCurrentActivities(
-    date as string | null
+    date as string | null,
+    false
   );
   return { props: { activities, date } };
 };

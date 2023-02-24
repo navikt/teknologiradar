@@ -18,7 +18,8 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   const date = context.query["date"] ?? null;
 
   const activities: LearningActivity[] = await getCurrentActivities(
-    date as string | null
+    date as string | null,
+    true
   );
   const activity = activities.find((activity) => activity.id === id);
   if (!activity) return { notFound: true };

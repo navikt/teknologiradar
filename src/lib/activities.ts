@@ -4,7 +4,7 @@ import {
   mapTrelloCardToActivity,
 } from "@/lib/trello";
 import { Cache } from "@/lib/cache";
-import { getActivityNextStartDate } from "@/lib/scheduling";
+import { getActivityNextStartDate, occursOnOrAfter } from "@/lib/scheduling";
 
 export enum RecurringInterval {
   ONE_TIME,
@@ -83,7 +83,7 @@ export const getCurrentActivities = (() => {
   const { TRELLO_BOARD_ID, TRELLO_API_KEY, TRELLO_API_TOKEN } = process.env;
   if (!TRELLO_API_KEY || !TRELLO_API_TOKEN || !TRELLO_BOARD_ID) {
     console.log("Trello API not set up, falling back to example data");
-    return (date: string | null) => {
+    return (date: string | null, includeCompleted: boolean) => {
       const currentTime = date ? new Date(date) : new Date();
       return exampleData.map((activity) =>
         mapToNextLearningActivity(activity, currentTime)
@@ -105,13 +105,18 @@ export const getCurrentActivities = (() => {
 
   console.log(`Trello API configured, caching data for ${fetchIntervalMs} ms`);
 
-  return async (date: string | null) => {
+  return async (date: string | null, includeCompleted: boolean) => {
     const currentTime = date ? new Date(date) : new Date();
     const activities = await activitiesCache.get(currentTime.getTime());
     const mapped = activities.map((activity) =>
       mapToNextLearningActivity(activity, currentTime)
     );
     mapped.sort(activityComparator);
+    if (!includeCompleted) {
+      return mapped.filter((activity) =>
+        occursOnOrAfter(activity, currentTime)
+      );
+    }
     return mapped;
   };
 })();

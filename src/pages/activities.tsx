@@ -10,7 +10,8 @@ import { GetServerSideProps } from "next";
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const date = context.query["date"] ?? null;
   const activities: NextLearningActivity[] = await getCurrentActivities(
-    date as string | null
+    date as string | null,
+    true
   );
   return { props: { activities, date } };
 };

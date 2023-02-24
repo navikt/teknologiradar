@@ -1,7 +1,11 @@
 import { LOCAL_TIMEZONE } from "./fagtorsdag";
 import { add, isBefore, isSameDay } from "date-fns";
 import { zonedTimeToUtc } from "date-fns-tz";
-import { LearningActivity, RecurringInterval } from "@/lib/activities";
+import {
+  LearningActivity,
+  NextLearningActivity,
+  RecurringInterval,
+} from "@/lib/activities";
 
 export function timeAndDateToLocalDateTime(
   dateString: string,
@@ -71,4 +75,15 @@ function nextDateAtInterval(date: Date, interval: RecurringInterval): Date {
     default:
       throw new Error(`Unrecognized interval: ${interval}`);
   }
+}
+
+export function occursOnOrBefore(
+  activity: NextLearningActivity,
+  upcomingFagtorsdag: Date
+) {
+  if (!activity.nextOccurrenceAt) return false;
+  const date = new Date(activity.nextOccurrenceAt);
+  return (
+    isSameDay(date, upcomingFagtorsdag) || isBefore(date, upcomingFagtorsdag)
+  );
 }

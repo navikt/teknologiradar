@@ -19,11 +19,16 @@ import { ActivityLocation } from "@/components/ActivityLocation";
 import noNb from "date-fns/locale/nb";
 import { Linkify } from "@/components/Linkify";
 import { isBefore, isSameDay } from "date-fns";
+import { GetServerSideProps } from "next";
+import { occursOnOrBefore } from "@/lib/scheduling";
 
-export async function getServerSideProps() {
-  const activities: NextLearningActivity[] = await getCurrentActivities();
-  return { props: { activities } };
-}
+export const getServerSideProps: GetServerSideProps = async (context) => {
+  const date = context.query["date"] ?? null;
+  const activities: NextLearningActivity[] = await getCurrentActivities(
+    date as string | null
+  );
+  return { props: { activities, date } };
+};
 
 const formatDate = (nextOccurrenceAt: number): string => {
   const dt = new Date(nextOccurrenceAt);
@@ -95,19 +100,19 @@ const ActivityOverview = ({
   );
 };
 
-const Home: NextPage<{ activities: NextLearningActivity[] }> = ({
-  activities,
-}) => {
-  const now = utcToZonedTime(new Date(), LOCAL_TIMEZONE);
+const Home: NextPage<{
+  activities: NextLearningActivity[];
+  date: string | null;
+}> = ({ activities, date }) => {
+  const now = utcToZonedTime(
+    date ? new Date(date) : new Date(),
+    LOCAL_TIMEZONE
+  );
 
   const upcomingFagtorsdag = getNextFagtorsdag(now);
-  const upcomingActivities = activities.filter((activity) => {
-    if (!activity.nextOccurrenceAt) return false;
-    const date = new Date(activity.nextOccurrenceAt);
-    return (
-      isSameDay(date, upcomingFagtorsdag) || isBefore(date, upcomingFagtorsdag)
-    );
-  });
+  const upcomingActivities = activities.filter((activity) =>
+    occursOnOrBefore(activity, upcomingFagtorsdag)
+  );
 
   const upcomingOneTimeActivities = upcomingActivities.filter(
     (activity) => activity.recurringInterval === RecurringInterval.ONE_TIME

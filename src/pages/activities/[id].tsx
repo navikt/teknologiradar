@@ -12,16 +12,18 @@ import { formatInTimeZone } from "date-fns-tz";
 import noNb from "date-fns/locale/nb";
 import { ActivityContact } from "@/components/ActivityContact";
 import { ExternalLink } from "@navikt/ds-icons";
-import activities from "@/pages/activities";
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const id = context.query["id"];
+  const date = context.query["date"] ?? null;
 
-  const activities: LearningActivity[] = await getCurrentActivities();
+  const activities: LearningActivity[] = await getCurrentActivities(
+    date as string | null
+  );
   const activity = activities.find((activity) => activity.id === id);
   if (!activity) return { notFound: true };
 
-  return { props: { activity } };
+  return { props: { activity, date } };
 };
 
 const ActivityPage: NextPage<{ activity: LearningActivity }> = ({

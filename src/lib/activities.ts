@@ -83,8 +83,8 @@ export const getCurrentActivities = (() => {
   const { TRELLO_BOARD_ID, TRELLO_API_KEY, TRELLO_API_TOKEN } = process.env;
   if (!TRELLO_API_KEY || !TRELLO_API_TOKEN || !TRELLO_BOARD_ID) {
     console.log("Trello API not set up, falling back to example data");
-    return () => {
-      const currentTime = new Date();
+    return (date: string | null) => {
+      const currentTime = date ? new Date(date) : new Date();
       return exampleData.map((activity) =>
         mapToNextLearningActivity(activity, currentTime)
       );
@@ -105,8 +105,8 @@ export const getCurrentActivities = (() => {
 
   console.log(`Trello API configured, caching data for ${fetchIntervalMs} ms`);
 
-  return async () => {
-    const currentTime = new Date();
+  return async (date: string | null) => {
+    const currentTime = date ? new Date(date) : new Date();
     const activities = await activitiesCache.get(currentTime.getTime());
     const mapped = activities.map((activity) =>
       mapToNextLearningActivity(activity, currentTime)

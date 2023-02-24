@@ -5,15 +5,20 @@ import { ActivityLocation } from "@/components/ActivityLocation";
 import NextLink from "next/link";
 import { Linkify } from "@/components/Linkify";
 import { ActivityContact } from "@/components/ActivityContact";
+import { GetServerSideProps } from "next";
 
-export async function getServerSideProps() {
-  const activities: NextLearningActivity[] = await getCurrentActivities();
-  return { props: { activities } };
-}
+export const getServerSideProps: GetServerSideProps = async (context) => {
+  const date = context.query["date"] ?? null;
+  const activities: NextLearningActivity[] = await getCurrentActivities(
+    date as string | null
+  );
+  return { props: { activities, date } };
+};
 
-const ActivitiesPage: NextPage<{ activities: NextLearningActivity[] }> = ({
-  activities,
-}) => {
+const ActivitiesPage: NextPage<{
+  activities: NextLearningActivity[];
+  date: string | null;
+}> = ({ activities, date }) => {
   return (
     <>
       {activities.map((activity, idx) => (

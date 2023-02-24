@@ -67,7 +67,7 @@ const ActivitiesPage: NextPage<{
           </Heading>
           <ul>
             {groupedByDate[date].map((activity) => (
-              <li>
+              <li key={activity.id}>
                 <Link href={`/activities/${activity.id}`}>
                   {activity.title}
                 </Link>

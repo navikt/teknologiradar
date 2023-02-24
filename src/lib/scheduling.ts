@@ -77,13 +77,8 @@ function nextDateAtInterval(date: Date, interval: RecurringInterval): Date {
   }
 }
 
-export function occursOnOrBefore(
-  activity: NextLearningActivity,
-  upcomingFagtorsdag: Date
-) {
+export function occursOnOrBefore(activity: NextLearningActivity, date: Date) {
   if (!activity.nextOccurrenceAt) return false;
-  const date = new Date(activity.nextOccurrenceAt);
-  return (
-    isSameDay(date, upcomingFagtorsdag) || isBefore(date, upcomingFagtorsdag)
-  );
+  const activityDate = new Date(activity.nextOccurrenceAt);
+  return isSameDay(activityDate, date) || isBefore(activityDate, date);
 }

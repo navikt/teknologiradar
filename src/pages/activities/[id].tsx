@@ -130,7 +130,7 @@ const ActivityEntry = ({ activity }: { activity: LearningActivity }) => {
           />
         )}
 
-        {activity.labels.length && <LabelList labels={activity.labels} />}
+        {activity.labels.length > 0 && <LabelList labels={activity.labels} />}
       </Detail>
       <Ingress className={"activity--ingress"}>
         {activity.imageUrl && (

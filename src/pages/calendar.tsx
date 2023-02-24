@@ -8,7 +8,7 @@ import NextLink from "next/link";
 import { Heading } from "@navikt/ds-react";
 import noNb from "date-fns/locale/nb";
 import { GetServerSideProps } from "next";
-import { occursOnOrBefore } from "@/lib/scheduling";
+import { occursOnOrAfter, occursOnOrBefore } from "@/lib/scheduling";
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const date = context.query["date"] ?? null;
@@ -28,8 +28,10 @@ const CalendarPage: NextPage<{
   );
 
   const upcomingFagtorsdag = getNextFagtorsdag(now);
-  const upcomingActivities = activities.filter((activity) =>
-    occursOnOrBefore(activity, upcomingFagtorsdag)
+  const upcomingActivities = activities.filter(
+    (activity) =>
+      occursOnOrAfter(activity, now) &&
+      occursOnOrBefore(activity, upcomingFagtorsdag)
   );
 
   const groupedByRooms: { [key: string]: NextLearningActivity[] } = {};

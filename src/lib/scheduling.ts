@@ -1,5 +1,5 @@
 import { LOCAL_TIMEZONE } from "./fagtorsdag";
-import { add, isBefore, isSameDay } from "date-fns";
+import { add, isAfter, isBefore, isSameDay } from "date-fns";
 import { zonedTimeToUtc } from "date-fns-tz";
 import {
   LearningActivity,
@@ -81,4 +81,10 @@ export function occursOnOrBefore(activity: NextLearningActivity, date: Date) {
   if (!activity.nextOccurrenceAt) return false;
   const activityDate = new Date(activity.nextOccurrenceAt);
   return isSameDay(activityDate, date) || isBefore(activityDate, date);
+}
+
+export function occursOnOrAfter(activity: NextLearningActivity, date: Date) {
+  if (!activity.nextOccurrenceAt) return false;
+  const activityDate = new Date(activity.nextOccurrenceAt);
+  return isSameDay(activityDate, date) || isAfter(activityDate, date);
 }

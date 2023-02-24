@@ -10,11 +10,11 @@
     "prepare": "husky install"
   },
   "dependencies": {
-    "@navikt/ds-css": "2.1.7",
-    "@navikt/ds-css-internal": "2.1.7",
-    "@navikt/ds-icons": "2.1.7",
-    "@navikt/ds-react": "2.1.7",
-    "@navikt/ds-react-internal": "2.1.7",
+    "@navikt/ds-css": "2.4.0",
+    "@navikt/ds-css-internal": "2.4.0",
+    "@navikt/ds-icons": "2.4.0",
+    "@navikt/ds-react": "2.4.0",
+    "@navikt/ds-react-internal": "2.4.0",
     "@next/font": "13.1.6",
     "date-fns": "2.29.3",
     "date-fns-tz": "2.0.0",

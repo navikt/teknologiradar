@@ -17,11 +17,27 @@ export default function App({ Component, pageProps }: AppProps) {
           <NextLink className="header--link" href={"/"}>
             <img
               src={"/img/fagtorsdag.png"}
-              alt={"Fagtorsdag logo"}
+              alt={""}
               width={"25px"}
               height={"25px"}
             />
             Fagtorsdag
+          </NextLink>
+        </Header.Title>
+        <Header.Title as="h2">
+          <NextLink className="header--link" href={"/calendar"}>
+            <img
+              src={"/img/fya1.jpg"}
+              alt={"Fyrstikkalléen 1"}
+              width={"25px"}
+              height={"25px"}
+            />
+            Timeplan
+          </NextLink>
+        </Header.Title>
+        <Header.Title as="h2">
+          <NextLink className="header--link" href={"/activities"}>
+            Tidligere aktiviteter
           </NextLink>
         </Header.Title>
       </Header>

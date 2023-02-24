@@ -11,7 +11,8 @@ import { isFagtorsdagDay, LOCAL_TIMEZONE } from "@/lib/fagtorsdag";
 import { formatInTimeZone } from "date-fns-tz";
 import noNb from "date-fns/locale/nb";
 import { ActivityContact } from "@/components/ActivityContact";
-import { ExternalLink } from "@navikt/ds-icons";
+import { ExternalLink, Back } from "@navikt/ds-icons";
+import Link from "next/link";
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const id = context.query["id"];
@@ -32,6 +33,9 @@ const ActivityPage: NextPage<{ activity: LearningActivity }> = ({
 }) => {
   return (
     <>
+      <Link href={"/"} className={"link-with-icon"}>
+        <Back /> Tilbake til oversikt
+      </Link>
       <ActivityEntry activity={activity} />
     </>
   );
@@ -118,9 +122,9 @@ const ActivityEntry = ({ activity }: { activity: LearningActivity }) => {
           recurring={activity.recurringInterval}
         />
         <span className={"activity--edit-link"}>
-          <a href={activity.editUrl}>
+          <Link href={activity.editUrl} className={"link-with-icon"}>
             Trello-kort <ExternalLink />
-          </a>
+          </Link>
         </span>
       </div>
       <Detail className={"activity--details"}>

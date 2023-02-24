@@ -11,6 +11,12 @@
   justify-items: flex-start;
 }
 
+.link-with-icon {
+  display: flex;
+  align-items: center;
+  gap: 3px;
+}
+
 .header--link {
   color: white;
   text-decoration: none;

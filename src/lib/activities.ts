@@ -67,7 +67,7 @@ function mapToNextLearningActivity(
   return { ...activity, nextOccurrenceAt } as NextLearningActivity;
 }
 
-function activityComparator(
+export function activityComparator(
   a: NextLearningActivity,
   b: NextLearningActivity
 ): number {

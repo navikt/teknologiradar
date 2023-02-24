@@ -70,7 +70,7 @@ const CalendarPage: NextPage<{
     <>
       <Heading level={"1"} size={"large"}>
         Timeplan for Fyrstikkalléen,{" "}
-        {formatInTimeZone(upcomingFagtorsdag, LOCAL_TIMEZONE, "dd. MMMM", {
+        {formatInTimeZone(upcomingFagtorsdag, LOCAL_TIMEZONE, "d. MMMM", {
           locale: noNb,
         })}
       </Heading>

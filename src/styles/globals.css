@@ -117,15 +117,10 @@
 
 .calendar {
   width: 100%;
-  border-right: 1px solid black;
-  border-bottom: 1px solid black;
 }
 
 .calendar--timeline {
-  border-bottom: 1px solid black;
-  border-top: 1px solid black;
   font-weight: bold;
-  background-color: #ccc;
 }
 
 .calendar--timegrid .calendar--timeline-slot {
@@ -148,31 +143,41 @@
 .calendar--row:nth-child(even) {
   background-color: #eee;
 }
+.calendar--row:nth-child(odd) {
+  background-color: #ddd;
+}
 
 .calendar--timeline-slot {
   display: inline-block;
-  border-left: 1px solid black;
+  border-left: 1px solid #00000088;
+  border-bottom: 1px solid #00000088;
   padding-left: 5px;
 }
-
-.calendar--timeline .calendar--timeline-slot:first-child {
-  text-align: center;
+.calendar--timeline-slot:last-child {
+  border-right: 1px solid black;
+}
+.calendar--timeline .calendar--timeline-slot {
+  border-left: none;
+  border-right: none;
+}
+.calendar--timeline-slot:first-child {
+  border-left: none;
+  border-bottom: none;
 }
 
 .calendar--room-label {
   position: absolute;
-  left: 0px;
+  right: calc(100% - 12.5%);
   top: 0px;
-  overflow: hidden;
   padding: 10px;
   font-size: 0.9em;
   text-overflow: ellipsis;
-  text-align: right;
   height: 100%;
-  background-color: #99999933;
+  background-color: #fff;
   display: flex;
   align-items: center;
   font-weight: bold;
+  direction: rtl;
 }
 
 .calendar--activity {

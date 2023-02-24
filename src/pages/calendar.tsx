@@ -50,7 +50,7 @@ const CalendarPage: NextPage<{
   const startHour = 10;
   const endHour = 16;
 
-  const timeSlots: string[] = ["Rom"];
+  const timeSlots: string[] = [""];
   for (let i = startHour; i <= endHour; i++) timeSlots.push(`${i}.00`);
   const hourWidth = 100 / timeSlots.length;
 

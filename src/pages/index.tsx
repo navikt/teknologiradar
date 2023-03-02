@@ -11,6 +11,7 @@ import { Heading, Ingress, Table } from "@navikt/ds-react";
 import Link from "next/link";
 import NextLink from "next/link";
 import {
+  formatTimeSpan,
   getCurrentActivities,
   NextLearningActivity,
   RecurringInterval,
@@ -30,9 +31,15 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   return { props: { activities, date } };
 };
 
-const formatDate = (nextOccurrenceAt: number): string => {
+const formatDate = (
+  nextOccurrenceAt: number,
+  durationMinutes: number | null
+): string => {
   const dt = new Date(nextOccurrenceAt);
-  return formatInTimeZone(dt, LOCAL_TIMEZONE, "HH.mm", { locale: noNb });
+  const timeStart = formatInTimeZone(dt, LOCAL_TIMEZONE, "HH.mm", {
+    locale: noNb,
+  });
+  return formatTimeSpan(timeStart, durationMinutes);
 };
 
 const ContactInfo = ({ name, role }: { name: string; role: string | null }) => {
@@ -51,7 +58,7 @@ const ActivityRow = ({ activity }: { activity: NextLearningActivity }) => {
     <Table.Row>
       <Table.HeaderCell scope={"row"}>
         {activity.nextOccurrenceAt
-          ? formatDate(activity.nextOccurrenceAt)
+          ? formatDate(activity.nextOccurrenceAt, activity.durationMinutes)
           : "Uplanlagt"}
       </Table.HeaderCell>
       <Table.DataCell>

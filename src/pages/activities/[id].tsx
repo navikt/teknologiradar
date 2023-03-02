@@ -126,19 +126,22 @@ const TimeAndDate = ({
 
 const Label = ({ label }: { label: ActivityLabel }) => {
   return (
-    <div className={"activity--label"} style={{ backgroundColor: label.color }}>
+    <span
+      className={"activity--label"}
+      style={{ backgroundColor: label.color }}
+    >
       {label.name}
-    </div>
+    </span>
   );
 };
 
 const LabelList = ({ labels }: { labels: ActivityLabel[] }) => {
   return (
-    <div className={"activity--label-list"}>
+    <span className={"activity--label-list"}>
       {labels.map((label, idx) => (
         <Label key={idx} label={label} />
       ))}
-    </div>
+    </span>
   );
 };
 

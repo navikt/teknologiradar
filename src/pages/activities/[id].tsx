@@ -41,13 +41,37 @@ const ActivityPage: NextPage<{ activity: LearningActivity }> = ({
   );
 };
 
+const pad = (num: number) => (num < 10 ? `0${num}` : `${num}`);
+
+const formatTimeSpan = (timeStart: string, durationMinutes: number | null) => {
+  if (durationMinutes === null) return timeStart;
+  const [hours, minutes] = timeStart
+    .split(/[\.:]/, 2)
+    .map((part) => parseInt(part, 10));
+  const startDate = new Date();
+  startDate.setHours(hours);
+  startDate.setMinutes(minutes);
+  const endDate = new Date(startDate.getTime() + durationMinutes * 60 * 1000);
+  return (
+    pad(startDate.getHours()) +
+    "." +
+    pad(startDate.getMinutes()) +
+    "–" +
+    pad(endDate.getHours()) +
+    "." +
+    pad(endDate.getMinutes())
+  );
+};
+
 const formatTimeAndDate = ({
   date,
   time,
+  durationMinutes,
   recurring,
 }: {
   date: string | null;
   time: string | null;
+  durationMinutes: number | null;
   recurring: RecurringInterval;
 }) => {
   if (!date && !time) return null;
@@ -58,7 +82,7 @@ const formatTimeAndDate = ({
       parts.push(
         formatInTimeZone(date, LOCAL_TIMEZONE, "d. MMMM", { locale: noNb })
       );
-    if (time) parts.push(`kl. ${time}`);
+    if (time) parts.push(`kl. ${formatTimeSpan(time, durationMinutes)}`);
     return parts.join(", ");
   }
 
@@ -67,7 +91,9 @@ const formatTimeAndDate = ({
     date &&
     isFagtorsdagDay(new Date(date))
   ) {
-    return time ? `Hver fagtorsdag, kl. ${time}` : `Hver fagtorsdag`;
+    return time
+      ? `Hver fagtorsdag, kl. ${formatTimeSpan(time, durationMinutes)}`
+      : `Hver fagtorsdag`;
   }
   return null;
 };
@@ -75,13 +101,20 @@ const formatTimeAndDate = ({
 const TimeAndDate = ({
   date,
   time,
+  durationMinutes,
   recurring,
 }: {
   date: string | null;
   time: string | null;
+  durationMinutes: number | null;
   recurring: RecurringInterval;
 }) => {
-  const dtString = formatTimeAndDate({ date, time, recurring });
+  const dtString = formatTimeAndDate({
+    date,
+    time,
+    durationMinutes,
+    recurring,
+  });
   if (!dtString) return null;
 
   return (
@@ -119,6 +152,7 @@ const ActivityEntry = ({ activity }: { activity: LearningActivity }) => {
         <TimeAndDate
           date={activity.date}
           time={activity.timeStart}
+          durationMinutes={activity.durationMinutes}
           recurring={activity.recurringInterval}
         />
         <span className={"activity--edit-link"}>

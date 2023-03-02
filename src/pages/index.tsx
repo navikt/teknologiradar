@@ -18,7 +18,6 @@ import {
 import { ActivityLocation } from "@/components/ActivityLocation";
 import noNb from "date-fns/locale/nb";
 import { Linkify } from "@/components/Linkify";
-import { isBefore, isSameDay } from "date-fns";
 import { GetServerSideProps } from "next";
 import { occursOnOrAfter, occursOnOrBefore } from "@/lib/scheduling";
 
@@ -88,7 +87,7 @@ const ActivityOverview = ({
         <Table.Row>
           <Table.HeaderCell scope="col">Når</Table.HeaderCell>
           <Table.HeaderCell scope="col">Hva</Table.HeaderCell>
-          <Table.HeaderCell scope="col">Hvem</Table.HeaderCell>
+          <Table.HeaderCell scope="col">Kontakt</Table.HeaderCell>
           <Table.HeaderCell scope="col">Hvor</Table.HeaderCell>
         </Table.Row>
       </Table.Header>

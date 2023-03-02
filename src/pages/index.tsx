@@ -94,7 +94,7 @@ const ActivityOverview = ({
         <Table.Row>
           <Table.HeaderCell scope="col">Når</Table.HeaderCell>
           <Table.HeaderCell scope="col">Hva</Table.HeaderCell>
-          <Table.HeaderCell scope="col">Kontakt</Table.HeaderCell>
+          <Table.HeaderCell scope="col">Hvem</Table.HeaderCell>
           <Table.HeaderCell scope="col">Hvor</Table.HeaderCell>
         </Table.Row>
       </Table.Header>

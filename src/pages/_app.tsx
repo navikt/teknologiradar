@@ -40,6 +40,11 @@ export default function App({ Component, pageProps }: AppProps) {
             Tidligere aktiviteter
           </NextLink>
         </Header.Title>
+        <Header.Title as="h2">
+          <NextLink className="header--link" href={"/learn"}>
+            Lær
+          </NextLink>
+        </Header.Title>
       </Header>
       <main className="layout">
         <Component {...pageProps} />

@@ -14,6 +14,7 @@ import noNb from "date-fns/locale/nb";
 import { ActivityContact } from "@/components/ActivityContact";
 import { ExternalLink, Back } from "@navikt/ds-icons";
 import Link from "next/link";
+import { Linkify } from "@/components/Linkify";
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const id = context.query["id"];
@@ -161,7 +162,7 @@ const ActivityEntry = ({ activity }: { activity: LearningActivity }) => {
             alt={activity.contactName ?? activity.contactRole ?? activity.title}
           />
         )}
-        {activity.description}
+        <Linkify text={activity.description} />
       </Ingress>
       <Detail className={"activity--locations"}>
         {activity.locations.map((loc, idx) => (

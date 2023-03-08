@@ -15,6 +15,7 @@ import { ActivityContact } from "@/components/ActivityContact";
 import { ExternalLink, Back } from "@navikt/ds-icons";
 import Link from "next/link";
 import { Linkify } from "@/components/Linkify";
+import Head from "next/head";
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const id = context.query["id"];
@@ -35,6 +36,9 @@ const ActivityPage: NextPage<{ activity: LearningActivity }> = ({
 }) => {
   return (
     <>
+      <Head>
+        <title>{activity.title} | Fagtorsdag</title>
+      </Head>
       <Link href={"/"} className={"link-with-icon"}>
         <Back /> Tilbake til oversikt
       </Link>

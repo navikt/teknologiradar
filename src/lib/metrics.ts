@@ -2,7 +2,7 @@ import amplitude, { AmplitudeClient } from "amplitude-js";
 
 let instance: AmplitudeClient | null = null;
 const apiKey = process.env.NEXT_PUBLIC_AMPLITUDE_API_KEY;
-if (apiKey) {
+if (apiKey && typeof window !== "undefined") {
   instance = amplitude.getInstance();
   instance.init(apiKey, "", {
     apiEndpoint: "amplitude.nav.no/collect",
@@ -10,7 +10,7 @@ if (apiKey) {
     includeUtm: true,
     batchEvents: false,
     includeReferrer: true,
-    platform: window?.location?.toString().split("?")[0].split("#")[0],
+    platform: window.location.toString().split("?")[0].split("#")[0],
   });
 }
 

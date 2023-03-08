@@ -28,9 +28,6 @@ spec:
     path: /api/healthy
   readiness:
     path: /api/healthy
-  env:
-    - name: NEXT_PUBLIC_AMPLITUDE_API_KEY
-      value: {{amplitudeApiKey}}
   ingresses:
   {{#each ingresses as |url|}}
      - {{url}}

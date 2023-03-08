@@ -1,8 +1,13 @@
 import amplitude, { AmplitudeClient } from "amplitude-js";
 
+const isProdEnvironment = () =>
+  typeof window !== "undefined" &&
+  window.location.hostname === "fagtorsdag.intern.nav.no";
+
 let instance: AmplitudeClient | null = null;
-const apiKey = process.env.NEXT_PUBLIC_AMPLITUDE_API_KEY;
-if (apiKey && typeof window !== "undefined") {
+if (isProdEnvironment()) {
+  const apiKey = "22c445c9be44f0221bf97a4bbb1c3bce";
+
   instance = amplitude.getInstance();
   instance.init(apiKey, "", {
     apiEndpoint: "amplitude.nav.no/collect",

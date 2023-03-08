@@ -16,6 +16,8 @@ import { ExternalLink, Back } from "@navikt/ds-icons";
 import Link from "next/link";
 import { Linkify } from "@/components/Linkify";
 import Head from "next/head";
+import { useEffect } from "react";
+import * as metrics from "@/lib/metrics";
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const id = context.query["id"];
@@ -34,10 +36,19 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 const ActivityPage: NextPage<{ activity: LearningActivity }> = ({
   activity,
 }) => {
+  useEffect(() => {
+    metrics.logPageView({
+      page: "Aktivitet",
+      activityTitle: activity.title,
+      activityId: activity.id,
+    });
+  }, [activity]);
+
   return (
     <>
       <Head>
         <title>{activity.title} | Fagtorsdag</title>
+        <meta name="description" content={activity.description} />
       </Head>
       <Link href={"/"} className={"link-with-icon"}>
         <Back /> Tilbake til oversikt

@@ -4,6 +4,8 @@ import { BodyShort, Heading, Ingress } from "@navikt/ds-react";
 import resources from "@/data/resources.json";
 import Link from "next/link";
 import { KOMITÈ_LINK } from "@/lib/fagtorsdag";
+import { useEffect } from "react";
+import * as metrics from "@/lib/metrics";
 
 interface LearningList {
   title: string;
@@ -27,6 +29,10 @@ const LearningList = ({ list }: { list: LearningList }) => {
 };
 
 const LearnPage: NextPage = () => {
+  useEffect(() => {
+    metrics.logPageView({ page: "Lær" });
+  }, []);
+
   return (
     <>
       <Heading size={"large"} level={"1"}>

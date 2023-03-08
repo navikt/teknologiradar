@@ -21,6 +21,8 @@ import noNb from "date-fns/locale/nb";
 import { Linkify } from "@/components/Linkify";
 import { GetServerSideProps } from "next";
 import { occursOnOrAfter, occursOnOrBefore } from "@/lib/scheduling";
+import { useEffect } from "react";
+import * as metrics from "@/lib/metrics";
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const date = context.query["date"] ?? null;
@@ -115,6 +117,10 @@ const Home: NextPage<{
     date ? new Date(date) : new Date(),
     LOCAL_TIMEZONE
   );
+
+  useEffect(() => {
+    metrics.logPageView({ page: date ? `Oversikt (${date})` : "Oversikt" });
+  }, [date]);
 
   const upcomingFagtorsdag = getNextFagtorsdag(now);
   const upcomingActivities = activities.filter(

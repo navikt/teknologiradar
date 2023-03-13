@@ -142,7 +142,7 @@ const Home: NextPage<{
         Dialog og erfaringsdeling rundt teknologivalg
       </Heading>
       <section>
-        <Heading level={"2"} size={"medium"} spacing>
+        {/*        <Heading level={"2"} size={"medium"} spacing>
           <FagtorsdagCountdown currentDate={now} />
         </Heading>
 
@@ -151,7 +151,7 @@ const Home: NextPage<{
           Eller en faggruppe eller lesesirkel du ønsker å starte?{" "}
           <Link href={FORMS_LINK}>Meld det inn</Link> i dag, så vil{" "}
           <Link href={KOMITÈ_LINK}>komitéen</Link> hjelpe deg komme i gang.
-        </Ingress>
+        </Ingress>*/}
       </section>
 
       <section className={"activity--overview"}>
@@ -159,10 +159,10 @@ const Home: NextPage<{
           Aktiviteter førstkommende fagtorsdag:
         </Heading>
         <ActivityOverview activities={upcomingOneTimeActivities} />
-        <Heading level={"2"} size={"medium"}>
+        {/*        <Heading level={"2"} size={"medium"}>
           Faste aktiviteter hver fagtorsdag:
         </Heading>
-        <ActivityOverview activities={upcomingRecurringActivities} />
+        <ActivityOverview activities={upcomingRecurringActivities} />*/}
       </section>
     </>
   );

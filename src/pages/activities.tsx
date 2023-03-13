@@ -13,7 +13,7 @@ import { formatInTimeZone } from "date-fns-tz";
 import noNb from "date-fns/locale/nb";
 import { isAfter } from "date-fns";
 import { useEffect } from "react";
-import * as metrics from "@/lib/metrics";
+/*import * as metrics from "@/lib/metrics";*/
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const date = context.query["date"] ?? null;
@@ -30,9 +30,9 @@ const ActivitiesPage: NextPage<{
 }> = ({ activities, date }) => {
   const now = date ? new Date(date) : new Date();
 
-  useEffect(() => {
+  /*  useEffect(() => {
     metrics.logPageView({ page: "Tidligere aktiviteter" });
-  }, []);
+  }, []);*/
 
   const groupedByDate: { [key: string]: NextLearningActivity[] } = {};
   const recurring = activities.filter(

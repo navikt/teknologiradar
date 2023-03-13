@@ -42,7 +42,12 @@ export interface TrelloCard {
 }
 
 const listNameById: { [key: string]: string } = {
-  "6307156d7ca6b4004424fb43": "UpcomingFagtorsdag",
+  "640e50418295928b01d5be0a": "UpcomingFagtorsdag",
+  "640e5031258e47b734f693df": "UpcomingFagtorsdag",
+  "640e502a91ab01a800eba0e0": "UpcomingFagtorsdag",
+  "640e502477b60be79eaccccc": "UpcomingFagtorsdag",
+  "640e5049a20f175fce555ea2": "UpcomingFagtorsdag",
+  "640e50373232c0d86899a7f1": "UpcomingFagtorsdag",
   "630c8bb1d847e5016e5ffe39": "RecurringEveryFagtorsdag",
   "63071581bbd9350032142ad9": "CompletedActivities",
 };

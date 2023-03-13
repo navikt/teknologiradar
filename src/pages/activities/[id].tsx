@@ -16,8 +16,8 @@ import { ExternalLink, Back } from "@navikt/ds-icons";
 import Link from "next/link";
 import { Linkify } from "@/components/Linkify";
 import Head from "next/head";
-import { useEffect } from "react";
-import * as metrics from "@/lib/metrics";
+/*import { useEffect } from "react";
+import * as metrics from "@/lib/metrics";*/
 import ReactMarkdown from "react-markdown";
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
@@ -37,13 +37,13 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 const ActivityPage: NextPage<{ activity: LearningActivity }> = ({
   activity,
 }) => {
-  useEffect(() => {
+  /*  useEffect(() => {
     metrics.logPageView({
       page: "Aktivitet",
       activityTitle: activity.title,
       activityId: activity.id,
     });
-  }, [activity]);
+  }, [activity]);*/
 
   return (
     <>
@@ -155,7 +155,11 @@ const ActivityEntry = ({ activity }: { activity: LearningActivity }) => {
           recurring={activity.recurringInterval}
         />
         <span className={"activity--edit-link"}>
-          <Link href={activity.editUrl} className={"link-with-icon"}>
+          <Link
+            href={activity.editUrl}
+            target="_blank"
+            className={"link-with-icon"}
+          >
             Trello-kort <ExternalLink />
           </Link>
         </span>

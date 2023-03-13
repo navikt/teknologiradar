@@ -139,7 +139,7 @@ const Home: NextPage<{
   return (
     <>
       <Heading level={"1"} size={"large"}>
-        Fagtorsdag – åpen delingsarena for alle
+        Dialog og erfaringsdeling rundt teknologivalg
       </Heading>
       <section>
         <Heading level={"2"} size={"medium"} spacing>

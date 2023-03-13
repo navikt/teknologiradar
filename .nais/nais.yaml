@@ -1,10 +1,10 @@
 apiVersion: 'nais.io/v1alpha1'
 kind: 'Application'
 metadata:
-  name: fagtorsdag-web
-  namespace: fagtorsdag
+  name: reops-solan
+  namespace: team-researchops
   labels:
-    team: fagtorsdag
+    team: team-researchops
   annotations:
     nais.io/read-only-file-system: "false"
     nais.io/run-as-user: "1001"
@@ -23,7 +23,7 @@ spec:
       cpu: 200m
       memory: 256Mi
   envFrom:
-    - secret: fagtorsdag-trello-secrets
+    - secret: solan-trello-secrets
   liveness:
     path: /api/healthy
   readiness:

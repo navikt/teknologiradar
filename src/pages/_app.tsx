@@ -10,21 +10,15 @@ export default function App({ Component, pageProps }: AppProps) {
   return (
     <div>
       <Head>
-        <title>Fagtorsdag – Åpen delingsarena for alle</title>
+        <title>Teknologiradaren</title>
       </Head>
       <Header>
         <Header.Title as="h1">
           <NextLink className="header--link" href={"/"}>
-            <img
-              src={"/img/fagtorsdag.png"}
-              alt={""}
-              width={"25px"}
-              height={"25px"}
-            />
-            Fagtorsdag
+            Teknologiradaren
           </NextLink>
         </Header.Title>
-        <Header.Title as="h2">
+        {/* <Header.Title as="h2">
           <NextLink className="header--link" href={"/calendar"}>
             <img
               src={"/img/fya1.jpg"}
@@ -44,7 +38,7 @@ export default function App({ Component, pageProps }: AppProps) {
           <NextLink className="header--link" href={"/learn"}>
             Lær
           </NextLink>
-        </Header.Title>
+        </Header.Title>*/}
       </Header>
       <main className="layout">
         <Component {...pageProps} />

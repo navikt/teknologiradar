@@ -18,6 +18,7 @@ import { Linkify } from "@/components/Linkify";
 import Head from "next/head";
 import { useEffect } from "react";
 import * as metrics from "@/lib/metrics";
+import ReactMarkdown from "react-markdown";
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const id = context.query["id"];
@@ -169,7 +170,7 @@ const ActivityEntry = ({ activity }: { activity: LearningActivity }) => {
 
         {activity.labels.length > 0 && <LabelList labels={activity.labels} />}
       </Detail>
-      <Ingress className={"activity--ingress"}>
+      <Ingress className={"activity--ingress"} as={"div"}>
         {activity.imageUrl && (
           <img
             className={"activity--image"}
@@ -177,7 +178,7 @@ const ActivityEntry = ({ activity }: { activity: LearningActivity }) => {
             alt={activity.contactName ?? activity.contactRole ?? activity.title}
           />
         )}
-        <Linkify text={activity.description} />
+        <ReactMarkdown>{activity.description}</ReactMarkdown>
       </Ingress>
       <Detail className={"activity--locations"}>
         {activity.locations.map((loc, idx) => (

@@ -7,7 +7,7 @@ import {
   NextLearningActivity,
   RecurringInterval,
 } from "@/lib/activities";
-import { Heading, Ingress, Table } from "@navikt/ds-react";
+import { Heading, Ingress, Table, Search } from "@navikt/ds-react";
 import Link from "next/link";
 import { KOMITÈ_LINK, LOCAL_TIMEZONE } from "@/lib/fagtorsdag";
 import { formatInTimeZone } from "date-fns-tz";
@@ -79,24 +79,23 @@ const ActivitiesPage: NextPage<{
 
   return (
     <>
-      <Heading size={"large"} level={"1"}>
+      <Heading size={"large"} level={"1"} style={{ marginTop: "10px" }}>
         Teknologiradaren
       </Heading>
       <Ingress>
-        Alle i NAV IT kan involvere seg i utviklingen av Teknologiradaren - jo
-        flere som bidrar, jo bedre blir den!
-      </Ingress>
-      <Ingress>
-        Det enkleste er å bidra konstruktivt i{" "}
+        Du kan påvirke Teknologiradaren i NAV IT. Gi innspill eller diskuter i{" "}
         <Link
           href="https://nav-it.slack.com/archives/CEHSHMNBF"
           target="_blank"
         >
-          #teknologiradar-kanalen på Slack
+          #teknologiradar-kanalen
         </Link>
-        , gjennom enten å poste et konkret forslag til endring - eller delta i
-        en trådet dialog på et konkret forslag.
+        .
       </Ingress>
+
+      <form className="searchform">
+        <Search label="Søk" variant="simple" />
+      </form>
 
       <Table className={"activity--table"}>
         <Table.Header>

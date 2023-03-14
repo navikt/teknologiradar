@@ -242,3 +242,7 @@
 .omstridt-color {
   background-color: rgb(237, 219, 244);
 }
+
+.searchform {
+  width: 100%;
+}

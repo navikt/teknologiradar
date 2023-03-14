@@ -76,9 +76,9 @@ const formatTimeAndDate = ({
     const parts = [];
     if (date)
       parts.push(
-        formatInTimeZone(date, LOCAL_TIMEZONE, "d. MMMM", { locale: noNb })
+        formatInTimeZone(date, LOCAL_TIMEZONE, "d. MMMM Y", { locale: noNb })
       );
-    if (time) parts.push(`kl. ${formatTimeSpan(time, durationMinutes)}`);
+    /*  if (time) parts.push(`kl. ${formatTimeSpan(time, durationMinutes)}`);*/
     return parts.join(", ");
   }
 

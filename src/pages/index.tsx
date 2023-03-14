@@ -81,19 +81,30 @@ const ActivitiesPage: NextPage<{
   return (
     <>
       <Heading size={"large"} level={"1"}>
-        Teknoligiradaren
+        Teknologiradaren
       </Heading>
-      {/*      <Ingress>
-        Ser du noe du kunne tenke deg å bli med på igjen?{" "}
-        <Link href={KOMITÈ_LINK}>Ta kontakt</Link>, så ser vi om det er mulig!
-      </Ingress>*/}
+      <Ingress>
+        Alle i NAV IT kan involvere seg i utviklingen av Teknologiradaren - jo
+        flere som bidrar, jo bedre blir den!
+      </Ingress>
+      <Ingress>
+        Det enkleste er å bidra konstruktivt i{" "}
+        <Link
+          href="https://nav-it.slack.com/archives/CEHSHMNBF"
+          target="_blank"
+        >
+          #teknologiradar-kanalen på Slack
+        </Link>
+        , gjennom enten å poste et konkret forslag til endring - eller delta i
+        en trådet dialog på et konkret forslag.
+      </Ingress>
 
       <Table className={"activity--table"}>
         <Table.Header>
           <Table.Row>
             <Table.HeaderCell scope="col">Dato</Table.HeaderCell>
             <Table.HeaderCell scope="col">Navn</Table.HeaderCell>
-            <Table.HeaderCell scope="col">Status</Table.HeaderCell>
+            <Table.HeaderCell scope="col">Tema</Table.HeaderCell>
           </Table.Row>
         </Table.Header>
         <Table.Body>

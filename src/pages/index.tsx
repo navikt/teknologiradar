@@ -131,7 +131,7 @@ const ActivitiesPage: NextPage<{
                       className={"activity--label"}
                       style={{ backgroundColor: "rgb(223, 225, 230)" }}
                     >
-                      N/A
+                      {activity.listName}
                     </span>
                   </Table.DataCell>
                 </Table.Row>

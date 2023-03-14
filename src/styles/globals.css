@@ -218,3 +218,27 @@
   white-space: nowrap;
   overflow-x: hidden;
 }
+
+.kandidat-color {
+  background-color: rgb(223, 225, 230);
+}
+
+.assess-color {
+  background-color: rgb(228, 247, 250);
+}
+
+.trial-color {
+  background-color: #ffeccc;
+}
+
+.adopt-color {
+  background-color: rgb(214, 236, 210);
+}
+
+.hold-color {
+  background-color: #ffc2c2;
+}
+
+.omstridt-color {
+  background-color: rgb(237, 219, 244);
+}

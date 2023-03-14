@@ -53,7 +53,6 @@ const ActivitiesPage: NextPage<{
       </span>
     );
   };
-
   /*  useEffect(() => {
         metrics.logPageView({ page: "Tidligere aktiviteter" });
       }, []);*/
@@ -128,8 +127,22 @@ const ActivitiesPage: NextPage<{
                   </Table.DataCell>
                   <Table.DataCell>
                     <span
-                      className={"activity--label"}
-                      style={{ backgroundColor: "rgb(223, 225, 230)" }}
+                      className={`activity--label 
+  ${
+    activity.listName === "Kandidat"
+      ? "kandidat-color"
+      : activity.listName === "Trial"
+      ? "trial-color"
+      : activity.listName === "Assess"
+      ? "assess-color"
+      : activity.listName === "Adopt"
+      ? "adopt-color"
+      : activity.listName === "Hold"
+      ? "hold-color"
+      : activity.listName === "Omstridt"
+      ? "omstridt-color"
+      : ""
+  }`}
                     >
                       {activity.listName}
                     </span>

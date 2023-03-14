@@ -127,21 +127,21 @@ const ActivitiesPage: NextPage<{
                   <Table.DataCell>
                     <span
                       className={`activity--label 
-  ${
-    activity.listName === "Kandidat"
-      ? "kandidat-color"
-      : activity.listName === "Trial"
-      ? "trial-color"
-      : activity.listName === "Assess"
-      ? "assess-color"
-      : activity.listName === "Adopt"
-      ? "adopt-color"
-      : activity.listName === "Hold"
-      ? "hold-color"
-      : activity.listName === "Omstridt"
-      ? "omstridt-color"
-      : ""
-  }`}
+                      ${
+                        activity.listName === "Kandidat"
+                          ? "kandidat-color"
+                          : activity.listName === "Trial"
+                          ? "trial-color"
+                          : activity.listName === "Assess"
+                          ? "assess-color"
+                          : activity.listName === "Adopt"
+                          ? "adopt-color"
+                          : activity.listName === "Hold"
+                          ? "hold-color"
+                          : activity.listName === "Omstridt"
+                          ? "omstridt-color"
+                          : ""
+                      }`}
                     >
                       {activity.listName}
                     </span>

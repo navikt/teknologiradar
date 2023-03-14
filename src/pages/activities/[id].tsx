@@ -164,6 +164,9 @@ const ActivityEntry = ({ activity }: { activity: LearningActivity }) => {
           </Link>
         </span>
       </div>
+      <Ingress className={"activity--subtext"}>
+        Status: {activity.listName}
+      </Ingress>
       <Detail className={"activity--details"}>
         {activity.contactName && (
           <ActivityContact
@@ -171,7 +174,6 @@ const ActivityEntry = ({ activity }: { activity: LearningActivity }) => {
             role={activity.contactRole}
           />
         )}
-
         {activity.labels.length > 0 && <LabelList labels={activity.labels} />}
       </Detail>
       <Ingress className={"activity--ingress"} as={"div"}>

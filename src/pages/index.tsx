@@ -101,7 +101,7 @@ const ActivitiesPage: NextPage<{
         <Table.Header>
           <Table.Row>
             <Table.HeaderCell scope="col">Dato</Table.HeaderCell>
-            <Table.HeaderCell scope="col">Navn</Table.HeaderCell>
+            <Table.HeaderCell scope="col">Teknologi</Table.HeaderCell>
             <Table.HeaderCell scope="col">Tema</Table.HeaderCell>
             <Table.HeaderCell scope="col">Status</Table.HeaderCell>
           </Table.Row>

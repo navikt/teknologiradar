@@ -105,6 +105,7 @@ const ActivitiesPage: NextPage<{
             <Table.HeaderCell scope="col">Dato</Table.HeaderCell>
             <Table.HeaderCell scope="col">Navn</Table.HeaderCell>
             <Table.HeaderCell scope="col">Tema</Table.HeaderCell>
+            <Table.HeaderCell scope="col">Status</Table.HeaderCell>
           </Table.Row>
         </Table.Header>
         <Table.Body>
@@ -124,6 +125,14 @@ const ActivitiesPage: NextPage<{
                     {activity.labels.length > 0 && (
                       <LabelList labels={activity.labels} />
                     )}
+                  </Table.DataCell>
+                  <Table.DataCell>
+                    <span
+                      className={"activity--label"}
+                      style={{ backgroundColor: "rgb(223, 225, 230)" }}
+                    >
+                      N/A
+                    </span>
                   </Table.DataCell>
                 </Table.Row>
               ))}

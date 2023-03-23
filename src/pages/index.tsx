@@ -108,6 +108,7 @@ const ActivitiesPage: NextPage<{
 
   const [mobilvisning, setMobilvisning] = useState(true);
 
+  // @ts-ignore
   return (
     <>
       <Heading size={"large"} level={"1"} style={{ marginTop: "10px" }}>
@@ -196,6 +197,7 @@ const ActivitiesPage: NextPage<{
           {dates.map((date) => (
             <>
               {groupedByDate[date]
+                // @ts-ignore
                 .filter((activity) => activity.listName.includes(selected2))
                 .map((activity) => (
                   <Table.Row key={activity.id}>

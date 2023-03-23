@@ -7,13 +7,22 @@ import {
   NextLearningActivity,
   RecurringInterval,
 } from "@/lib/activities";
-import { Heading, Ingress, Table, Search } from "@navikt/ds-react";
+import {
+  Heading,
+  Ingress,
+  Table,
+  Search,
+  HelpText,
+  Chips,
+  ExpansionCard,
+  Switch,
+} from "@navikt/ds-react";
 import Link from "next/link";
 import { KOMITÈ_LINK, LOCAL_TIMEZONE } from "@/lib/fagtorsdag";
 import { formatInTimeZone } from "date-fns-tz";
 import noNb from "date-fns/locale/nb";
 import { isAfter } from "date-fns";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import NextLink from "next/link";
 import { ActivityLocation } from "@/components/ActivityLocation";
 /*import * as metrics from "@/lib/metrics";*/
@@ -68,6 +77,7 @@ const ActivitiesPage: NextPage<{
       const activityDate = activity.date;
       if (!activityDate || isAfter(new Date(activityDate), now)) return;
       if (!groupedByDate[activityDate]) groupedByDate[activityDate] = [];
+      /*    if (activity.listName === "Kandidat")*/
       groupedByDate[activityDate].push(activity);
     });
 
@@ -76,6 +86,27 @@ const ActivitiesPage: NextPage<{
   );
   const dates = Object.keys(groupedByDate);
   dates.sort((a, b) => (a === b ? 0 : a > b ? -1 : 1));
+
+  const options = [
+    "Applikasjon & Backend",
+    "Data",
+    "Design",
+    "DevOps",
+    "Frontend",
+    "Integrasjon",
+    "Modellering og arkitektur",
+    "Plattform",
+    "Produktutvikling",
+    "Sikkerhet",
+    "Teamarbeid",
+    "Utviklingsteknikker",
+  ];
+  const [selected, setSelected] = useState([]);
+
+  const options2 = ["Kandidat", "Assess", "Trial", "Adopt", "Omstridt", "Hold"];
+  const [selected2, setSelected2] = useState([]);
+
+  const [mobilvisning, setMobilvisning] = useState(true);
 
   return (
     <>
@@ -97,7 +128,62 @@ const ActivitiesPage: NextPage<{
         <Search label="Søk" variant="simple" />
       </form>
 
-      <Table className={"activity--table"}>
+      {/* <Switch aria-hidden="false" onChange={() => setMobilvisning(!mobilvisning)}
+                checked={mobilvisning}
+                className="mobilvisning-button" size="medium" position="left">
+            Vis filter
+        </Switch>*/}
+
+      {mobilvisning == true && (
+        <>
+          <Heading size={"xsmall"} level={"2"} style={{ marginTop: "10px" }}>
+            Tema
+          </Heading>
+          <Chips>
+            {options.map((c) => (
+              <Chips.Toggle
+                selected={selected.includes(c)}
+                key={c}
+                onClick={() =>
+                  setSelected(
+                    selected.includes(c)
+                      ? selected.filter((x) => x !== c)
+                      : [...selected, c]
+                  )
+                }
+              >
+                {c}
+              </Chips.Toggle>
+            ))}
+          </Chips>
+
+          <Heading size={"xsmall"} level={"2"} style={{ marginTop: "10px" }}>
+            Status
+          </Heading>
+          <Chips>
+            {options2.map((c) => (
+              <Chips.Toggle
+                selected={selected2.includes(c)}
+                key={c}
+                onClick={() =>
+                  setSelected2(
+                    selected2.includes(c)
+                      ? selected2.filter((x) => x !== c)
+                      : [...selected2, c]
+                  )
+                }
+              >
+                {c}
+              </Chips.Toggle>
+            ))}
+          </Chips>
+        </>
+      )}
+
+      <Table
+        className={"activity--table"}
+        style={{ overflow: "scroll", marginTop: "35px" }}
+      >
         <Table.Header>
           <Table.Row>
             <Table.HeaderCell scope="col">Dato</Table.HeaderCell>
@@ -109,24 +195,26 @@ const ActivitiesPage: NextPage<{
         <Table.Body>
           {dates.map((date) => (
             <>
-              {groupedByDate[date].map((activity) => (
-                <Table.Row key={activity.id}>
-                  <Table.HeaderCell scope={"row"}>
-                    {activity.date}
-                  </Table.HeaderCell>
-                  <Table.DataCell>
-                    <Link href={`/activities/${activity.id}`}>
-                      {activity.title}
-                    </Link>
-                  </Table.DataCell>
-                  <Table.DataCell>
-                    {activity.labels.length > 0 && (
-                      <LabelList labels={activity.labels} />
-                    )}
-                  </Table.DataCell>
-                  <Table.DataCell>
-                    <span
-                      className={`activity--label 
+              {groupedByDate[date]
+                .filter((activity) => activity.listName.includes(selected2))
+                .map((activity) => (
+                  <Table.Row key={activity.id}>
+                    <Table.HeaderCell scope={"row"}>
+                      {activity.date}
+                    </Table.HeaderCell>
+                    <Table.DataCell>
+                      <Link href={`/activities/${activity.id}`}>
+                        {activity.title}
+                      </Link>
+                    </Table.DataCell>
+                    <Table.DataCell>
+                      {activity.labels.length > 0 && (
+                        <LabelList labels={activity.labels} />
+                      )}
+                    </Table.DataCell>
+                    <Table.DataCell>
+                      <span
+                        className={`activity--label 
                       ${
                         activity.listName === "Kandidat"
                           ? "kandidat-color"
@@ -142,16 +230,59 @@ const ActivitiesPage: NextPage<{
                           ? "omstridt-color"
                           : ""
                       }`}
-                    >
-                      {activity.listName}
-                    </span>
-                  </Table.DataCell>
-                </Table.Row>
-              ))}
+                      >
+                        {activity.listName}
+                      </span>
+                    </Table.DataCell>
+                  </Table.Row>
+                ))}
             </>
           ))}
         </Table.Body>
       </Table>
+
+      {/*<ExpansionCard aria-label="Demo med description" defaultOpen={true} style={{width: "-webkit-fill-available"}}>
+        <ExpansionCard.Header>
+          <ExpansionCard.Title>Kandidat</ExpansionCard.Title>
+          <ExpansionCard.Description>
+            Dette er ting vi har hørt om, eller kjenner til, men ingen har vært klare for å forsøke det i NAV ennå.
+          </ExpansionCard.Description>
+        </ExpansionCard.Header>
+        <ExpansionCard.Content>
+          <Table className={"activity--table"} style={{overflow: "scroll"}}>
+            <Table.Header>
+              <Table.Row>
+                <Table.HeaderCell scope="col">Dato</Table.HeaderCell>
+                <Table.HeaderCell scope="col">Teknologi</Table.HeaderCell>
+                <Table.HeaderCell scope="col">Tema</Table.HeaderCell>
+              </Table.Row>
+            </Table.Header>
+            <Table.Body>
+              {dates.map((date) => (
+                  <>
+                    {groupedByDate[date].filter((activity) => activity.listName === "Kandidat").map((activity) => (
+                        <Table.Row key={activity.id}>
+                          <Table.HeaderCell scope={"row"}>
+                            {activity.date}
+                          </Table.HeaderCell>
+                          <Table.DataCell>
+                            <Link href={`/activities/${activity.id}`}>
+                              {activity.title}
+                            </Link>
+                          </Table.DataCell>
+                          <Table.DataCell>
+                            {activity.labels.length > 0 && (
+                                <LabelList labels={activity.labels} />
+                            )}
+                          </Table.DataCell>
+                        </Table.Row>
+                    ))}
+                  </>
+              ))}
+            </Table.Body>
+          </Table>
+        </ExpansionCard.Content>
+      </ExpansionCard>*/}
     </>
   );
 };

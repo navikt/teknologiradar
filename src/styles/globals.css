@@ -243,6 +243,10 @@
   background-color: rgb(237, 219, 244);
 }
 
+.navds-help-text {
+  display: inline-block !important;
+}
+
 .searchform {
   width: 100%;
 }

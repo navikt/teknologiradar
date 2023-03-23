@@ -1,5 +1,5 @@
 {
-  "name": "fagtorsdag-web",
+  "name": "reops-solan",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -10,11 +10,11 @@
     "prepare": "husky install"
   },
   "dependencies": {
-    "@navikt/ds-css": "2.4.0",
-    "@navikt/ds-css-internal": "2.4.0",
+    "@navikt/ds-css": "2.8.2",
+    "@navikt/ds-css-internal": "2.8.2",
     "@navikt/ds-icons": "2.4.0",
-    "@navikt/ds-react": "2.4.0",
-    "@navikt/ds-react-internal": "2.4.0",
+    "@navikt/ds-react": "2.8.2",
+    "@navikt/ds-react-internal": "2.8.2",
     "amplitude-js": "8.21.6",
     "date-fns": "2.29.3",
     "date-fns-tz": "2.0.0",

@@ -108,25 +108,27 @@ const ActivitiesPage: NextPage<{
 
   const [mobilvisning, setMobilvisning] = useState(true);
 
+  const [value, setValue] = useState("");
+
+  const handleSearchChange = (e: React.SetStateAction<string>) => {
+    setValue(e);
+  };
+
   // @ts-ignore
   return (
     <>
       <Heading size={"large"} level={"1"} style={{ marginTop: "10px" }}>
         Teknologiradaren
       </Heading>
-      <Ingress>
-        Du kan påvirke Teknologiradaren i NAV IT. Gi innspill eller diskuter i{" "}
-        <Link
-          href="https://nav-it.slack.com/archives/CEHSHMNBF"
-          target="_blank"
-        >
-          #teknologiradar-kanalen
-        </Link>
-        .
-      </Ingress>
 
       <form className="searchform">
-        <Search label="Søk" variant="simple" />
+        <Search
+          label="Søk"
+          variant="simple"
+          onChange={handleSearchChange}
+          value={value}
+          onClear={() => setValue("")}
+        />
       </form>
 
       {/* <Switch aria-hidden="false" onChange={() => setMobilvisning(!mobilvisning)}
@@ -198,7 +200,25 @@ const ActivitiesPage: NextPage<{
             <>
               {groupedByDate[date]
                 // @ts-ignore
-                .filter((activity) => activity.listName.includes(selected2))
+                .filter((activity) => {
+                  if (selected.length === 0 && selected2.length === 0) {
+                    return true; // Show all activities if no filter is applied
+                  } else {
+                    const listNameMatches =
+                      selected2.length === 0 ||
+                      (activity.listName &&
+                        selected2.some((item) =>
+                          activity.listName.includes(item)
+                        ));
+                    const categoryMatches =
+                      selected.length === 0 ||
+                      (activity.labels &&
+                        selected.some((item) =>
+                          activity.labels[0].name.includes(item)
+                        ));
+                    return listNameMatches && categoryMatches;
+                  }
+                })
                 .map((activity) => (
                   <Table.Row key={activity.id}>
                     <Table.HeaderCell scope={"row"}>
@@ -242,6 +262,17 @@ const ActivitiesPage: NextPage<{
           ))}
         </Table.Body>
       </Table>
+
+      <Ingress style={{ marginBottom: "80px", marginTop: "0px" }}>
+        Du kan påvirke Teknologiradaren ved å gi innspill eller diskutere i{" "}
+        <Link
+          href="https://nav-it.slack.com/archives/CEHSHMNBF"
+          target="_blank"
+        >
+          #teknologiradar
+        </Link>
+        .
+      </Ingress>
 
       {/*<ExpansionCard aria-label="Demo med description" defaultOpen={true} style={{width: "-webkit-fill-available"}}>
         <ExpansionCard.Header>

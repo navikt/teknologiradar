@@ -63,8 +63,8 @@ const ActivitiesPage: NextPage<{
     );
   };
   /*  useEffect(() => {
-          metrics.logPageView({ page: "Tidligere aktiviteter" });
-        }, []);*/
+            metrics.logPageView({ page: "Tidligere aktiviteter" });
+          }, []);*/
 
   const groupedByDate: { [key: string]: NextLearningActivity[] } = {};
   const recurring = activities.filter(
@@ -252,7 +252,10 @@ const ActivitiesPage: NextPage<{
                           : ""
                       }`}
                       >
-                        {activity.listName}
+                        {activity.listName}{" "}
+                        <HelpText title="Tekst kommer">
+                          Her kommer det snart en hjelpsom beskrivelse
+                        </HelpText>
                       </span>
                     </Table.DataCell>
                   </Table.Row>
@@ -262,7 +265,9 @@ const ActivitiesPage: NextPage<{
         </Table.Body>
       </Table>
 
-      <Ingress style={{ marginBottom: "80px", marginTop: "0px" }}>
+      <Ingress
+        style={{ marginBottom: "80px", marginTop: "0px", lineHeight: "1.5" }}
+      >
         Du kan påvirke Teknologiradaren ved å gi innspill eller diskutere i{" "}
         <Link
           href="https://nav-it.slack.com/archives/CEHSHMNBF"

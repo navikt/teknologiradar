@@ -245,6 +245,8 @@
 
 .navds-help-text {
   display: inline-block !important;
+  vertical-align: text-top;
+  margin-left: 1px;
 }
 
 .searchform {

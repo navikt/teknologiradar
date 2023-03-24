@@ -14,9 +14,9 @@ export default function App({ Component, pageProps }: AppProps) {
       </Head>
       <Header>
         <Header.Title as="h1">
-          <NextLink className="header--link" href={"/"}>
+          <a className="header--link" href={"."}>
             Teknologiradaren
-          </NextLink>
+          </a>
         </Header.Title>
         {/* <Header.Title as="h2">
           <NextLink className="header--link" href={"/calendar"}>

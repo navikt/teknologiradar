@@ -63,8 +63,8 @@ const ActivitiesPage: NextPage<{
     );
   };
   /*  useEffect(() => {
-        metrics.logPageView({ page: "Tidligere aktiviteter" });
-      }, []);*/
+          metrics.logPageView({ page: "Tidligere aktiviteter" });
+        }, []);*/
 
   const groupedByDate: { [key: string]: NextLearningActivity[] } = {};
   const recurring = activities.filter(
@@ -106,12 +106,11 @@ const ActivitiesPage: NextPage<{
   const options2 = ["Kandidat", "Assess", "Trial", "Adopt", "Omstridt", "Hold"];
   const [selected2, setSelected2] = useState([]);
 
-  const [mobilvisning, setMobilvisning] = useState(true);
+  const [showfilter, setShowfilter] = useState(true);
 
-  const [value, setValue] = useState("");
-
+  const [search, setSearch] = useState("");
   const handleSearchChange = (e: React.SetStateAction<string>) => {
-    setValue(e);
+    setSearch(e);
   };
 
   // @ts-ignore
@@ -126,18 +125,18 @@ const ActivitiesPage: NextPage<{
           label="Søk"
           variant="simple"
           onChange={handleSearchChange}
-          value={value}
-          onClear={() => setValue("")}
+          value={search}
+          onClear={() => setSearch("")}
         />
       </form>
 
-      {/* <Switch aria-hidden="false" onChange={() => setMobilvisning(!mobilvisning)}
-                checked={mobilvisning}
+      {/* <Switch aria-hidden="false" onChange={() => setShowfilter(!showfilter)}
+                checked={showfilter}
                 className="mobilvisning-button" size="medium" position="left">
             Vis filter
         </Switch>*/}
 
-      {mobilvisning == true && (
+      {showfilter == true && (
         <>
           <Heading size={"xsmall"} level={"2"} style={{ marginTop: "10px" }}>
             Tema
@@ -273,49 +272,6 @@ const ActivitiesPage: NextPage<{
         </Link>
         .
       </Ingress>
-
-      {/*<ExpansionCard aria-label="Demo med description" defaultOpen={true} style={{width: "-webkit-fill-available"}}>
-        <ExpansionCard.Header>
-          <ExpansionCard.Title>Kandidat</ExpansionCard.Title>
-          <ExpansionCard.Description>
-            Dette er ting vi har hørt om, eller kjenner til, men ingen har vært klare for å forsøke det i NAV ennå.
-          </ExpansionCard.Description>
-        </ExpansionCard.Header>
-        <ExpansionCard.Content>
-          <Table className={"activity--table"} style={{overflow: "scroll"}}>
-            <Table.Header>
-              <Table.Row>
-                <Table.HeaderCell scope="col">Dato</Table.HeaderCell>
-                <Table.HeaderCell scope="col">Teknologi</Table.HeaderCell>
-                <Table.HeaderCell scope="col">Tema</Table.HeaderCell>
-              </Table.Row>
-            </Table.Header>
-            <Table.Body>
-              {dates.map((date) => (
-                  <>
-                    {groupedByDate[date].filter((activity) => activity.listName === "Kandidat").map((activity) => (
-                        <Table.Row key={activity.id}>
-                          <Table.HeaderCell scope={"row"}>
-                            {activity.date}
-                          </Table.HeaderCell>
-                          <Table.DataCell>
-                            <Link href={`/activities/${activity.id}`}>
-                              {activity.title}
-                            </Link>
-                          </Table.DataCell>
-                          <Table.DataCell>
-                            {activity.labels.length > 0 && (
-                                <LabelList labels={activity.labels} />
-                            )}
-                          </Table.DataCell>
-                        </Table.Row>
-                    ))}
-                  </>
-              ))}
-            </Table.Body>
-          </Table>
-        </ExpansionCard.Content>
-      </ExpansionCard>*/}
     </>
   );
 };

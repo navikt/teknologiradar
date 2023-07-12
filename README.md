@@ -1,6 +1,6 @@
 # ResearchOps Solan
 
-Et eksperiment. Teknologiradaren med Trello backend.
+Teknologiradaren med Trello backend.
 
 ---
 

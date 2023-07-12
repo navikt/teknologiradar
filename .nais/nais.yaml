@@ -28,6 +28,10 @@ spec:
     path: /api/healthy
   readiness:
     path: /api/healthy
+  accessPolicy:
+    outbound:
+      external:
+        - host: api.trello.com
   ingresses:
   {{#each ingresses as |url|}}
      - {{url}}

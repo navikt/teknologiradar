@@ -129,7 +129,7 @@ const ActivitiesPage: NextPage<{
             level={"2"}
             style={{ marginTop: "10px" }}
           >
-            Tema
+            Kategorier
           </Heading>
           <Chips>
             {options.map((c) => (
@@ -188,7 +188,7 @@ const ActivitiesPage: NextPage<{
             {/*<Table.HeaderCell scope="col">Dato</Table.HeaderCell>*/}
             <Table.HeaderCell scope="col">Teknologi</Table.HeaderCell>
             <Table.HeaderCell scope="col">Status</Table.HeaderCell>
-            <Table.HeaderCell scope="col">Tema</Table.HeaderCell>
+            <Table.HeaderCell scope="col">Kategori</Table.HeaderCell>
           </Table.Row>
         </Table.Header>
         <Table.Body>

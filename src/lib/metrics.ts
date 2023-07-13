@@ -1,6 +1,6 @@
 import amplitude, { AmplitudeClient } from "amplitude-js";
 
-const isProdEnvironment = () =>
+/*const isProdEnvironment = () =>
   typeof window !== "undefined" &&
   window.location.hostname === "fagtorsdag.intern.nav.no";
 
@@ -28,4 +28,4 @@ export const logPageView = (data: { [key: string]: string } & PageViewData) => {
   console.log("Sending to Amplitude", eventName, data);
   const title = typeof window === "undefined" ? "" : window.document.title;
   instance?.logEvent(eventName, { ...data, title });
-};
+};*/

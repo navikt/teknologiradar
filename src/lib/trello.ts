@@ -42,12 +42,12 @@ export interface TrelloCard {
 }
 
 const listNameById: { [key: string]: string } = {
-  "640e50418295928b01d5be0a": "Kandidat",
-  "640e5031258e47b734f693df": "Assess",
-  "640e502a91ab01a800eba0e0": "Trial",
-  "640e502477b60be79eaccccc": "Adopt",
+  "640e50418295928b01d5be0a": "Uavklart",
+  "640e5031258e47b734f693df": "Vurder",
+  "640e502a91ab01a800eba0e0": "Eksperiment",
+  "640e502477b60be79eaccccc": "Bruk",
   "640e5049a20f175fce555ea2": "Omstridt",
-  "640e50373232c0d86899a7f1": "Hold",
+  "640e50373232c0d86899a7f1": "Avstå",
   "630c8bb1d847e5016e5ffe39": "RecurringEveryFagtorsdag",
   "63071581bbd9350032142ad9": "CompletedActivities",
 };

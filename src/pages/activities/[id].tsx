@@ -51,7 +51,7 @@ const ActivityPage: NextPage<{ activity: LearningActivity }> = ({
         <title>{activity.title} | Fagtorsdag</title>
         <meta name="description" content={activity.description} />
       </Head>
-      <Link href={"/"} className={"link-with-icon"}>
+      <Link href={"/"} className={"link-with-icon color-blue"}>
         <Back /> Tilbake til oversikt
       </Link>
       <ActivityEntry activity={activity} />
@@ -144,27 +144,31 @@ const LabelList = ({ labels }: { labels: ActivityLabel[] }) => {
 const ActivityEntry = ({ activity }: { activity: LearningActivity }) => {
   return (
     <>
-      <Heading level="1" size={"large"} className={"activity--header"}>
+      <Heading
+        level="1"
+        size={"large"}
+        className={"activity--header color-white"}
+      >
         {activity.title}
       </Heading>
-      <div className={"activity--subtext"}>
+      <div className={"activity--subtext color-white"}>
         <TimeAndDate
           date={activity.date}
           time={activity.timeStart}
           durationMinutes={activity.durationMinutes}
           recurring={activity.recurringInterval}
         />
-        <span className={"activity--edit-link"}>
+        <span className={"activity--edit-link color-white"}>
           <Link
             href={activity.editUrl}
             target="_blank"
-            className={"link-with-icon"}
+            className={"link-with-icon color-blue"}
           >
             Trello-kort <ExternalLink />
           </Link>
         </span>
       </div>
-      <Ingress className={"activity--subtext"}>
+      <Ingress className={"activity--subtext color-white"}>
         Status: {activity.listName}
       </Ingress>
       <Detail className={"activity--details"}>
@@ -176,7 +180,7 @@ const ActivityEntry = ({ activity }: { activity: LearningActivity }) => {
         )}
         {activity.labels.length > 0 && <LabelList labels={activity.labels} />}
       </Detail>
-      <Ingress className={"activity--ingress"} as={"div"}>
+      <Ingress className={"activity--ingress color-white"} as={"div"}>
         {activity.imageUrl && (
           <img
             className={"activity--image"}

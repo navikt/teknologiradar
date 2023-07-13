@@ -7,24 +7,10 @@ import {
   NextLearningActivity,
   RecurringInterval,
 } from "@/lib/activities";
-import {
-  Heading,
-  Ingress,
-  Table,
-  Search,
-  HelpText,
-  Chips,
-  ExpansionCard,
-  Switch,
-} from "@navikt/ds-react";
+import { Heading, Ingress, Table, Search, Chips } from "@navikt/ds-react";
 import Link from "next/link";
-import { KOMITÈ_LINK, LOCAL_TIMEZONE } from "@/lib/fagtorsdag";
-import { formatInTimeZone } from "date-fns-tz";
-import noNb from "date-fns/locale/nb";
 import { isAfter } from "date-fns";
 import { useEffect, useState } from "react";
-import NextLink from "next/link";
-import { ActivityLocation } from "@/components/ActivityLocation";
 /*import * as metrics from "@/lib/metrics";*/
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
@@ -62,9 +48,6 @@ const ActivitiesPage: NextPage<{
       </span>
     );
   };
-  /*  useEffect(() => {
-            metrics.logPageView({ page: "Tidligere aktiviteter" });
-          }, []);*/
 
   const groupedByDate: { [key: string]: NextLearningActivity[] } = {};
   const recurring = activities.filter(
@@ -103,7 +86,7 @@ const ActivitiesPage: NextPage<{
   ];
   const [selected, setSelected] = useState([]);
 
-  const options2 = ["Kandidat", "Assess", "Trial", "Adopt", "Omstridt", "Hold"];
+  const options2 = ["Bruk", "Vurder", "Avstå", "Eksperiment", "Omstridt"];
   const [selected2, setSelected2] = useState([]);
 
   const [showfilter, setShowfilter] = useState(true);
@@ -116,12 +99,20 @@ const ActivitiesPage: NextPage<{
   // @ts-ignore
   return (
     <>
-      <Heading size={"large"} level={"1"} style={{ marginTop: "10px" }}>
-        Teknologiradaren
+      <Heading
+        size={"large"}
+        level={"1"}
+        style={{ marginTop: "10px", color: "rgb(34 211 238 / 1)" }}
+      >
+        Teknologiradar
       </Heading>
 
-      <form className="searchform">
+      <form
+        className="searchform"
+        style={{ marginTop: "10px", marginBottom: "0px" }}
+      >
         <Search
+          style={{ borderRadius: "60px" }}
           label="Søk"
           variant="simple"
           onChange={handleSearchChange}
@@ -130,20 +121,20 @@ const ActivitiesPage: NextPage<{
         />
       </form>
 
-      {/* <Switch aria-hidden="false" onChange={() => setShowfilter(!showfilter)}
-                checked={showfilter}
-                className="mobilvisning-button" size="medium" position="left">
-            Vis filter
-        </Switch>*/}
-
       {showfilter == true && (
         <>
-          <Heading size={"xsmall"} level={"2"} style={{ marginTop: "10px" }}>
+          <Heading
+            className={"color-blue"}
+            size={"xsmall"}
+            level={"2"}
+            style={{ marginTop: "10px" }}
+          >
             Tema
           </Heading>
           <Chips>
             {options.map((c) => (
               <Chips.Toggle
+                className={"chip-effect"}
                 selected={selected.includes(c)}
                 key={c}
                 onClick={() =>
@@ -159,12 +150,18 @@ const ActivitiesPage: NextPage<{
             ))}
           </Chips>
 
-          <Heading size={"xsmall"} level={"2"} style={{ marginTop: "10px" }}>
+          <Heading
+            className={"color-blue"}
+            size={"xsmall"}
+            level={"2"}
+            style={{ marginTop: "10px" }}
+          >
             Status
           </Heading>
           <Chips>
             {options2.map((c) => (
               <Chips.Toggle
+                className={"chip-effect"}
                 selected={selected2.includes(c)}
                 key={c}
                 onClick={() =>
@@ -184,14 +181,14 @@ const ActivitiesPage: NextPage<{
 
       <Table
         className={"activity--table"}
-        style={{ overflow: "scroll", marginTop: "35px" }}
+        style={{ overflow: "scroll", marginTop: "60px" }}
       >
-        <Table.Header>
+        <Table.Header className={"color-blue"}>
           <Table.Row>
-            <Table.HeaderCell scope="col">Dato</Table.HeaderCell>
+            {/*<Table.HeaderCell scope="col">Dato</Table.HeaderCell>*/}
             <Table.HeaderCell scope="col">Teknologi</Table.HeaderCell>
-            <Table.HeaderCell scope="col">Tema</Table.HeaderCell>
             <Table.HeaderCell scope="col">Status</Table.HeaderCell>
+            <Table.HeaderCell scope="col">Tema</Table.HeaderCell>
           </Table.Row>
         </Table.Header>
         <Table.Body>
@@ -220,32 +217,30 @@ const ActivitiesPage: NextPage<{
                 })
                 .map((activity) => (
                   <Table.Row key={activity.id}>
-                    <Table.HeaderCell scope={"row"}>
+                    {/* <Table.HeaderCell className={"color-white"} scope={"row"}>
                       {activity.date}
-                    </Table.HeaderCell>
+                    </Table.HeaderCell>*/}
                     <Table.DataCell>
-                      <Link href={`/activities/${activity.id}`}>
+                      <Link
+                        className={"blue-link"}
+                        href={`/activities/${activity.id}`}
+                      >
                         {activity.title}
                       </Link>
-                    </Table.DataCell>
-                    <Table.DataCell>
-                      {activity.labels.length > 0 && (
-                        <LabelList labels={activity.labels} />
-                      )}
                     </Table.DataCell>
                     <Table.DataCell>
                       <span
                         className={`activity--label 
                       ${
-                        activity.listName === "Kandidat"
+                        activity.listName === "Uavklart"
                           ? "kandidat-color"
-                          : activity.listName === "Trial"
+                          : activity.listName === "Eksperiment"
                           ? "trial-color"
-                          : activity.listName === "Assess"
+                          : activity.listName === "Vurder"
                           ? "assess-color"
-                          : activity.listName === "Adopt"
+                          : activity.listName === "Bruk"
                           ? "adopt-color"
-                          : activity.listName === "Hold"
+                          : activity.listName === "Avstå"
                           ? "hold-color"
                           : activity.listName === "Omstridt"
                           ? "omstridt-color"
@@ -253,10 +248,15 @@ const ActivitiesPage: NextPage<{
                       }`}
                       >
                         {activity.listName}{" "}
-                        <HelpText title="Tekst kommer">
+                        {/*  <HelpText title="Tekst kommer">
                           Her kommer det snart en hjelpsom beskrivelse
-                        </HelpText>
+                        </HelpText>*/}
                       </span>
+                    </Table.DataCell>
+                    <Table.DataCell>
+                      {activity.labels.length > 0 && (
+                        <LabelList labels={activity.labels} />
+                      )}
                     </Table.DataCell>
                   </Table.Row>
                 ))}
@@ -265,18 +265,22 @@ const ActivitiesPage: NextPage<{
         </Table.Body>
       </Table>
 
-      <Ingress
-        style={{ marginBottom: "80px", marginTop: "0px", lineHeight: "1.5" }}
-      >
-        Du kan påvirke Teknologiradaren ved å gi innspill eller diskutere i{" "}
-        <Link
-          href="https://nav-it.slack.com/archives/CEHSHMNBF"
-          target="_blank"
+      <footer>
+        <Ingress
+          className={"color-white"}
+          style={{ marginBottom: "80px", marginTop: "30px", lineHeight: "1.5" }}
         >
-          #teknologiradar
-        </Link>
-        .
-      </Ingress>
+          Du kan påvirke Teknologiradaren ved å gi innspill eller diskutere i{" "}
+          <Link
+            className={"blue-link"}
+            href="https://nav-it.slack.com/archives/CEHSHMNBF"
+            target="_blank"
+          >
+            #teknologiradar
+          </Link>
+          .
+        </Ingress>
+      </footer>
     </>
   );
 };

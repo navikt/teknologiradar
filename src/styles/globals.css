@@ -1,3 +1,80 @@
+html {
+  --tw-bg-opacity: 1;
+  background-color: rgb(15 23 42 / 1);
+}
+
+.blue-link {
+  text-decoration: underline;
+  color: #fff;
+}
+
+.blue-link:hover {
+  text-decoration: underline;
+  color: rgb(34 211 238 / 1);
+}
+
+.chip-effect {
+  background-color: #fff !important;
+  color: rgb(15 23 42 / 1) !important;
+}
+
+.chip-effect:hover {
+  background-color: #ccc !important;
+  color: rgb(15 23 42 / 1) !important;
+}
+
+.navdsi-header {
+  background: none !important;
+}
+
+.navdsi-header__title {
+  border-right: none !important;
+}
+
+.underline-offset-4 {
+  text-underline-offset: 4px;
+}
+
+.navds-table__header-cell,
+.navds-table__data-cell {
+  border-bottom: 1px solid #eee !important;
+}
+
+#logo {
+  padding-top: 25px;
+  padding-left: 15px;
+  text-decoration: none;
+}
+
+#logo:hover {
+  text-decoration: underline;
+}
+
+tr:hover {
+  background-color: unset !important;
+}
+
+.gap-3 {
+  gap: 0.75rem;
+}
+.items-center {
+  align-items: center;
+}
+.inline-flex {
+  display: inline-flex;
+}
+.-ml-1 {
+  margin-left: -0.25rem;
+}
+
+.color-blue {
+  color: #c2fdee;
+}
+
+.color-white {
+  color: #fff;
+}
+
 .ml-auto {
   margin-left: auto;
 }

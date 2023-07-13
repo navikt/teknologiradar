@@ -5,7 +5,7 @@ import * as metrics from "@/lib/metrics";
 
 const NotFoundPage: NextPage = () => {
   useEffect(() => {
-    metrics.logPageView({ page: `404` });
+    /*metrics.logPageView({ page: `404` });*/
   }, []);
 
   return (

@@ -4,6 +4,7 @@ import "@navikt/ds-css-internal";
 import type { AppProps } from "next/app";
 import Head from "next/head";
 import { Header } from "@navikt/ds-react-internal";
+import NextLink from "next/link";
 
 export default function App({ Component, pageProps }: AppProps) {
   return (
@@ -13,9 +14,9 @@ export default function App({ Component, pageProps }: AppProps) {
       </Head>
       <Header>
         <Header.Title as="h1">
-          <a
+          <NextLink
             id="logo"
-            href="/"
+            href="."
             className="inline-flex items-center gap-3 -ml-1 hover:underline underline-offset-4 color-blue"
           >
             <svg
@@ -37,7 +38,7 @@ export default function App({ Component, pageProps }: AppProps) {
               <circle cx="13" cy="24" r="2" />
             </svg>
             <span className="font-semibold">Teknologiradar</span>
-          </a>
+          </NextLink>
         </Header.Title>
       </Header>
       <main className="layout">

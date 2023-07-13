@@ -237,7 +237,7 @@ const ActivitiesPage: NextPage<{
                           : activity.listName === "Eksperiment"
                           ? "trial-color"
                           : activity.listName === "Vurder"
-                          ? "assess-color"
+                          ? "trial-color"
                           : activity.listName === "Bruk"
                           ? "adopt-color"
                           : activity.listName === "Avstå"

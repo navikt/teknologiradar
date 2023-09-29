@@ -10,7 +10,7 @@ export default function App({ Component, pageProps }: AppProps) {
   return (
     <div>
       <Head>
-        <title>Teknologiradar</title>
+        <title>Teknologiradar βeta</title>
       </Head>
       <Header>
         <Header.Title as="h1">
@@ -37,7 +37,7 @@ export default function App({ Component, pageProps }: AppProps) {
               <circle cx="28" cy="5.8" r="2" />
               <circle cx="13" cy="24" r="2" />
             </svg>
-            <span className="font-semibold">Teknologiradar</span>
+            <span className="font-semibold">Teknologiradar βeta</span>
           </NextLink>
         </Header.Title>
       </Header>

@@ -70,23 +70,10 @@ const ActivitiesPage: NextPage<{
   const dates = Object.keys(groupedByDate);
   dates.sort((a, b) => (a === b ? 0 : a > b ? -1 : 1));
 
-  const options = [
-    "Applikasjon & Backend",
-    "Data",
-    "Design",
-    "DevOps",
-    "Frontend",
-    "Integrasjon",
-    "Modellering og arkitektur",
-    "Plattform",
-    "Produktutvikling",
-    "Sikkerhet",
-    "Teamarbeid",
-    "Utviklingsteknikker",
-  ];
+  const options = ["Frontend", "Data science", "Data engineering"];
   const [selected, setSelected] = useState([]);
 
-  const options2 = ["Bruk", "Vurder", "Avstå", "Eksperiment", "Omstridt"];
+  const options2 = ["Bruk", "Vurder", "Avstå"];
   const [selected2, setSelected2] = useState([]);
 
   const [showfilter, setShowfilter] = useState(true);
@@ -129,7 +116,7 @@ const ActivitiesPage: NextPage<{
             level={"2"}
             style={{ marginTop: "10px" }}
           >
-            Kategorier
+            Forum
           </Heading>
           <Chips>
             {options.map((c) => (
@@ -188,7 +175,7 @@ const ActivitiesPage: NextPage<{
             {/*<Table.HeaderCell scope="col">Dato</Table.HeaderCell>*/}
             <Table.HeaderCell scope="col">Teknologi</Table.HeaderCell>
             <Table.HeaderCell scope="col">Status</Table.HeaderCell>
-            <Table.HeaderCell scope="col">Kategori</Table.HeaderCell>
+            <Table.HeaderCell scope="col">Forum</Table.HeaderCell>
           </Table.Row>
         </Table.Header>
         <Table.Body>

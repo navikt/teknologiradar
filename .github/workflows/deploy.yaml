@@ -12,6 +12,9 @@ jobs:
   build-and-push:
     name: Build and push
     runs-on: ubuntu-latest
+    permissions:
+      packages: write
+      contents: read
     steps:
       - uses: actions/checkout@v3
         name: Checkout

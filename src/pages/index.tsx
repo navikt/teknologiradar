@@ -70,7 +70,7 @@ const ActivitiesPage: NextPage<{
   const dates = Object.keys(groupedByDate);
   dates.sort((a, b) => (a === b ? 0 : a > b ? -1 : 1));
 
-  const options = ["Frontend", "Data science", "Data engineering"];
+  const options = ["Design", "Frontend", "Data science", "Data engineering"];
   const [selected, setSelected] = useState([]);
 
   const options2 = ["Bruk", "Vurder", "Avstå"];

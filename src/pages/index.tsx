@@ -257,14 +257,16 @@ const ActivitiesPage: NextPage<{
           className={"color-white"}
           style={{ marginBottom: "80px", marginTop: "30px", lineHeight: "1.5" }}
         >
-          Du kan påvirke Teknologiradaren ved å gi innspill eller diskutere i{" "}
+          Du kan påvirke Teknologiradaren ved å gi innspill eller diskutere i et
+          av teknologiforumene
+          {/*{" "}
           <Link
             className={"blue-link"}
             href="https://nav-it.slack.com/archives/CEHSHMNBF"
             target="_blank"
           >
             #teknologiradar
-          </Link>
+          </Link>*/}
           .
         </Ingress>
       </footer>

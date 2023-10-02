@@ -51,8 +51,8 @@ jobs:
           docker build --pull --tag ${IMAGE} .
           docker push ${IMAGE}
 
-  deploy-dev:
-    name: Deploy to nais dev
+  deploy-prod:
+    name: Deploy to nais prod
     needs: build-and-push
     runs-on: ubuntu-latest
     steps:
@@ -69,6 +69,6 @@ jobs:
         uses: nais/deploy/actions/deploy@master
         env:
           APIKEY: ${{ secrets.NAIS_DEPLOY_APIKEY }}
-          CLUSTER: dev-gcp
+          CLUSTER: prod-gcp
           RESOURCE: .nais/nais.yaml
-          VARS: .nais/dev-gcp.yaml
+          VARS: .nais/prod-gcp.yaml

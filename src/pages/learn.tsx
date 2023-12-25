@@ -1,5 +1,5 @@
 import { NextPage } from "next";
-import { BodyShort, Heading, Ingress } from "@navikt/ds-react";
+import { BodyShort, Heading } from "@navikt/ds-react";
 
 import resources from "@/data/resources.json";
 import Link from "next/link";
@@ -38,11 +38,11 @@ const LearnPage: NextPage = () => {
       <Heading size={"large"} level={"1"}>
         Læringsressurser
       </Heading>
-      <Ingress>
+      <p>
         Har du lyst til å lære deg noe nytt, eller fordype deg i et tema du vil
         lære mer om? Da er fagtorsdag dagen for deg! Trenger du tips eller
         inspirasjon til hva du kan lære? Se oversikten under.
-      </Ingress>
+      </p>
       {(resources.diciplines as LearningList[]).map((dicipline, idx) => (
         <section key={idx}>
           <Heading size={"medium"} level={"2"}>

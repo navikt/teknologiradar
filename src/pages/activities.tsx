@@ -58,10 +58,10 @@ const ActivitiesPage: NextPage<{
       <Heading size={"large"} level={"1"}>
         Oversikt over tidligere aktiviteter
       </Heading>
-      <Ingress>
+      <p>
         Ser du noe du kunne tenke deg å bli med på igjen?{" "}
         <Link href={KOMITÈ_LINK}>Ta kontakt</Link>, så ser vi om det er mulig!
-      </Ingress>
+      </p>
 
       {dates.map((date) => (
         <section key={date}>

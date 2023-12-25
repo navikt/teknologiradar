@@ -54,27 +54,27 @@ jobs:
           docker build --pull --tag ${IMAGE} .
           docker push ${IMAGE}
 
-  deploy-dev:
-    name: Deploy to nais dev
-    needs: build-and-push
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v1
-        name: Checkout
-
-      - name: Lag tag for image
-        run: echo "TAG=$(git log -1 --pretty='%ad_%h' --date=format:'%Y%m%d%H%M%S')" >> $GITHUB_ENV
-
-      - name: Lag full image referanse
-        run: echo "IMAGE=$IMAGE_BASE:$TAG" >> $GITHUB_ENV
-
-      - name: Deploy
-        uses: nais/deploy/actions/deploy@master
-        env:
-          APIKEY: ${{ secrets.NAIS_DEPLOY_APIKEY }}
-          CLUSTER: dev-gcp
-          RESOURCE: .nais/nais.yaml
-          VARS: .nais/dev-gcp.yaml
+#  deploy-dev:
+#    name: Deploy to nais dev
+#    needs: build-and-push
+#    runs-on: ubuntu-latest
+#    steps:
+#      - uses: actions/checkout@v1
+#        name: Checkout
+#
+#      - name: Lag tag for image
+#        run: echo "TAG=$(git log -1 --pretty='%ad_%h' --date=format:'%Y%m%d%H%M%S')" >> $GITHUB_ENV
+#
+#      - name: Lag full image referanse
+#        run: echo "IMAGE=$IMAGE_BASE:$TAG" >> $GITHUB_ENV
+#
+#      - name: Deploy
+#        uses: nais/deploy/actions/deploy@master
+#        env:
+#          APIKEY: ${{ secrets.NAIS_DEPLOY_APIKEY }}
+#          CLUSTER: dev-gcp
+#          RESOURCE: .nais/nais.yaml
+#          VARS: .nais/dev-gcp.yaml
 
   deploy-prod:
     name: Deploy to nais prod

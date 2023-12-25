@@ -3,9 +3,7 @@ import { Html, Head, Main, NextScript } from "next/document";
 export default function Document() {
   return (
     <Html lang="no">
-      <Head>
-        <title>Teknologiradar βeta</title>
-      </Head>
+      <Head />
       <body>
         <Main />
         <NextScript />

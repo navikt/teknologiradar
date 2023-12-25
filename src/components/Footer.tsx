@@ -3,7 +3,7 @@ import { BodyShort, Heading, Link } from "@navikt/ds-react";
 
 const Footer = () => {
   return (
-    <div className="bg-deepblue-800 w-full">
+    <div className="bg-deepblue-800 w-full border-t-2 border-blue-300">
       <footer
         id="aksel-footer"
         data-hj-suppress
@@ -12,6 +12,7 @@ const Footer = () => {
       >
         <div className="relative z-10 mx-auto grid w-full max-w-screen-2xl gap-12 px-4 pb-16 pt-12 md:grid-cols-2 md:px-6 lg:grid-cols-2 xl:grid-cols-4 xl:gap-6">
           <LogoBlock />
+          <Snarveier />
           <SideLenker />
           <Kontakt />
         </div>
@@ -39,9 +40,9 @@ function Snarveier() {
         Om nettstedet
       </Heading>
       <BodyShort as="ul" className="mt-3 grid gap-3">
-        <FooterLink href="/om-felgen">Hva er Felgen?</FooterLink>
-        <FooterLink href="https://forms.office.com/r/UyFMJsLfKM?lang=nb-NO">
-          Innspill til Felgen
+        <FooterLink href="/about">Hva er Teknologiradar?</FooterLink>
+        <FooterLink href="https://nav-it.slack.com/archives/CEHSHMNBF">
+          Spørsmål om radaren
         </FooterLink>
       </BodyShort>
     </div>

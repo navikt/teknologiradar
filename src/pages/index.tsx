@@ -7,7 +7,7 @@ import {
   NextLearningActivity,
   RecurringInterval,
 } from "@/lib/activities";
-import { Heading, Ingress, Table, Search, Chips } from "@navikt/ds-react";
+import { Heading, Table, Search, Chips } from "@navikt/ds-react";
 import Link from "next/link";
 import { isAfter } from "date-fns";
 import { useState } from "react";
@@ -268,7 +268,7 @@ const ActivitiesPage: NextPage<{
       </Table>
 
       <footer>
-        <Ingress
+        <p
           className={"color-white"}
           style={{ marginBottom: "80px", marginTop: "30px", lineHeight: "1.5" }}
         >
@@ -283,7 +283,7 @@ const ActivitiesPage: NextPage<{
             #teknologiradar
           </Link>*/}
           .
-        </Ingress>
+        </p>
       </footer>
     </>
   );

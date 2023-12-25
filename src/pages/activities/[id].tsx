@@ -14,7 +14,6 @@ import noNb from "date-fns/locale/nb";
 import { ActivityContact } from "@/components/ActivityContact";
 import { ExternalLink, Back } from "@navikt/ds-icons";
 import Link from "next/link";
-import { Linkify } from "@/components/Linkify";
 import Head from "next/head";
 /*import { useEffect } from "react";
 import * as metrics from "@/lib/metrics";*/
@@ -26,7 +25,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 
   const activities: LearningActivity[] = await getCurrentActivities(
     date as string | null,
-    true
+    true,
   );
   const activity = activities.find((activity) => activity.id === id);
   if (!activity) return { notFound: true };
@@ -76,7 +75,7 @@ const formatTimeAndDate = ({
     const parts = [];
     if (date)
       parts.push(
-        formatInTimeZone(date, LOCAL_TIMEZONE, "d. MMMM Y", { locale: noNb })
+        formatInTimeZone(date, LOCAL_TIMEZONE, "d. MMMM Y", { locale: noNb }),
       );
     /*  if (time) parts.push(`kl. ${formatTimeSpan(time, durationMinutes)}`);*/
     return parts.join(", ");

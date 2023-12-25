@@ -4,6 +4,7 @@ import "@navikt/ds-css-internal";
 import type { AppProps } from "next/app";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import ScrollToTop from "@/components/ScrollToTop";
 
 export default function App({ Component, pageProps }: AppProps) {
   return (
@@ -13,6 +14,7 @@ export default function App({ Component, pageProps }: AppProps) {
         <Component {...pageProps} />
       </main>
       <Footer />
+      <ScrollToTop />
     </div>
   );
 }

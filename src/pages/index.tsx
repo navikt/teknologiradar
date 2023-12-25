@@ -172,67 +172,70 @@ const ActivitiesPage: NextPage<{
         </>
       )}
 
-      <Table
-        className={"activity--table"}
-        style={{ overflow: "scroll", marginTop: "60px" }}
-      >
-        <Table.Header className={"color-blue"}>
-          <Table.Row>
-            {/*<Table.HeaderCell scope="col">Dato</Table.HeaderCell>*/}
-            <Table.HeaderCell scope="col">Teknologi</Table.HeaderCell>
-            <Table.HeaderCell scope="col">Status</Table.HeaderCell>
-            <Table.HeaderCell scope="col">Forum</Table.HeaderCell>
-          </Table.Row>
-        </Table.Header>
-        <Table.Body>
-          {dates.map((date) => (
-            <>
-              {groupedByDate[date]
-                .filter((activity) => {
-                  if (
-                    selected.length === 0 &&
-                    selected2.length === 0 &&
-                    search === ""
-                  ) {
-                    return true; // Show all activities if no filter is applied
-                  } else {
-                    const listNameMatches =
-                      selected2.length === 0 ||
-                      (activity.listName &&
-                        selected2.some((item) =>
-                          activity.listName.includes(item),
-                        ));
-                    const categoryMatches =
-                      selected.length === 0 ||
-                      (activity.labels &&
-                        selected.some((item) =>
-                          activity.labels[0].name.includes(item),
-                        ));
-                    const searchMatches =
-                      search === "" ||
-                      (activity.title &&
-                        activity.title
-                          .toLowerCase()
-                          .includes(search.toLowerCase()));
-                    return listNameMatches && categoryMatches && searchMatches;
-                  }
-                })
-                .map((activity) => (
-                  <Table.Row key={activity.id}>
-                    {/* <Table.HeaderCell className={"color-white"} scope={"row"}>
+      <div style={{ overflowX: "auto", width: "100%" }}>
+        <Table
+          className={"activity--table"}
+          style={{ overflow: "scroll", marginTop: "60px" }}
+        >
+          <Table.Header className={"color-blue"}>
+            <Table.Row>
+              {/*<Table.HeaderCell scope="col">Dato</Table.HeaderCell>*/}
+              <Table.HeaderCell scope="col">Teknologi</Table.HeaderCell>
+              <Table.HeaderCell scope="col">Status</Table.HeaderCell>
+              <Table.HeaderCell scope="col">Forum</Table.HeaderCell>
+            </Table.Row>
+          </Table.Header>
+          <Table.Body>
+            {dates.map((date) => (
+              <>
+                {groupedByDate[date]
+                  .filter((activity) => {
+                    if (
+                      selected.length === 0 &&
+                      selected2.length === 0 &&
+                      search === ""
+                    ) {
+                      return true; // Show all activities if no filter is applied
+                    } else {
+                      const listNameMatches =
+                        selected2.length === 0 ||
+                        (activity.listName &&
+                          selected2.some((item) =>
+                            activity.listName.includes(item),
+                          ));
+                      const categoryMatches =
+                        selected.length === 0 ||
+                        (activity.labels &&
+                          selected.some((item) =>
+                            activity.labels[0].name.includes(item),
+                          ));
+                      const searchMatches =
+                        search === "" ||
+                        (activity.title &&
+                          activity.title
+                            .toLowerCase()
+                            .includes(search.toLowerCase()));
+                      return (
+                        listNameMatches && categoryMatches && searchMatches
+                      );
+                    }
+                  })
+                  .map((activity) => (
+                    <Table.Row key={activity.id}>
+                      {/* <Table.HeaderCell className={"color-white"} scope={"row"}>
                       {activity.date}
                     </Table.HeaderCell>*/}
-                    <Table.DataCell>
-                      <Link
-                        className={"blue-link"}
-                        href={`/activities/${activity.id}`}
-                      >
-                        {activity.title}
-                      </Link>
-                    </Table.DataCell>
-                    <Table.DataCell>
-                      <span
-                        className={`activity--label 
+                      <Table.DataCell>
+                        <Link
+                          className={"blue-link"}
+                          href={`/activities/${activity.id}`}
+                        >
+                          {activity.title}
+                        </Link>
+                      </Table.DataCell>
+                      <Table.DataCell>
+                        <span
+                          className={`activity--label 
                       ${
                         activity.listName === "Uavklart"
                           ? "kandidat-color"
@@ -248,24 +251,25 @@ const ActivitiesPage: NextPage<{
                                     ? "omstridt-color"
                                     : ""
                       }`}
-                      >
-                        {activity.listName}{" "}
-                        {/*  <HelpText title="Tekst kommer">
+                        >
+                          {activity.listName}{" "}
+                          {/*  <HelpText title="Tekst kommer">
                           Her kommer det snart en hjelpsom beskrivelse
                         </HelpText>*/}
-                      </span>
-                    </Table.DataCell>
-                    <Table.DataCell>
-                      {activity.labels.length > 0 && (
-                        <LabelList labels={activity.labels} />
-                      )}
-                    </Table.DataCell>
-                  </Table.Row>
-                ))}
-            </>
-          ))}
-        </Table.Body>
-      </Table>
+                        </span>
+                      </Table.DataCell>
+                      <Table.DataCell>
+                        {activity.labels.length > 0 && (
+                          <LabelList labels={activity.labels} />
+                        )}
+                      </Table.DataCell>
+                    </Table.Row>
+                  ))}
+              </>
+            ))}
+          </Table.Body>
+        </Table>
+      </div>
 
       <footer>
         <p

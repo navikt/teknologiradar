@@ -1,5 +1,5 @@
 import { NextPage } from "next";
-import { Heading, Ingress } from "@navikt/ds-react";
+import { Heading } from "@navikt/ds-react";
 import { useEffect } from "react";
 import * as metrics from "@/lib/metrics";
 
@@ -9,12 +9,12 @@ const NotFoundPage: NextPage = () => {
   }, []);
 
   return (
-    <>
+    <div className="color-white">
       <Heading level={"1"} size={"large"}>
         Fant ikke siden
       </Heading>
-      <Ingress>Det kan hende aktiviteten har blitt slettet.</Ingress>
-    </>
+      <p>Det kan hende aktiviteten har blitt slettet.</p>
+    </div>
   );
 };
 

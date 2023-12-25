@@ -12,14 +12,13 @@ import { KOMITÈ_LINK, LOCAL_TIMEZONE } from "@/lib/fagtorsdag";
 import { formatInTimeZone } from "date-fns-tz";
 import noNb from "date-fns/locale/nb";
 import { isAfter } from "date-fns";
-import { useEffect } from "react";
 /*import * as metrics from "@/lib/metrics";*/
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const date = context.query["date"] ?? null;
   const activities: NextLearningActivity[] = await getCurrentActivities(
     date as string | null,
-    true
+    true,
   );
   return { props: { activities, date } };
 };
@@ -36,7 +35,7 @@ const ActivitiesPage: NextPage<{
 
   const groupedByDate: { [key: string]: NextLearningActivity[] } = {};
   const recurring = activities.filter(
-    (act) => act.recurringInterval !== RecurringInterval.ONE_TIME
+    (act) => act.recurringInterval !== RecurringInterval.ONE_TIME,
   );
 
   activities
@@ -49,7 +48,7 @@ const ActivitiesPage: NextPage<{
     });
 
   Object.values(groupedByDate).forEach((activities) =>
-    activities.sort(activityComparator)
+    activities.sort(activityComparator),
   );
   const dates = Object.keys(groupedByDate);
   dates.sort((a, b) => (a === b ? 0 : a > b ? -1 : 1));

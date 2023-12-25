@@ -10,14 +10,14 @@ import {
 import { Heading, Ingress, Table, Search, Chips } from "@navikt/ds-react";
 import Link from "next/link";
 import { isAfter } from "date-fns";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 /*import * as metrics from "@/lib/metrics";*/
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const date = context.query["date"] ?? null;
   const activities: NextLearningActivity[] = await getCurrentActivities(
     date as string | null,
-    true
+    true,
   );
   return { props: { activities, date } };
 };
@@ -51,7 +51,7 @@ const ActivitiesPage: NextPage<{
 
   const groupedByDate: { [key: string]: NextLearningActivity[] } = {};
   const recurring = activities.filter(
-    (act) => act.recurringInterval !== RecurringInterval.ONE_TIME
+    (act) => act.recurringInterval !== RecurringInterval.ONE_TIME,
   );
 
   activities
@@ -65,7 +65,7 @@ const ActivitiesPage: NextPage<{
     });
 
   Object.values(groupedByDate).forEach((activities) =>
-    activities.sort(activityComparator)
+    activities.sort(activityComparator),
   );
   const dates = Object.keys(groupedByDate);
   dates.sort((a, b) => (a === b ? 0 : a > b ? -1 : 1));
@@ -134,7 +134,7 @@ const ActivitiesPage: NextPage<{
                   setSelected(
                     selected.includes(c)
                       ? selected.filter((x) => x !== c)
-                      : [...selected, c]
+                      : [...selected, c],
                   )
                 }
               >
@@ -161,7 +161,7 @@ const ActivitiesPage: NextPage<{
                   setSelected2(
                     selected2.includes(c)
                       ? selected2.filter((x) => x !== c)
-                      : [...selected2, c]
+                      : [...selected2, c],
                   )
                 }
               >
@@ -188,24 +188,33 @@ const ActivitiesPage: NextPage<{
           {dates.map((date) => (
             <>
               {groupedByDate[date]
-                // @ts-ignore
                 .filter((activity) => {
-                  if (selected.length === 0 && selected2.length === 0) {
+                  if (
+                    selected.length === 0 &&
+                    selected2.length === 0 &&
+                    search === ""
+                  ) {
                     return true; // Show all activities if no filter is applied
                   } else {
                     const listNameMatches =
                       selected2.length === 0 ||
                       (activity.listName &&
                         selected2.some((item) =>
-                          activity.listName.includes(item)
+                          activity.listName.includes(item),
                         ));
                     const categoryMatches =
                       selected.length === 0 ||
                       (activity.labels &&
                         selected.some((item) =>
-                          activity.labels[0].name.includes(item)
+                          activity.labels[0].name.includes(item),
                         ));
-                    return listNameMatches && categoryMatches;
+                    const searchMatches =
+                      search === "" ||
+                      (activity.title &&
+                        activity.title
+                          .toLowerCase()
+                          .includes(search.toLowerCase()));
+                    return listNameMatches && categoryMatches && searchMatches;
                   }
                 })
                 .map((activity) => (
@@ -228,16 +237,16 @@ const ActivitiesPage: NextPage<{
                         activity.listName === "Uavklart"
                           ? "kandidat-color"
                           : activity.listName === "Eksperiment"
-                          ? "trial-color"
-                          : activity.listName === "Vurder"
-                          ? "trial-color"
-                          : activity.listName === "Bruk"
-                          ? "adopt-color"
-                          : activity.listName === "Avstå"
-                          ? "hold-color"
-                          : activity.listName === "Omstridt"
-                          ? "omstridt-color"
-                          : ""
+                            ? "trial-color"
+                            : activity.listName === "Vurder"
+                              ? "trial-color"
+                              : activity.listName === "Bruk"
+                                ? "adopt-color"
+                                : activity.listName === "Avstå"
+                                  ? "hold-color"
+                                  : activity.listName === "Omstridt"
+                                    ? "omstridt-color"
+                                    : ""
                       }`}
                       >
                         {activity.listName}{" "}

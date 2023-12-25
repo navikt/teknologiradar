@@ -12,6 +12,7 @@ const Footer = () => {
       >
         <div className="relative z-10 mx-auto grid w-full max-w-screen-2xl gap-12 px-4 pb-16 pt-12 md:grid-cols-2 md:px-6 lg:grid-cols-2 xl:grid-cols-4 xl:gap-6">
           <LogoBlock />
+          <SideLenker />
           <Kontakt />
         </div>
       </footer>
@@ -54,8 +55,8 @@ function SideLenker() {
         Erklæringer
       </Heading>
       <BodyShort as="ul" className="mt-3 grid gap-3">
-        <FooterLink href="/personvern">Personvern</FooterLink>
-        <FooterLink href="/tilgjengelighet">Tilgjengelighet</FooterLink>
+        <FooterLink href="/privacy">Personvern</FooterLink>
+        <FooterLink href="/accessibility">Tilgjengelighet</FooterLink>
       </BodyShort>
     </div>
   );

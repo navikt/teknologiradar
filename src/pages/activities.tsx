@@ -54,25 +54,25 @@ const ActivitiesPage: NextPage<{
   dates.sort((a, b) => (a === b ? 0 : a > b ? -1 : 1));
 
   return (
-    <>
-      <Heading size={"large"} level={"1"}>
-        Oversikt over tidligere aktiviteter
+    <div className="color-white pb-10">
+      <Heading className="pb-4" size={"large"} level={"1"}>
+        Endringslogg
       </Heading>
-      <p>
+      {/*      <p className="mt-6">
         Ser du noe du kunne tenke deg å bli med på igjen?{" "}
         <Link href={KOMITÈ_LINK}>Ta kontakt</Link>, så ser vi om det er mulig!
-      </p>
+      </p>*/}
 
       {dates.map((date) => (
         <section key={date}>
-          <Heading size={"medium"} level={"3"}>
+          <Heading spacing className="pt-6" size={"medium"} level={"3"}>
             {formatInTimeZone(date, LOCAL_TIMEZONE, "EEEE d. MMMM yyyy", {
               locale: noNb,
             })}
           </Heading>
           <ul>
             {groupedByDate[date].map((activity) => (
-              <li key={activity.id}>
+              <li className="mb-2" key={activity.id}>
                 <Link href={`/activities/${activity.id}`}>
                   {activity.title}
                 </Link>
@@ -81,7 +81,7 @@ const ActivitiesPage: NextPage<{
           </ul>
         </section>
       ))}
-    </>
+    </div>
   );
 };
 

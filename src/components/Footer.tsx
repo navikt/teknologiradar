@@ -28,7 +28,15 @@ function LogoBlock() {
       <p className="mt-3 leading-normal">
         &copy; {new Date().getFullYear()} NAV
       </p>
-      <p className="leading-normal">Arbeids- og velferdsetaten</p>
+      <p className="leading-normal">
+        <Link
+          target="_blank"
+          className="text-text-on-inverted focus:shadow-focus focus:text-text-default flex w-fit items-center gap-1 underline hover:no-underline focus:bg-blue-200 focus:shadow-blue-200"
+          href="https://teamkatalog.nav.no/team/f7bc1e10-763f-4071-bf18-ee7f585eda9f"
+        >
+          Teknologiredaksjonen
+        </Link>
+      </p>
     </div>
   );
 }

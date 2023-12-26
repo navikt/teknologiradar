@@ -7,8 +7,14 @@ html {
   background-color: rgb(15 23 42 / 1);
 }
 
-Footer a {
+a {
   color: #fff !important;
+  text-decoration: underline;
+}
+
+a:hover {
+  color: #fff !important;
+  text-decoration: none;
 }
 
 .markdowndetails p {

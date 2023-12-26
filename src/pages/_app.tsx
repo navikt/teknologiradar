@@ -13,7 +13,7 @@ export default function App({ Component, pageProps }: AppProps) {
       <main className="layout">
         <Component {...pageProps} />
       </main>
-      <Footer className="layout" />
+      <Footer />
       <ScrollToTop />
     </div>
   );

@@ -10,7 +10,7 @@ const Footer = () => {
         data-theme="dark"
         className="flex pt-3 z-10 items-center max-w-[101ch] m-auto justify-between toc-ignore text-text-on-inverted bg-deepblue-800 relative flex justify-center"
       >
-        <div className="relative z-10 mx-auto grid w-full max-w-screen-2xl gap-12 px-4 pb-16 pt-12 md:grid-cols-2 md:px-6 lg:grid-cols-2 xl:grid-cols-4 xl:gap-6">
+        <div className="relative z-10 mx-auto grid w-full max-w-screen-2xl gap-12 px-4 pb-16 pt-12 md:grid-cols-2 md:px-6 lg:grid-cols-2 xl:grid-cols-4 xl:gap-5">
           <LogoBlock />
           <Snarveier />
           <SideLenker />

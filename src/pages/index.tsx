@@ -175,7 +175,7 @@ const ActivitiesPage: NextPage<{
       <div style={{ overflowX: "auto", width: "100%" }}>
         <Table
           className={"activity--table"}
-          style={{ overflow: "scroll", marginTop: "60px" }}
+          style={{ overflow: "scroll", marginTop: "20px" }}
         >
           <Table.Header className={"color-blue"}>
             <Table.Row>

@@ -353,3 +353,7 @@ tr:hover {
 #språkhjelp-back-to-top:hover {
   background: #000;
 }
+
+.navdsi-header__title {
+  padding-left: 10px !important;
+}

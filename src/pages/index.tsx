@@ -258,7 +258,7 @@ const ActivitiesPage: NextPage<{
                         </HelpText>*/}
                         </span>
                       </Table.DataCell>
-                      <Table.DataCell>
+                      <Table.DataCell className="whitespace-nowrap">
                         {activity.labels.length > 0 && (
                           <LabelList labels={activity.labels} />
                         )}

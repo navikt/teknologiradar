@@ -179,7 +179,7 @@ const ActivityEntry = ({ activity }: { activity: LearningActivity }) => {
         )}
         {activity.labels.length > 0 && <LabelList labels={activity.labels} />}
       </Detail>
-      <p className={"activity--ingress color-white"} as={"div"}>
+      <p className={"activity--ingress color-white"}>
         {activity.imageUrl && (
           <img
             className={"activity--image"}

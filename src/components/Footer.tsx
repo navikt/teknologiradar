@@ -52,9 +52,7 @@ function Snarveier() {
       </Heading>
       <BodyShort as="ul" className="mt-3 grid gap-3">
         <FooterLink href="/about">Om Teknologiradar</FooterLink>
-        <FooterLink href="http://localhost:3000/activities">
-          Endringslogg
-        </FooterLink>
+        <FooterLink href="/activities">Endringslogg</FooterLink>
       </BodyShort>
     </div>
   );

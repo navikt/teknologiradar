@@ -11,6 +11,11 @@ Footer a {
   color: #fff !important;
 }
 
+.markdowndetails p {
+  padding-bottom: 1em;
+  line-height: 1.5em;
+}
+
 .blue-link {
   text-decoration: underline;
   color: #fff;

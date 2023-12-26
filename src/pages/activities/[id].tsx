@@ -157,7 +157,7 @@ const ActivityEntry = ({ activity }: { activity: LearningActivity }) => {
           durationMinutes={activity.durationMinutes}
           recurring={activity.recurringInterval}
         />
-        <span className={"activity--edit-link color-white"}>
+        {/*       <span className={"activity--edit-link color-white"}>
           <Link
             href={activity.editUrl}
             target="_blank"
@@ -165,11 +165,11 @@ const ActivityEntry = ({ activity }: { activity: LearningActivity }) => {
           >
             Trello-kort <ExternalLink />
           </Link>
-        </span>
+        </span>*/}
       </div>
-      <Ingress className={"activity--subtext color-white"}>
+      <p className={"activity--subtext color-white"}>
         Status: {activity.listName}
-      </Ingress>
+      </p>
       <Detail className={"activity--details"}>
         {activity.contactName && (
           <ActivityContact
@@ -179,7 +179,7 @@ const ActivityEntry = ({ activity }: { activity: LearningActivity }) => {
         )}
         {activity.labels.length > 0 && <LabelList labels={activity.labels} />}
       </Detail>
-      <Ingress className={"activity--ingress color-white"} as={"div"}>
+      <p className={"activity--ingress color-white"} as={"div"}>
         {activity.imageUrl && (
           <img
             className={"activity--image"}
@@ -187,8 +187,10 @@ const ActivityEntry = ({ activity }: { activity: LearningActivity }) => {
             alt={activity.contactName ?? activity.contactRole ?? activity.title}
           />
         )}
-        <ReactMarkdown>{activity.description}</ReactMarkdown>
-      </Ingress>
+        <ReactMarkdown className="mt-10 markdowndetails">
+          {activity.description}
+        </ReactMarkdown>
+      </p>
       <Detail className={"activity--locations"}>
         {activity.locations.map((loc, idx) => (
           <ActivityLocation key={idx} location={loc} />

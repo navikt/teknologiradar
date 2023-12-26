@@ -3,7 +3,10 @@ import { BodyShort, Heading, Link } from "@navikt/ds-react";
 
 const Footer = () => {
   return (
-    <div className="bg-deepblue-800 w-full border-t-2 border-blue-300">
+    <div
+      className="bg-deepblue-800 w-full border-t-2"
+      style={{ borderColor: "rgb(34, 211, 238)" }}
+    >
       <footer
         id="aksel-footer"
         data-hj-suppress
@@ -45,12 +48,12 @@ function Snarveier() {
   return (
     <div>
       <Heading level="2" size="xsmall">
-        Om nettstedet
+        Snarveier
       </Heading>
       <BodyShort as="ul" className="mt-3 grid gap-3">
-        <FooterLink href="/about">Hva er Teknologiradar?</FooterLink>
-        <FooterLink href="https://nav-it.slack.com/archives/CEHSHMNBF">
-          Spørsmål om radaren
+        <FooterLink href="/about">Om Teknologiradar</FooterLink>
+        <FooterLink href="http://localhost:3000/activities">
+          Endringslogg
         </FooterLink>
       </BodyShort>
     </div>

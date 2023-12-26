@@ -72,9 +72,10 @@ const ActivitiesPage: NextPage<{
           </Heading>
           <ul>
             {groupedByDate[date].map((activity) => (
-              <li className="mb-2" key={activity.id}>
+              <li className="mb-2 list-disc list-inside" key={activity.id}>
                 <Link href={`/activities/${activity.id}`}>
-                  {activity.title}
+                  {activity.title}{" "}
+                  <span className="lowercase">({activity.listName})</span>
                 </Link>
               </li>
             ))}

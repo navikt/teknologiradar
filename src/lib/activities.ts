@@ -59,7 +59,7 @@ async function fetchActivities({
 
 function mapToNextLearningActivity(
   activity: LearningActivity,
-  currentTime: Date
+  currentTime: Date,
 ) {
   const nextOccurrenceAt =
     getActivityNextStartDate(activity, currentTime)?.getTime() ?? null;
@@ -68,7 +68,7 @@ function mapToNextLearningActivity(
 
 export function activityComparator(
   a: NextLearningActivity,
-  b: NextLearningActivity
+  b: NextLearningActivity,
 ): number {
   if (a.nextOccurrenceAt === b.nextOccurrenceAt) {
     return a.recurringInterval - b.recurringInterval;
@@ -81,11 +81,11 @@ export function activityComparator(
 export const getCurrentActivities = (() => {
   const { TRELLO_BOARD_ID, TRELLO_API_KEY, TRELLO_API_TOKEN } = process.env;
   if (!TRELLO_API_KEY || !TRELLO_API_TOKEN || !TRELLO_BOARD_ID) {
-    console.log("Trello API not set up, falling back to example data");
+    // console.log("Trello API not set up, falling back to example data");
     return (date: string | null, includeCompleted: boolean) => {
       const currentTime = date ? new Date(date) : new Date();
       return exampleData.map((activity) =>
-        mapToNextLearningActivity(activity, currentTime)
+        mapToNextLearningActivity(activity, currentTime),
       );
     };
   }
@@ -108,12 +108,12 @@ export const getCurrentActivities = (() => {
     const currentTime = date ? new Date(date) : new Date();
     const activities = await activitiesCache.get(currentTime.getTime());
     const mapped = activities.map((activity) =>
-      mapToNextLearningActivity(activity, currentTime)
+      mapToNextLearningActivity(activity, currentTime),
     );
     mapped.sort(activityComparator);
     if (!includeCompleted) {
       return mapped.filter((activity) =>
-        occursOnOrAfter(activity, currentTime)
+        occursOnOrAfter(activity, currentTime),
       );
     }
     return mapped;
@@ -124,7 +124,7 @@ const pad = (num: number) => (num < 10 ? `0${num}` : `${num}`);
 
 export const formatTimeSpan = (
   timeStart: string,
-  durationMinutes: number | null
+  durationMinutes: number | null,
 ) => {
   if (durationMinutes === null) return timeStart;
   const [hours, minutes] = timeStart

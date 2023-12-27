@@ -1,7 +1,8 @@
+"use client";
 import type { NextPage } from "next";
 import { Heading, Link } from "@navikt/ds-react";
 
-const About: NextPage = () => {
+const Page: NextPage = () => {
   return (
     <div className="App">
       <main>
@@ -71,4 +72,4 @@ const About: NextPage = () => {
   );
 };
 
-export default About;
+export default Page;

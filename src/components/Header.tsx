@@ -1,3 +1,4 @@
+"use client";
 import { Header } from "@navikt/ds-react-internal";
 import NextLink from "next/link";
 

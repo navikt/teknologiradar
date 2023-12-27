@@ -1,7 +1,8 @@
+"use client";
 import type { NextPage } from "next";
 import { Heading, Link } from "@navikt/ds-react";
 
-const Privacy: NextPage = () => {
+const Page: NextPage = () => {
   return (
     <div className="App">
       <main>
@@ -104,4 +105,4 @@ const Privacy: NextPage = () => {
   );
 };
 
-export default Privacy;
+export default Page;

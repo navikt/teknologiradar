@@ -25,13 +25,13 @@ spec:
   envFrom:
     - secret: solan-trello-secrets
   liveness:
-    path: /api/healthy
+    path: /internal/is-alive
     initialDelay: 10
     timeout: 5
     periodSeconds: 5
     failureThreshold: 30
   readiness:
-    path: /api/healthy
+    path: /internal/is-ready
     initialDelay: 10
     periodSeconds: 5
     timeout: 5

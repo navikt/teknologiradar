@@ -26,8 +26,15 @@ spec:
     - secret: solan-trello-secrets
   liveness:
     path: /api/healthy
+    initialDelay: 10
+    timeout: 5
+    periodSeconds: 5
+    failureThreshold: 30
   readiness:
     path: /api/healthy
+    initialDelay: 10
+    periodSeconds: 5
+    timeout: 5
   accessPolicy:
     outbound:
       external:

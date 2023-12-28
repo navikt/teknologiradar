@@ -9,7 +9,6 @@ const Footer = () => {
     >
       <footer
         id="aksel-footer"
-        data-hj-suppress
         data-theme="dark"
         className="flex pt-3 z-10 items-center max-w-[101ch] m-auto justify-between toc-ignore text-text-on-inverted bg-deepblue-800 relative flex justify-center"
       >

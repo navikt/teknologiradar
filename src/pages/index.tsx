@@ -15,6 +15,8 @@ import { useState } from "react";
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const date = context.query["date"] ?? null;
+
+  // @ts-ignore
   const activities: NextLearningActivity[] = await getCurrentActivities(
     date as string | null,
     true,

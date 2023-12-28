@@ -19,10 +19,12 @@ import Head from "next/head";
 import * as metrics from "@/lib/metrics";*/
 import ReactMarkdown from "react-markdown";
 
+// @ts-ignore
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const id = context.query["id"];
   const date = context.query["date"] ?? null;
 
+  // @ts-ignore
   const activities: LearningActivity[] = await getCurrentActivities(
     date as string | null,
     true,
@@ -37,12 +39,12 @@ const ActivityPage: NextPage<{ activity: LearningActivity }> = ({
   activity,
 }) => {
   /*  useEffect(() => {
-    metrics.logPageView({
-      page: "Aktivitet",
-      activityTitle: activity.title,
-      activityId: activity.id,
-    });
-  }, [activity]);*/
+      metrics.logPageView({
+        page: "Aktivitet",
+        activityTitle: activity.title,
+        activityId: activity.id,
+      });
+    }, [activity]);*/
 
   return (
     <>
@@ -71,14 +73,14 @@ const formatTimeAndDate = ({
 }) => {
   if (!date && !time) return null;
 
+  // @ts-ignore
   if (recurring === RecurringInterval.ONE_TIME) {
     const parts = [];
-    const dateValue: string = date || new Date().toISOString().split("T")[0];
-    if (dateValue)
+    if (date)
+      // @ts-ignore
       parts.push(
-        formatInTimeZone(new Date(dateValue), LOCAL_TIMEZONE, "d. MMMM Y", {
-          locale: noNb,
-        }),
+        // @ts-ignore
+        formatInTimeZone(date, LOCAL_TIMEZONE, "d. MMMM Y", { locale: noNb }),
       );
     /*  if (time) parts.push(`kl. ${formatTimeSpan(time, durationMinutes)}`);*/
     return parts.join(", ");

@@ -181,7 +181,6 @@ const ActivitiesPage: NextPage<{
         >
           <Table.Header className={"color-blue"}>
             <Table.Row>
-              {/*<Table.HeaderCell scope="col">Dato</Table.HeaderCell>*/}
               <Table.HeaderCell scope="col">Teknologi</Table.HeaderCell>
               <Table.HeaderCell scope="col">Status</Table.HeaderCell>
               <Table.HeaderCell scope="col">Forum</Table.HeaderCell>
@@ -224,9 +223,6 @@ const ActivitiesPage: NextPage<{
                   })
                   .map((activity) => (
                     <Table.Row key={activity.id}>
-                      {/* <Table.HeaderCell className={"color-white"} scope={"row"}>
-                      {activity.date}
-                    </Table.HeaderCell>*/}
                       <Table.DataCell>
                         <Link
                           className={"blue-link"}
@@ -254,10 +250,7 @@ const ActivitiesPage: NextPage<{
                                     : ""
                       }`}
                         >
-                          {activity.listName}{" "}
-                          {/*  <HelpText title="Tekst kommer">
-                          Her kommer det snart en hjelpsom beskrivelse
-                        </HelpText>*/}
+                          {activity.listName}
                         </span>
                       </Table.DataCell>
                       <Table.DataCell className="whitespace-nowrap">
@@ -279,16 +272,7 @@ const ActivitiesPage: NextPage<{
           style={{ marginBottom: "80px", marginTop: "30px", lineHeight: "1.5" }}
         >
           Du kan påvirke Teknologiradaren ved å gi innspill eller diskutere i et
-          av teknologiforumene
-          {/*{" "}
-          <Link
-            className={"blue-link"}
-            href="https://nav-it.slack.com/archives/CEHSHMNBF"
-            target="_blank"
-          >
-            #teknologiradar
-          </Link>*/}
-          .
+          av teknologiforumene.
         </p>
       </footer>
     </>

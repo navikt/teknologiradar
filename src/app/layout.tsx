@@ -21,7 +21,7 @@ export default async function RootLayout({ children }: RootLayoutProps) {
       <Header />
       <main className="layout">{children}</main>
       <Footer />
-      {/*<ScrollToTop />*/}
+      <ScrollToTop />
     </div>
   );
 }

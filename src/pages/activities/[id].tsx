@@ -73,9 +73,12 @@ const formatTimeAndDate = ({
 
   if (recurring === RecurringInterval.ONE_TIME) {
     const parts = [];
-    if (date)
+    const dateValue: string = date || new Date().toISOString().split("T")[0];
+    if (dateValue)
       parts.push(
-        formatInTimeZone(date, LOCAL_TIMEZONE, "d. MMMM Y", { locale: noNb }),
+        formatInTimeZone(dateValue, LOCAL_TIMEZONE, "d. MMMM Y", {
+          locale: noNb,
+        }),
       );
     /*  if (time) parts.push(`kl. ${formatTimeSpan(time, durationMinutes)}`);*/
     return parts.join(", ");

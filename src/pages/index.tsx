@@ -1,3 +1,4 @@
+import React from "react";
 import type { NextPage } from "next";
 import { GetServerSideProps } from "next";
 import {
@@ -188,7 +189,7 @@ const ActivitiesPage: NextPage<{
           </Table.Header>
           <Table.Body>
             {dates.map((date) => (
-              <>
+              <React.Fragment key={date}>
                 {groupedByDate[date]
                   .filter((activity) => {
                     if (
@@ -260,7 +261,7 @@ const ActivitiesPage: NextPage<{
                       </Table.DataCell>
                     </Table.Row>
                   ))}
-              </>
+              </React.Fragment>
             ))}
           </Table.Body>
         </Table>

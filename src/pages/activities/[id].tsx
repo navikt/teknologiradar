@@ -76,7 +76,7 @@ const formatTimeAndDate = ({
     const dateValue: string = date || new Date().toISOString().split("T")[0];
     if (dateValue)
       parts.push(
-        formatInTimeZone(dateValue, LOCAL_TIMEZONE, "d. MMMM Y", {
+        formatInTimeZone(new Date(dateValue), LOCAL_TIMEZONE, "d. MMMM Y", {
           locale: noNb,
         }),
       );

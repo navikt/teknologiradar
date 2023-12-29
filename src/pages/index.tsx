@@ -53,10 +53,9 @@ const ActivitiesPage: NextPage<{
   };
 
   const groupedByDate: { [key: string]: NextLearningActivity[] } = {};
-  const recurring = activities.filter(
+  activities.filter(
     (act) => act.recurringInterval !== RecurringInterval.ONE_TIME,
   );
-
   activities
     .filter((act) => act.recurringInterval === RecurringInterval.ONE_TIME)
     .forEach((activity) => {
@@ -85,7 +84,7 @@ const ActivitiesPage: NextPage<{
   const options2 = ["Bruk", "Vurder", "Avstå"];
   const [selected2, setSelected2] = useState([]);
 
-  const [showfilter, setShowfilter] = useState(true);
+  const [showfilter] = useState(true);
 
   const [search, setSearch] = useState("");
   const handleSearchChange = (e: React.SetStateAction<string>) => {
@@ -131,10 +130,12 @@ const ActivitiesPage: NextPage<{
             {options.map((c) => (
               <Chips.Toggle
                 className={"chip-effect"}
+                // @ts-ignore
                 selected={selected.includes(c)}
                 key={c}
                 onClick={() =>
                   setSelected(
+                    // @ts-ignore
                     selected.includes(c)
                       ? selected.filter((x) => x !== c)
                       : [...selected, c],
@@ -158,10 +159,12 @@ const ActivitiesPage: NextPage<{
             {options2.map((c) => (
               <Chips.Toggle
                 className={"chip-effect"}
+                // @ts-ignore
                 selected={selected2.includes(c)}
                 key={c}
                 onClick={() =>
                   setSelected2(
+                    // @ts-ignore
                     selected2.includes(c)
                       ? selected2.filter((x) => x !== c)
                       : [...selected2, c],

@@ -32,8 +32,8 @@ const Accessibility: NextPage = () => {
             </p>
 
             <p className="mb-4 leading-normal">
-              TIlgjengelighetserklæringen er utarbeidet av Teknologiredaksjonen,
-              og lenke til den vil publiseres her så snart den er klar.
+              TIlgjengelighetserklæringen er under arbeid, og lenke til den
+              publiseres her så snart den er klar.
             </p>
             {/*<p className="mb-4 leading-normal"><a className="underline hover:no-underline color-white" href="https://uustatus.no/nb/erklaringer/publisert/d537c65c-f4bd-4f30-be2b-3a8808a42cf0">Tilgjengelighetserklæring for felgen.intern.nav.no (uustatus.no).</a></p>*/}
 

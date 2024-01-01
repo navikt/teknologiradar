@@ -24,7 +24,6 @@ const About: NextPage = () => {
               Om Teknologiradar
             </Heading>
             <div className="mb-12 mt-5 max-w-2xl font-serif">
-              <h2 className="pb-4 text-2xl">Visjon</h2>
               <p className="mb-4 leading-normal">
                 Teknologiradaren er et hjelpemiddel for å øke bevissthet og
                 samarbeid rundt teknologivalgene som skjer i teamene.

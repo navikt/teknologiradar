@@ -56,7 +56,7 @@ const ActivitiesPage: NextPage<{
   return (
     <div className="color-white pb-10">
       <Heading className="pb-4" size={"large"} level={"1"}>
-        Endringslogg
+        Vedtakslogg
       </Heading>
       {/*      <p className="mt-6">
         Ser du noe du kunne tenke deg å bli med på igjen?{" "}

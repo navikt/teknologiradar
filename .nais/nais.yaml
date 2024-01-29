@@ -17,10 +17,10 @@ spec:
     cpuThresholdPercentage: 50
   resources:
     limits:
-      cpu: 500m
+      cpu: 100m
       memory: 256Mi
     requests:
-      cpu: 200m
+      cpu: 100m
       memory: 256Mi
   envFrom:
     - secret: solan-trello-secrets

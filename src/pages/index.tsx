@@ -276,7 +276,14 @@ const ActivitiesPage: NextPage<{
           style={{ marginBottom: "80px", marginTop: "30px", lineHeight: "1.5" }}
         >
           Du kan påvirke Teknologiradaren ved å gi innspill eller diskutere i et
-          av teknologiforumene.
+          av{" "}
+          <Link
+            className={"blue-link"}
+            href={`https://delta.nav.no/faggrupper`}
+          >
+            teknologiforumene
+          </Link>
+          .
         </p>
       </footer>
     </>

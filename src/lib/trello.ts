@@ -1,10 +1,4 @@
-import { utcToZonedTime } from "date-fns-tz";
-import {
-  ActivityLabel,
-  LearningActivity,
-  RecurringInterval,
-} from "@/lib/activities";
-import { LOCAL_TIMEZONE } from "@/lib/fagtorsdag";
+import { Technology, TechnologyLabel } from "@/lib/technologies";
 
 export interface Label {
   id: string;
@@ -116,17 +110,6 @@ export async function getTrelloCards({
   }
 }
 
-function parseCustomFields(customFields: CustomFieldItem[]) {
-  const fields: { [key: string]: string | null } = {};
-  customFields?.forEach((field) => {
-    const name = customFieldNameById[field.idCustomField];
-    if (name) {
-      fields[name] = field.value.text ?? field.value.number ?? null;
-    }
-  });
-  return fields;
-}
-
 export function extractDescription(cardDescription: string) {
   if (!/^#/m.test(cardDescription)) {
     return cardDescription ?? "";
@@ -139,51 +122,16 @@ export function extractDescription(cardDescription: string) {
   return m[1].trim();
 }
 
-export function isActivityCard(trelloCard: TrelloCard) {
+export function isTechnologyCard(trelloCard: TrelloCard) {
   return listNameById[trelloCard.idList] !== undefined;
 }
 
-function pad(num: number) {
-  return num < 10 ? `0${num}` : `${num}`;
-}
-
-export function mapTrelloCardToActivity(
-  trelloCard: TrelloCard
-): LearningActivity {
-  const activityStartDate = trelloCard.due ?? trelloCard.start;
-  const dateTime = activityStartDate
-    ? utcToZonedTime(activityStartDate, LOCAL_TIMEZONE)
-    : null;
-
-  const date = dateTime?.toISOString().substring(0, 10) ?? null;
-  const timeStart = dateTime
-    ? pad(dateTime?.getHours()) + "." + pad(dateTime?.getMinutes())
-    : null;
-
+export function mapTrelloCardToTechnology(trelloCard: TrelloCard): Technology {
   const listName = listNameById[trelloCard.idList];
-  const recurringInterval =
-    listName === "RecurringEveryFagtorsdag"
-      ? RecurringInterval.BI_WEEKLY
-      : RecurringInterval.ONE_TIME;
-
-  const customFields = parseCustomFields(trelloCard.customFieldItems);
-
-  const locations: string[] = [];
-  if (customFields["Room"]) locations.push(customFields["Room"]);
-  if (customFields["StreamURL"]) locations.push(customFields["StreamURL"]);
-
-  const durationMinutes = customFields["LengthMinutes"]
-    ? parseInt(customFields["LengthMinutes"], 10)
-    : null;
-
-  const contact = customFields["Contact"] ?? "";
-  const [contactName, contactRole] = contact.split(",").map((v) => v.trim());
-  const imageUrl = customFields["ImageURL"] || null;
-  const emoji = customFields["Emoji"] || null;
 
   const description = extractDescription(trelloCard.desc);
 
-  const labels: ActivityLabel[] = trelloCard.labels.map((trelloLabel) => ({
+  const labels: TechnologyLabel[] = trelloCard.labels.map((trelloLabel) => ({
     name: trelloLabel.name,
     color: TRELLO_COLORS[trelloLabel.color] ?? TRELLO_FALLBACK_COLOR,
   }));
@@ -192,15 +140,6 @@ export function mapTrelloCardToActivity(
     id: trelloCard.id,
     title: trelloCard.name,
     description,
-    date,
-    timeStart,
-    recurringInterval,
-    locations,
-    durationMinutes,
-    contactName: contactName ?? null,
-    contactRole: contactRole ?? null,
-    imageUrl,
-    emoji,
     editUrl: trelloCard.shortUrl,
     labels,
     listName,

@@ -3,13 +3,13 @@ import {
   TechnologyLabel,
   getCurrentTechnologies,
 } from "@/lib/technologies";
-import { useStatesToNextQuery } from "@/lib/useStatesToNextQuery";
 import { Chips, Heading, Search, Table } from "@navikt/ds-react";
 import type { NextPage } from "next";
 import { GetServerSideProps } from "next";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
+import { useStatesToNextQuery } from "use-states-to-next-query";
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const date = context.query["date"] ?? null;

@@ -1,15 +1,14 @@
-import { eqSet } from "@/lib/sets";
 import {
   Technology,
   TechnologyLabel,
   getCurrentTechnologies,
 } from "@/lib/technologies";
+import { useStatesToNextQuery } from "@/lib/useStatesToNextQuery";
 import { Chips, Heading, Search, Table } from "@navikt/ds-react";
 import type { NextPage } from "next";
 import { GetServerSideProps } from "next";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { ParsedUrlQuery } from "querystring";
 import React, { useEffect, useState } from "react";
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
@@ -40,21 +39,6 @@ type ForumOptions = (typeof forumOptions)[number][];
 const decisionOptions = ["Bruk", "Vurder", "Avstå"] as const;
 type DecisionOptions = (typeof decisionOptions)[number][];
 
-const extractParams = ({ forums, statuses }: ParsedUrlQuery) => {
-  let paramForums = Array.isArray(forums)
-    ? (forums as ForumOptions)
-    : ([forums] as ForumOptions);
-
-  let paramStatuses = Array.isArray(statuses)
-    ? (statuses as DecisionOptions)
-    : ([statuses] as DecisionOptions);
-
-  paramForums = paramForums.filter((x) => !!x);
-  paramStatuses = paramStatuses.filter((x) => !!x);
-
-  return { paramForums, paramStatuses };
-};
-
 const TechnologyPage: NextPage<{
   technologies: Technology[];
   date: string | null;
@@ -82,51 +66,30 @@ const TechnologyPage: NextPage<{
     );
   };
 
-  const [selectedForums, setSelectedForums] = useState<ForumOptions>([]);
-  const [selectedDecisions, setSelectedDecisions] = useState<DecisionOptions>(
-    [],
-  );
+  const forums = useState<ForumOptions>([]);
+  const [selectedForums, setSelectedForums] = forums;
+  const decisions = useState<DecisionOptions>([]);
+  const [selectedDecisions, setSelectedDecisions] = decisions;
+  const search = useState("");
+  const [currentSearch, setSearch] = search;
+
+  useStatesToNextQuery(router, {
+    search,
+    forums,
+    decisions,
+  });
 
   const [showfilter] = useState(true);
 
-  const [search, setSearch] = useState("");
   const handleSearchChange = (e: React.SetStateAction<string>) => {
     setSearch(e);
   };
-
-  useEffect(() => {
-    let { paramForums, paramStatuses } = extractParams(router.query);
-
-    if (paramForums.length > 0) {
-      setSelectedForums(paramForums);
-    }
-    if (paramStatuses.length > 0) {
-      setSelectedDecisions(paramStatuses);
-    }
-  }, [router]);
-
-  useEffect(() => {
-    let { paramForums, paramStatuses } = extractParams(router.query);
-
-    const oldForums = new Set(paramForums);
-    const oldStatus = new Set(paramStatuses);
-    const newForums = new Set(selectedForums);
-    const newStatus = new Set(selectedDecisions);
-
-    if (!eqSet(oldForums, newForums) || !eqSet(oldStatus, newStatus)) {
-      router.query.forums = selectedForums;
-      router.query.statuses = selectedDecisions;
-      router.replace({ pathname: "/", query: router.query }, undefined, {
-        shallow: true,
-      });
-    }
-  }, [selectedForums, selectedDecisions, router]);
 
   const filteredTechnologies = technologies.filter((technology) => {
     if (
       selectedForums.length === 0 &&
       selectedDecisions.length === 0 &&
-      search === ""
+      currentSearch === ""
     ) {
       return true; // Show all activities if no filter is applied
     } else {
@@ -141,9 +104,9 @@ const TechnologyPage: NextPage<{
             technology.labels[0].name.includes(item),
           ));
       const searchMatches =
-        search === "" ||
+        currentSearch === "" ||
         (technology.title &&
-          technology.title.toLowerCase().includes(search.toLowerCase()));
+          technology.title.toLowerCase().includes(currentSearch.toLowerCase()));
       return listNameMatches && categoryMatches && searchMatches;
     }
   });
@@ -167,7 +130,7 @@ const TechnologyPage: NextPage<{
           label="Søk"
           variant="simple"
           onChange={handleSearchChange}
-          value={search}
+          value={currentSearch}
           onClear={() => setSearch("")}
         />
       </form>

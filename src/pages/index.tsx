@@ -1,15 +1,22 @@
-import type { NextPage } from "next";
-import { GetServerSideProps } from "next";
-import React from "react";
-
 import {
   Technology,
   TechnologyLabel,
   getCurrentTechnologies,
 } from "@/lib/technologies";
 import { Chips, Heading, Search, Table } from "@navikt/ds-react";
+import type { NextPage } from "next";
+import { GetServerSideProps } from "next";
 import Link from "next/link";
-import { useState } from "react";
+import { useRouter } from "next/router";
+import React, { useEffect, useState } from "react";
+import { useStatesToNextQuery } from "use-states-to-next-query";
+
+export const getServerSideProps: GetServerSideProps = async (context) => {
+  const date = context.query["date"] ?? null;
+
+  const technologies: Technology[] = await getCurrentTechnologies();
+  return { props: { technologies, date } };
+};
 
 const colorMap = {
   Uavklart: "kandidat-color",
@@ -32,16 +39,12 @@ type ForumOptions = (typeof forumOptions)[number][];
 const decisionOptions = ["Bruk", "Vurder", "Avstå"] as const;
 type DecisionOptions = (typeof decisionOptions)[number][];
 
-export const getServerSideProps: GetServerSideProps = async (context) => {
-  const date = context.query["date"] ?? null;
-
-  const technologies: Technology[] = await getCurrentTechnologies();
-  return { props: { technologies, date } };
-};
-
-const TechnologiesPage: NextPage<{
+const TechnologyPage: NextPage<{
   technologies: Technology[];
-}> = ({ technologies }) => {
+  date: string | null;
+}> = ({ technologies, date }) => {
+  const router = useRouter();
+
   const Label = ({ label }: { label: TechnologyLabel }) => {
     return (
       <span
@@ -62,17 +65,51 @@ const TechnologiesPage: NextPage<{
       </span>
     );
   };
-  const [selectedForums, setSelectedForums] = useState<ForumOptions>([]);
-  const [selectedDecisions, setSelectedDecisions] = useState<DecisionOptions>(
-    [],
-  );
+
+  const forums = useState<ForumOptions>([]);
+  const [selectedForums, setSelectedForums] = forums;
+  const decisions = useState<DecisionOptions>([]);
+  const [selectedDecisions, setSelectedDecisions] = decisions;
+  const search = useState("");
+  const [currentSearch, setSearch] = search;
+
+  useStatesToNextQuery(router, {
+    search,
+    forums,
+    decisions,
+  });
 
   const [showfilter] = useState(true);
 
-  const [search, setSearch] = useState("");
   const handleSearchChange = (e: React.SetStateAction<string>) => {
     setSearch(e);
   };
+
+  const filteredTechnologies = technologies.filter((technology) => {
+    if (
+      selectedForums.length === 0 &&
+      selectedDecisions.length === 0 &&
+      currentSearch === ""
+    ) {
+      return true; // Show all activities if no filter is applied
+    } else {
+      const listNameMatches =
+        selectedDecisions.length === 0 ||
+        (technology.listName &&
+          selectedDecisions.some((item) => technology.listName.includes(item)));
+      const categoryMatches =
+        selectedForums.length === 0 ||
+        (technology.labels &&
+          selectedForums.some((item) =>
+            technology.labels[0].name.includes(item),
+          ));
+      const searchMatches =
+        currentSearch === "" ||
+        (technology.title &&
+          technology.title.toLowerCase().includes(currentSearch.toLowerCase()));
+      return listNameMatches && categoryMatches && searchMatches;
+    }
+  });
 
   return (
     <>
@@ -93,7 +130,7 @@ const TechnologiesPage: NextPage<{
           label="Søk"
           variant="simple"
           onChange={handleSearchChange}
-          value={search}
+          value={currentSearch}
           onClear={() => setSearch("")}
         />
       </form>
@@ -169,60 +206,30 @@ const TechnologiesPage: NextPage<{
             </Table.Row>
           </Table.Header>
           <Table.Body>
-            {technologies
-              .filter((technology) => {
-                if (
-                  selectedForums.length === 0 &&
-                  selectedDecisions.length === 0 &&
-                  search === ""
-                ) {
-                  return true; // Show all activities if no filter is applied
-                } else {
-                  const listNameMatches =
-                    selectedDecisions.length === 0 ||
-                    (technology.listName &&
-                      selectedDecisions.some((item) =>
-                        technology.listName.includes(item),
-                      ));
-                  const categoryMatches =
-                    selectedForums.length === 0 ||
-                    (technology.labels &&
-                      selectedForums.some((item) =>
-                        technology.labels[0].name.includes(item),
-                      ));
-                  const searchMatches =
-                    search === "" ||
-                    (technology.title &&
-                      technology.title
-                        .toLowerCase()
-                        .includes(search.toLowerCase()));
-                  return listNameMatches && categoryMatches && searchMatches;
-                }
-              })
-              .map((technology) => (
-                <Table.Row key={technology.id}>
-                  <Table.DataCell>
-                    <Link
-                      className={"blue-link"}
-                      href={`/technologies/${technology.id}`}
-                    >
-                      {technology.title}
-                    </Link>
-                  </Table.DataCell>
-                  <Table.DataCell>
-                    <span
-                      className={`activity--label ${colorMap[technology.listName]}`}
-                    >
-                      {technology.listName}
-                    </span>
-                  </Table.DataCell>
-                  <Table.DataCell className="whitespace-nowrap">
-                    {technology.labels.length > 0 && (
-                      <LabelList labels={technology.labels} />
-                    )}
-                  </Table.DataCell>
-                </Table.Row>
-              ))}
+            {filteredTechnologies.map((technology) => (
+              <Table.Row key={technology.id}>
+                <Table.DataCell>
+                  <Link
+                    className={"blue-link"}
+                    href={`/technologies/${technology.id}`}
+                  >
+                    {technology.title}
+                  </Link>
+                </Table.DataCell>
+                <Table.DataCell>
+                  <span
+                    className={`activity--label ${colorMap[technology.listName]}`}
+                  >
+                    {technology.listName}
+                  </span>
+                </Table.DataCell>
+                <Table.DataCell className="whitespace-nowrap">
+                  {technology.labels.length > 0 && (
+                    <LabelList labels={technology.labels} />
+                  )}
+                </Table.DataCell>
+              </Table.Row>
+            ))}
           </Table.Body>
         </Table>
       </div>
@@ -246,4 +253,4 @@ const TechnologiesPage: NextPage<{
   );
 };
 
-export default TechnologiesPage;
+export default TechnologyPage;

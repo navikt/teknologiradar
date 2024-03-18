@@ -1,37 +1,48 @@
-import React from "react";
 import type { NextPage } from "next";
 import { GetServerSideProps } from "next";
+import React from "react";
+
 import {
-  ActivityLabel,
-  activityComparator,
-  getCurrentActivities,
-  NextLearningActivity,
-  RecurringInterval,
-} from "@/lib/activities";
-import { Heading, Table, Search, Chips } from "@navikt/ds-react";
+  Technology,
+  TechnologyLabel,
+  getCurrentTechnologies,
+} from "@/lib/technologies";
+import { Chips, Heading, Search, Table } from "@navikt/ds-react";
 import Link from "next/link";
-import { isAfter } from "date-fns";
 import { useState } from "react";
-/*import * as metrics from "@/lib/metrics";*/
+
+const colorMap = {
+  Uavklart: "kandidat-color",
+  Eksperiment: "trial-color",
+  Vurder: "trial-color",
+  Bruk: "adopt-color",
+  Avstå: "hold-color",
+  Omstridt: "omstridt-color",
+};
+
+const forumOptions = [
+  "Design",
+  "Frontend",
+  "Backend",
+  "Data science",
+  "Data engineering",
+] as const;
+type ForumOptions = (typeof forumOptions)[number][];
+
+const decisionOptions = ["Bruk", "Vurder", "Avstå"] as const;
+type DecisionOptions = (typeof decisionOptions)[number][];
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const date = context.query["date"] ?? null;
 
-  // @ts-ignore
-  const activities: NextLearningActivity[] = await getCurrentActivities(
-    date as string | null,
-    true,
-  );
-  return { props: { activities, date } };
+  const technologies: Technology[] = await getCurrentTechnologies();
+  return { props: { technologies, date } };
 };
 
-const ActivitiesPage: NextPage<{
-  activities: NextLearningActivity[];
-  date: string | null;
-}> = ({ activities, date }) => {
-  const now = date ? new Date(date) : new Date();
-
-  const Label = ({ label }: { label: ActivityLabel }) => {
+const TechnologiesPage: NextPage<{
+  technologies: Technology[];
+}> = ({ technologies }) => {
+  const Label = ({ label }: { label: TechnologyLabel }) => {
     return (
       <span
         className={"activity--label"}
@@ -42,7 +53,7 @@ const ActivitiesPage: NextPage<{
     );
   };
 
-  const LabelList = ({ labels }: { labels: ActivityLabel[] }) => {
+  const LabelList = ({ labels }: { labels: TechnologyLabel[] }) => {
     return (
       <span className={"activity--label-list"}>
         {labels.map((label, idx) => (
@@ -51,38 +62,10 @@ const ActivitiesPage: NextPage<{
       </span>
     );
   };
-
-  const groupedByDate: { [key: string]: NextLearningActivity[] } = {};
-  activities.filter(
-    (act) => act.recurringInterval !== RecurringInterval.ONE_TIME,
+  const [selectedForums, setSelectedForums] = useState<ForumOptions>([]);
+  const [selectedDecisions, setSelectedDecisions] = useState<DecisionOptions>(
+    [],
   );
-  activities
-    .filter((act) => act.recurringInterval === RecurringInterval.ONE_TIME)
-    .forEach((activity) => {
-      const activityDate = activity.date;
-      if (!activityDate || isAfter(new Date(activityDate), now)) return;
-      if (!groupedByDate[activityDate]) groupedByDate[activityDate] = [];
-      /*    if (activity.listName === "Kandidat")*/
-      groupedByDate[activityDate].push(activity);
-    });
-
-  Object.values(groupedByDate).forEach((activities) =>
-    activities.sort(activityComparator),
-  );
-  const dates = Object.keys(groupedByDate);
-  dates.sort((a, b) => (a === b ? 0 : a > b ? -1 : 1));
-
-  const options = [
-    "Design",
-    "Frontend",
-    "Backend",
-    "Data science",
-    "Data engineering",
-  ];
-  const [selected, setSelected] = useState([]);
-
-  const options2 = ["Bruk", "Vurder", "Avstå"];
-  const [selected2, setSelected2] = useState([]);
 
   const [showfilter] = useState(true);
 
@@ -91,7 +74,6 @@ const ActivitiesPage: NextPage<{
     setSearch(e);
   };
 
-  // @ts-ignore
   return (
     <>
       <Heading
@@ -127,18 +109,16 @@ const ActivitiesPage: NextPage<{
             Forum
           </Heading>
           <Chips>
-            {options.map((c) => (
+            {forumOptions.map((c) => (
               <Chips.Toggle
                 className={"chip-effect"}
-                // @ts-ignore
-                selected={selected.includes(c)}
+                selected={selectedForums.includes(c)}
                 key={c}
                 onClick={() =>
-                  setSelected(
-                    // @ts-ignore
-                    selected.includes(c)
-                      ? selected.filter((x) => x !== c)
-                      : [...selected, c],
+                  setSelectedForums(
+                    selectedForums.includes(c)
+                      ? selectedForums.filter((x) => x !== c)
+                      : [...selectedForums, c],
                   )
                 }
               >
@@ -156,18 +136,16 @@ const ActivitiesPage: NextPage<{
             Status
           </Heading>
           <Chips>
-            {options2.map((c) => (
+            {decisionOptions.map((c) => (
               <Chips.Toggle
                 className={"chip-effect"}
-                // @ts-ignore
-                selected={selected2.includes(c)}
+                selected={selectedDecisions.includes(c)}
                 key={c}
                 onClick={() =>
-                  setSelected2(
-                    // @ts-ignore
-                    selected2.includes(c)
-                      ? selected2.filter((x) => x !== c)
-                      : [...selected2, c],
+                  setSelectedDecisions(
+                    selectedDecisions.includes(c)
+                      ? selectedDecisions.filter((x) => x !== c)
+                      : [...selectedDecisions, c],
                   )
                 }
               >
@@ -191,81 +169,60 @@ const ActivitiesPage: NextPage<{
             </Table.Row>
           </Table.Header>
           <Table.Body>
-            {dates.map((date) => (
-              <React.Fragment key={date}>
-                {groupedByDate[date]
-                  .filter((activity) => {
-                    if (
-                      selected.length === 0 &&
-                      selected2.length === 0 &&
-                      search === ""
-                    ) {
-                      return true; // Show all activities if no filter is applied
-                    } else {
-                      const listNameMatches =
-                        selected2.length === 0 ||
-                        (activity.listName &&
-                          selected2.some((item) =>
-                            activity.listName.includes(item),
-                          ));
-                      const categoryMatches =
-                        selected.length === 0 ||
-                        (activity.labels &&
-                          selected.some((item) =>
-                            activity.labels[0].name.includes(item),
-                          ));
-                      const searchMatches =
-                        search === "" ||
-                        (activity.title &&
-                          activity.title
-                            .toLowerCase()
-                            .includes(search.toLowerCase()));
-                      return (
-                        listNameMatches && categoryMatches && searchMatches
-                      );
-                    }
-                  })
-                  .map((activity) => (
-                    <Table.Row key={activity.id}>
-                      <Table.DataCell>
-                        <Link
-                          className={"blue-link"}
-                          href={`/activities/${activity.id}`}
-                        >
-                          {activity.title}
-                        </Link>
-                      </Table.DataCell>
-                      <Table.DataCell>
-                        <span
-                          className={`activity--label 
-                      ${
-                        activity.listName === "Uavklart"
-                          ? "kandidat-color"
-                          : activity.listName === "Eksperiment"
-                            ? "trial-color"
-                            : activity.listName === "Vurder"
-                              ? "trial-color"
-                              : activity.listName === "Bruk"
-                                ? "adopt-color"
-                                : activity.listName === "Avstå"
-                                  ? "hold-color"
-                                  : activity.listName === "Omstridt"
-                                    ? "omstridt-color"
-                                    : ""
-                      }`}
-                        >
-                          {activity.listName}
-                        </span>
-                      </Table.DataCell>
-                      <Table.DataCell className="whitespace-nowrap">
-                        {activity.labels.length > 0 && (
-                          <LabelList labels={activity.labels} />
-                        )}
-                      </Table.DataCell>
-                    </Table.Row>
-                  ))}
-              </React.Fragment>
-            ))}
+            {technologies
+              .filter((technology) => {
+                if (
+                  selectedForums.length === 0 &&
+                  selectedDecisions.length === 0 &&
+                  search === ""
+                ) {
+                  return true; // Show all activities if no filter is applied
+                } else {
+                  const listNameMatches =
+                    selectedDecisions.length === 0 ||
+                    (technology.listName &&
+                      selectedDecisions.some((item) =>
+                        technology.listName.includes(item),
+                      ));
+                  const categoryMatches =
+                    selectedForums.length === 0 ||
+                    (technology.labels &&
+                      selectedForums.some((item) =>
+                        technology.labels[0].name.includes(item),
+                      ));
+                  const searchMatches =
+                    search === "" ||
+                    (technology.title &&
+                      technology.title
+                        .toLowerCase()
+                        .includes(search.toLowerCase()));
+                  return listNameMatches && categoryMatches && searchMatches;
+                }
+              })
+              .map((technology) => (
+                <Table.Row key={technology.id}>
+                  <Table.DataCell>
+                    <Link
+                      className={"blue-link"}
+                      href={`/technologies/${technology.id}`}
+                    >
+                      {technology.title}
+                    </Link>
+                  </Table.DataCell>
+                  <Table.DataCell>
+                    <span
+                      className={`activity--label ${colorMap[technology.listName]}`}
+                    >
+                      {technology.listName}
+                    </span>
+                  </Table.DataCell>
+                  <Table.DataCell className="whitespace-nowrap">
+                    {technology.labels.length > 0 && (
+                      <LabelList labels={technology.labels} />
+                    )}
+                  </Table.DataCell>
+                </Table.Row>
+              ))}
           </Table.Body>
         </Table>
       </div>
@@ -289,4 +246,4 @@ const ActivitiesPage: NextPage<{
   );
 };
 
-export default ActivitiesPage;
+export default TechnologiesPage;

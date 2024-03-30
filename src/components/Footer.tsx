@@ -4,7 +4,7 @@ import { BodyShort, Heading, Link } from "@navikt/ds-react";
 const Footer = () => {
   return (
     <div
-      className="bg-deepblue-800 w-full border-t-2"
+      className="bg-deepblue-800 w-full mt-10 border-t-2"
       style={{ borderColor: "rgb(34, 211, 238)" }}
     >
       <footer

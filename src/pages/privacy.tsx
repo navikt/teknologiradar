@@ -1,6 +1,5 @@
 import type { NextPage } from "next";
-import { Heading, Link } from "@navikt/ds-react";
-
+import { Heading } from "@navikt/ds-react";
 const Privacy: NextPage = () => {
   return (
     <div className="App">

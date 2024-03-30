@@ -1,6 +1,5 @@
 import type { NextPage } from "next";
 import { Heading } from "@navikt/ds-react";
-
 const Accessibility: NextPage = () => {
   return (
     <div className="App">

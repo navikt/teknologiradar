@@ -8,7 +8,7 @@ import type { NextPage } from "next";
 import { GetServerSideProps } from "next";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useStatesToNextQuery } from "use-states-to-next-query";
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
@@ -100,6 +100,7 @@ const TechnologyPage: NextPage<{
       const categoryMatches =
         selectedForums.length === 0 ||
         (technology.labels &&
+          technology.labels[0].name && // defensive code (incomplete / missing data)
           selectedForums.some((item) =>
             technology.labels[0].name.includes(item),
           ));

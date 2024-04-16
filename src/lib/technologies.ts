@@ -118,4 +118,13 @@ Tradisjonelle test-rammeverk for frontend har ofte basert seg på test-ID-er og 
     listName: "Bruk",
     labels: [{ name: "Frontend", color: "#aaaaff" }],
   },
+  {
+    id: "incomplete-data-test-2",
+    title: "incomplete data test 2",
+    description: `incomplete data test`,
+    editUrl: "https://example.com",
+    listName: "Avstå",
+    // @ts-ignore
+    labels: [{}],
+  },
 ];

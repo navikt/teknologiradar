@@ -1,5 +1,6 @@
 import { Cache } from "@/lib/cache";
 import { getTrelloCards, mapTrelloCardToTechnology } from "@/lib/trello";
+import { z } from "zod";
 
 export enum RecurringInterval {
   ONE_TIME,
@@ -40,10 +41,26 @@ async function fetchTechnologies({
 }
 
 export const getCurrentTechnologies = (() => {
+  const TechnologyValidator = z.array(
+    z.object({
+      id: z.string(),
+      title: z.string(),
+      description: z.string(),
+      editUrl: z.string(),
+      listName: z.string(),
+      labels: z.array(
+        z.object({
+          name: z.string(),
+          color: z.string(),
+        }),
+      ),
+    }),
+  );
+
   const { TRELLO_BOARD_ID, TRELLO_API_KEY, TRELLO_API_TOKEN } = process.env;
   if (!TRELLO_API_KEY || !TRELLO_API_TOKEN || !TRELLO_BOARD_ID) {
     return () => {
-      return exampleData;
+      return TechnologyValidator.parse(exampleData);
     };
   }
   const fetchIntervalMs = 5 * 60 * 1000;
@@ -64,7 +81,7 @@ export const getCurrentTechnologies = (() => {
   return async () => {
     const currentTime = new Date();
     const mapped = await technologiesCache.get(currentTime.getTime());
-    return mapped;
+    return TechnologyValidator.parse(mapped);
   };
 })();
 

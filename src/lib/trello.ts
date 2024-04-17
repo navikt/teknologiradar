@@ -1,4 +1,5 @@
 import { Technology, TechnologyLabel } from "@/lib/technologies";
+import { listNameById } from "config";
 
 export interface Label {
   id: string;
@@ -34,26 +35,6 @@ export interface TrelloCard {
   url: string;
   customFieldItems: CustomFieldItem[];
 }
-
-const listNameById: { [key: string]: string } = {
-  "640e50418295928b01d5be0a": "Uavklart",
-  "640e5031258e47b734f693df": "Vurder",
-  "640e502a91ab01a800eba0e0": "Eksperiment",
-  "640e502477b60be79eaccccc": "Bruk",
-  "640e5049a20f175fce555ea2": "Omstridt",
-  "640e50373232c0d86899a7f1": "Avstå",
-  "630c8bb1d847e5016e5ffe39": "RecurringEveryFagtorsdag",
-  "63071581bbd9350032142ad9": "CompletedActivities",
-};
-
-const customFieldNameById: { [key: string]: string } = {
-  "63ce2d2e1c1ceb006d7c5bc0": "Room",
-  "63ce2cfb41503201ec504740": "Contact",
-  "63ce2d4715a9681fb9224d44": "StreamURL",
-  "63db5708ca241eb9df2b28fe": "LengthMinutes",
-  "63db5bb599475d70574891f8": "ImageURL",
-  "63db5cf637a137fc31ab2040": "Emoji",
-};
 
 const TRELLO_FALLBACK_COLOR = "#AAAAAA";
 const TRELLO_COLORS: { [key: string]: string } = {

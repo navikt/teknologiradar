@@ -39,4 +39,6 @@ next-env.d.ts
 # editor
 .idea
 .eslintcache
+
+config.ts
 yarn.lock

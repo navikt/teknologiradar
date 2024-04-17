@@ -2,6 +2,22 @@ import { Cache } from "@/lib/cache";
 import { getTrelloCards, mapTrelloCardToTechnology } from "@/lib/trello";
 import { z } from "zod";
 
+const TechnologyValidator = z.array(
+  z.object({
+    id: z.string(),
+    title: z.string(),
+    description: z.string(),
+    editUrl: z.string(),
+    listName: z.string(),
+    labels: z.array(
+      z.object({
+        name: z.string(),
+        color: z.string(),
+      }),
+    ),
+  }),
+);
+
 export enum RecurringInterval {
   ONE_TIME,
   WEEKLY,
@@ -41,22 +57,6 @@ async function fetchTechnologies({
 }
 
 export const getCurrentTechnologies = (() => {
-  const TechnologyValidator = z.array(
-    z.object({
-      id: z.string(),
-      title: z.string(),
-      description: z.string(),
-      editUrl: z.string(),
-      listName: z.string(),
-      labels: z.array(
-        z.object({
-          name: z.string(),
-          color: z.string(),
-        }),
-      ),
-    }),
-  );
-
   const { TRELLO_BOARD_ID, TRELLO_API_KEY, TRELLO_API_TOKEN } = process.env;
   if (!TRELLO_API_KEY || !TRELLO_API_TOKEN || !TRELLO_BOARD_ID) {
     return () => {
@@ -127,8 +127,8 @@ const exampleData: Technology[] = [
 Beskrivelse
 
 React Testing Library (RTL) og dets søster-biblioteker for andre rammeverk er designet for å teste slik brukeren interagerer med systemet, og teste faktisk utfall, ikke internlogikk. I tillegg er det innebygget testing av universell utforming, ved at man leter etter elementer basert på rolle, tekstlig verdi og status, som er samme informasjon som kommuniseres til skjermlesere.
-    
-Begrunnelse     
+
+Begrunnelse
 
 Tradisjonelle test-rammeverk for frontend har ofte basert seg på test-ID-er og API-er som tester logikk mer enn brukerinteraksjon. Dette retter Testing Library opp i, ved å tilby API-er som presser frem testing som ligner på slik vi ville ha testet manuelt. "Finn radio-knappen som har teksten 'et-eller-annet', klikk på den. Finn 'Neste'-knappen og klikk på den. Se at du kom til neste side, og ikke at det vises en feilmelding." Slik ville jeg testet selv, og akkurat det samme støtter RTL. Biblioteket har også inspirert andre test-rammeverk, som Cypress o.l., og er blitt en industristandard for frontend-testing.`,
     editUrl: "https://example.com",

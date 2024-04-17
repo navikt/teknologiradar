@@ -100,7 +100,8 @@ const TechnologyPage: NextPage<{
       const categoryMatches =
         selectedForums.length === 0 ||
         (technology.labels &&
-          technology.labels[0].name && // defensive code (incomplete / missing data)
+          technology.labels.length > 0 && // check if labels array has at least one element
+          technology.labels[0].name &&
           selectedForums.some((item) =>
             technology.labels[0].name.includes(item),
           ));

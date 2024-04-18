@@ -18,13 +18,6 @@ const TechnologyValidator = z.array(
   }),
 );
 
-export enum RecurringInterval {
-  ONE_TIME,
-  WEEKLY,
-  BI_WEEKLY,
-  MONTHLY,
-}
-
 export interface TechnologyLabel {
   name: string;
   color: string;
@@ -84,31 +77,6 @@ export const getCurrentTechnologies = (() => {
     return TechnologyValidator.parse(mapped);
   };
 })();
-
-const pad = (num: number) => (num < 10 ? `0${num}` : `${num}`);
-
-export const formatTimeSpan = (
-  timeStart: string,
-  durationMinutes: number | null,
-) => {
-  if (durationMinutes === null) return timeStart;
-  const [hours, minutes] = timeStart
-    .split(/[\.:]/, 2)
-    .map((part) => parseInt(part, 10));
-  const startDate = new Date();
-  startDate.setHours(hours);
-  startDate.setMinutes(minutes);
-  const endDate = new Date(startDate.getTime() + durationMinutes * 60 * 1000);
-  return (
-    pad(startDate.getHours()) +
-    "." +
-    pad(startDate.getMinutes()) +
-    "-" +
-    pad(endDate.getHours()) +
-    "." +
-    pad(endDate.getMinutes())
-  );
-};
 
 const exampleData: Technology[] = [
   {

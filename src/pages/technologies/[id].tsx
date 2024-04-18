@@ -69,17 +69,6 @@ const TechnologyEntry = ({ technology }: { technology: Technology }) => {
       >
         {technology.title}
       </Heading>
-      <div className={"activity--subtext color-white"}>
-        {/*       <span className={"activity--edit-link color-white"}>
-          <Link
-            href={activity.editUrl}
-            target="_blank"
-            className={"link-with-icon color-blue"}
-          >
-            Trello-kort <ExternalLink />
-          </Link>
-        </span>*/}
-      </div>
       <p className={"activity--subtext color-white"}>
         Status: {technology.listName}
       </p>

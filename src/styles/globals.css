@@ -269,3 +269,7 @@ tr:hover {
 .navdsi-header__title {
   padding-left: 10px !important;
 }
+
+.color-teal {
+  color: rgb(34 211 238 / 1);
+}

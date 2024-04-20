@@ -1,8 +1,0 @@
-// replace with values from trello (see README.md)
-
-export const listNameById: { [key: string]: string } = {
-  // "": "Uavklart",
-  "": "Vurder",
-  "": "Bruk",
-  "": "Avstå",
-};

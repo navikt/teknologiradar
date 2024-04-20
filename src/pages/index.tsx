@@ -1,14 +1,12 @@
-import {
-  Technology,
-  TechnologyLabel,
-  getCurrentTechnologies,
-} from "@/lib/technologies";
+import { TechnologyTable } from "@/components/TechnologyTable";
+import { Technology, getCurrentTechnologies } from "@/lib/technologies";
 import { Chips, Heading, Search, Table } from "@navikt/ds-react";
 import type { NextPage } from "next";
 import { GetServerSideProps } from "next";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import React, { useState } from "react";
+// @ts-expect-error
 import { useStatesToNextQuery } from "use-states-to-next-query";
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
@@ -18,53 +16,22 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   return { props: { technologies, date } };
 };
 
-const colorMap = {
-  Uavklart: "kandidat-color",
-  Eksperiment: "trial-color",
-  Vurder: "trial-color",
-  Bruk: "adopt-color",
-  Avstå: "hold-color",
-  Omstridt: "omstridt-color",
-};
-
-const forumOptions = [
+export const forumOptions = [
   "Design",
   "Frontend",
   "Backend",
   "Data science",
   "Data engineering",
 ] as const;
-type ForumOptions = (typeof forumOptions)[number][];
+export type ForumOptions = (typeof forumOptions)[number][];
 
 const decisionOptions = ["Bruk", "Vurder", "Avstå"] as const;
 type DecisionOptions = (typeof decisionOptions)[number][];
 
 const TechnologyPage: NextPage<{
   technologies: Technology[];
-  date: string | null;
-}> = ({ technologies, date }) => {
+}> = ({ technologies }) => {
   const router = useRouter();
-
-  const Label = ({ label }: { label: TechnologyLabel }) => {
-    return (
-      <span
-        className={"activity--label"}
-        style={{ backgroundColor: label.color }}
-      >
-        {label.name}
-      </span>
-    );
-  };
-
-  const LabelList = ({ labels }: { labels: TechnologyLabel[] }) => {
-    return (
-      <span className={"activity--label-list"}>
-        {labels.map((label, idx) => (
-          <Label key={idx} label={label} />
-        ))}
-      </span>
-    );
-  };
 
   const forums = useState<ForumOptions>([]);
   const [selectedForums, setSelectedForums] = forums;
@@ -195,46 +162,7 @@ const TechnologyPage: NextPage<{
         </>
       )}
 
-      <div style={{ overflowX: "auto", width: "100%" }}>
-        <Table
-          className={"activity--table"}
-          style={{ overflow: "scroll", marginTop: "20px" }}
-        >
-          <Table.Header className={"color-blue"}>
-            <Table.Row>
-              <Table.HeaderCell scope="col">Teknologi</Table.HeaderCell>
-              <Table.HeaderCell scope="col">Status</Table.HeaderCell>
-              <Table.HeaderCell scope="col">Forum</Table.HeaderCell>
-            </Table.Row>
-          </Table.Header>
-          <Table.Body>
-            {filteredTechnologies.map((technology) => (
-              <Table.Row key={technology.id}>
-                <Table.DataCell>
-                  <Link
-                    className={"blue-link"}
-                    href={`/technologies/${technology.id}`}
-                  >
-                    {technology.title}
-                  </Link>
-                </Table.DataCell>
-                <Table.DataCell>
-                  <span
-                    className={`activity--label ${colorMap[technology.listName]}`}
-                  >
-                    {technology.listName}
-                  </span>
-                </Table.DataCell>
-                <Table.DataCell className="whitespace-nowrap">
-                  {technology.labels.length > 0 && (
-                    <LabelList labels={technology.labels} />
-                  )}
-                </Table.DataCell>
-              </Table.Row>
-            ))}
-          </Table.Body>
-        </Table>
-      </div>
+      <TechnologyTable technologies={filteredTechnologies} />
 
       <footer>
         <p

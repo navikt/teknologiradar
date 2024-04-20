@@ -6,9 +6,10 @@ import {
 import { Back } from "@navikt/ds-icons";
 import { Detail, Heading } from "@navikt/ds-react";
 import type { GetServerSideProps, NextPage } from "next";
+import dynamic from "next/dynamic";
 import Head from "next/head";
 import Link from "next/link";
-import ReactMarkdown from "react-markdown";
+const ReactMarkdown = dynamic(() => import("react-markdown"), { ssr: false });
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const id = context.query["id"];

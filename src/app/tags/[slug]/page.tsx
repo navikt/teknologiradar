@@ -17,7 +17,7 @@ export async function generateStaticParams() {
   });
 
   const processed = [...tagSet.values()].map((t) => {
-    return { slug: t.toLowerCase() };
+    return { slug: t?.toLowerCase() };
   });
 
   return processed;
@@ -29,8 +29,8 @@ const TagsPage = async ({ params }: { params: Params }) => {
   const technologies: Technology[] = await getCurrentTechnologies();
   const _technologies = technologies.filter((technology) =>
     technology.labels
-      .map((l) => l.name.toLowerCase())
-      .includes(params.slug.toLowerCase()),
+      .map((l) => l.name?.toLowerCase())
+      .includes(params.slug?.toLowerCase()),
   );
 
   return (

@@ -1,7 +1,6 @@
 import { Technology, getCurrentTechnologies } from "@/lib/technologies";
 import { Heading } from "@navikt/ds-react";
 import Link from "next/link";
-import React from "react";
 
 const getTags = async () => {
   const technologies: Technology[] = await getCurrentTechnologies();
@@ -27,7 +26,7 @@ const Tags = async () => {
       <ul>
         {tags.map((tag) => (
           <li key={tag}>
-            <Link href={`/tags/${tag.toLowerCase()}`}>{tag}</Link>
+            <Link href={`/tags/${tag?.toLowerCase()}`}>{tag}</Link>
           </li>
         ))}
       </ul>

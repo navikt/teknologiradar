@@ -67,7 +67,7 @@ export const TechnologyTable = ({
             <TableHeaderCell className="w-[300px]" scope="col">
               Teknologi
             </TableHeaderCell>
-            <TableHeaderCell className="w-[110px]" scope="col">
+            <TableHeaderCell className="w-[120px]" scope="col">
               Status
             </TableHeaderCell>
             <TableHeaderCell scope="col">Forum</TableHeaderCell>

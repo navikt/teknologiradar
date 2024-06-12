@@ -11,7 +11,7 @@ import Link from "next/link";
 
 const colorMap = {
   Uavklart: "kandidat-color",
-  Eksperiment: "trial-color",
+  Eksperimenter: "trial-color",
   Vurder: "trial-color",
   Bruk: "adopt-color",
   Avstå: "hold-color",
@@ -67,7 +67,7 @@ export const TechnologyTable = ({
             <TableHeaderCell className="w-[300px]" scope="col">
               Teknologi
             </TableHeaderCell>
-            <TableHeaderCell className="w-[120px]" scope="col">
+            <TableHeaderCell className="w-[130px]" scope="col">
               Status
             </TableHeaderCell>
             <TableHeaderCell scope="col">Forum</TableHeaderCell>

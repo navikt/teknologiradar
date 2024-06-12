@@ -25,7 +25,7 @@ export const forumOptions = [
 ] as const;
 export type ForumOptions = (typeof forumOptions)[number][];
 
-const decisionOptions = ["Bruk", "Eksperiminter", "Avstå"] as const;
+const decisionOptions = ["Bruk", "Eksperimenter", "Avstå"] as const;
 type DecisionOptions = (typeof decisionOptions)[number][];
 
 const TechnologyPage: NextPage<{

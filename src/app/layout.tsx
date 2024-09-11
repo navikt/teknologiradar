@@ -18,10 +18,6 @@ type RootLayoutProps = {
 export default async function RootLayout({ children }: RootLayoutProps) {
   return (
     <html lang="no">
-    <head>
-        <script defer data-domains="https://teknologiradar.ansatt.nav.no/" src="https://umami.nav.no/script.js"
-                data-website-id="f8157d1d-b9ff-4208-9281-882e4594c126"></script>
-    </head>
     <body>
     <Header/>
     <main className="layout">{children}</main>

@@ -1,10 +1,10 @@
 apiVersion: 'nais.io/v1alpha1'
 kind: 'Application'
 metadata:
-  name: reops-solan
-  namespace: team-researchops
+  name: teknologiradar
+  namespace: teknologiredaksjonen
   labels:
-    team: team-researchops
+    team: teknologiredaksjonen
   annotations:
     nais.io/read-only-file-system: "false"
     nais.io/run-as-user: "1001"

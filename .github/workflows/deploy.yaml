@@ -5,9 +5,6 @@ on:
     branches:
       - main
 
-env:
-  IMAGE_BASE: ghcr.io/${{github.repository}}
-
 jobs:
   build-and-push:
     name: Build and push
@@ -15,6 +12,7 @@ jobs:
     permissions:
       packages: write
       contents: read
+      id-token: write
     steps:
       - uses: actions/checkout@v4
         name: Checkout
@@ -40,47 +38,25 @@ jobs:
       - name: Install dependencies
         run: npm run build
 
-      - name: Lag tag for image
-        run: echo "TAG=$(git log -1 --pretty='%ad_%h' --date=format:'%Y%m%d%H%M%S')" >> $GITHUB_ENV
+      - name: 'Build and push'
+        uses: nais/docker-build-push@v0
+        id: docker-build-push
+        with:
+          team: teknologiredaksjonen
+          identity_provider: ${{ secrets.NAIS_WORKLOAD_IDENTITY_PROVIDER }}
+          project_id: ${{ vars.NAIS_MANAGEMENT_PROJECT_ID }}
 
-      - name: Lag full image referanse
-        run: echo "IMAGE=$IMAGE_BASE:$TAG" >> $GITHUB_ENV
-
-      - name: Build app and publish Docker image
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: |
-          echo ${GITHUB_TOKEN} | docker login ghcr.io -u ${GITHUB_REPOSITORY} --password-stdin
-          docker build --pull --tag ${IMAGE} .
-          docker push ${IMAGE}
-
-#  deploy-dev:
-#    name: Deploy to nais dev
-#    needs: build-and-push
-#    runs-on: ubuntu-latest
-#    steps:
-#      - uses: actions/checkout@v1
-#        name: Checkout
-#
-#      - name: Lag tag for image
-#        run: echo "TAG=$(git log -1 --pretty='%ad_%h' --date=format:'%Y%m%d%H%M%S')" >> $GITHUB_ENV
-#
-#      - name: Lag full image referanse
-#        run: echo "IMAGE=$IMAGE_BASE:$TAG" >> $GITHUB_ENV
-#
-#      - name: Deploy
-#        uses: nais/deploy/actions/deploy@master
-#        env:
-#          APIKEY: ${{ secrets.NAIS_DEPLOY_APIKEY }}
-#          CLUSTER: dev-gcp
-#          RESOURCE: .nais/nais.yaml
-#          VARS: .nais/dev-gcp.yaml
+    outputs:
+      image: ${{ steps.docker-build-push.outputs.image }}
 
   deploy-prod:
+    if: github.ref == 'refs/heads/main'
     name: Deploy to nais prod
- #   needs: deploy-dev
     needs: build-and-push
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      id-token: write
     steps:
       - uses: actions/checkout@v4
         name: Checkout
@@ -94,7 +70,7 @@ jobs:
       - name: Deploy
         uses: nais/deploy/actions/deploy@master
         env:
-          APIKEY: ${{ secrets.NAIS_DEPLOY_APIKEY }}
           CLUSTER: prod-gcp
           RESOURCE: .nais/nais.yaml
+          VAR: image=${{ needs.build.outputs.image }},version=${{ github.sha }}
           VARS: .nais/prod-gcp.yaml

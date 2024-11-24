@@ -1,6 +1,6 @@
 # Teknologiradar βeta
 
-Teknologiradaren med Trello backend.
+Teknologiradar med Trello backend.
 
 # Local development
 

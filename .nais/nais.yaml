@@ -40,6 +40,5 @@ spec:
       external:
         - host: api.trello.com
   ingresses:
-  {{#each ingresses as |url|}}
-     - {{url}}
-  {{/each}}
+    - 'https://teknologiradar.intern.nav.no'
+    - 'https://teknologiradar.ansatt.nav.no'

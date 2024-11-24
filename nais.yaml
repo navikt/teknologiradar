@@ -23,7 +23,7 @@ spec:
       cpu: 100m
       memory: 256Mi
   envFrom:
-    - secret: solan-trello-secrets
+    - secret: teknologiradar-trello-secrets
   liveness:
     path: /internal/is-alive
     initialDelay: 10

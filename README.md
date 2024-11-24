@@ -8,7 +8,7 @@ Teknologiradar med Trello backend.
 npm install
 ```
 
-## create a `.env.local` file in the root of the project
+## Create a `.env.local` file in the root of the project
 
 ```shell
 TRELLO_BOARD_ID=

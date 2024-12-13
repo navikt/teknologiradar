@@ -1,3 +1,5 @@
+"use client";
+
 import { TechnologyTable } from "@/components/TechnologyTable";
 import { Technology, getCurrentTechnologies } from "@/lib/technologies";
 import { Chips, Heading, Search, Table } from "@navikt/ds-react";
@@ -6,6 +8,7 @@ import { GetServerSideProps } from "next";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import React, { useState } from "react";
+import { forumOptions, ForumOptions } from "@/lib/forumOptions";
 // @ts-expect-error
 import { useStatesToNextQuery } from "use-states-to-next-query";
 
@@ -15,17 +18,6 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   const technologies: Technology[] = await getCurrentTechnologies();
   return { props: { technologies, date } };
 };
-
-// DRY: duplication of this on client & server side (get via API?)
-export const forumOptions = [
-  "Design",
-  "Frontend",
-  "Backend",
-  "Data science",
-  "Data engineering",
-  "BI",
-] as const;
-export type ForumOptions = (typeof forumOptions)[number][];
 
 // DRY: duplication of this on client & server side (get via API?)
 const decisionOptions = ["Bruk", "Eksperimenter", "Avstå"] as const;

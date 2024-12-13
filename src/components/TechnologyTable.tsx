@@ -8,7 +8,7 @@ import {
   TableRow,
 } from "@navikt/ds-react/Table";
 import Link from "next/link";
-import { forumOptions } from "../pages/index";
+import { forumOptions } from "@/lib/forumOptions";
 
 const colorMap = {
   Uavklart: "kandidat-color",

@@ -1,5 +1,5 @@
 import { Technology, TechnologyLabel } from "@/lib/technologies";
-import { listNameById } from "config";
+import { listNameById } from "@/lib/config";
 
 export interface Label {
   id: string;
@@ -34,6 +34,10 @@ export interface TrelloCard {
   start: string | null;
   url: string;
   customFieldItems: CustomFieldItem[];
+}
+
+export interface ForumOptions {
+  [colorName: string]: string;
 }
 
 const TRELLO_FALLBACK_COLOR = "#AAAAAA";
@@ -88,6 +92,32 @@ export async function getTrelloCards({
   } catch (e) {
     console.error("Error fetching Trello cards", e);
     return [];
+  }
+}
+
+export async function getForumOptions({
+  trelloBoardId,
+  trelloApiKey,
+  trelloApiToken,
+}: {
+  trelloBoardId: string;
+  trelloApiKey: string;
+  trelloApiToken: string;
+}): Promise<ForumOptions> {
+  const url = `https://api.trello.com/1/boards/${trelloBoardId}/labelNames`;
+  const authorization = `OAuth oauth_consumer_key=\"${trelloApiKey}\", oauth_token=\"${trelloApiToken}\"`;
+  try {
+    const resp = await fetch(url, { headers: { authorization } });
+    const data = await resp.json();
+    const filteredLabels = Object.fromEntries(
+      Object.entries(data).filter(
+        ([_, value]: [string, string]) => value.trim() !== "",
+      ),
+    );
+    return filteredLabels as ForumOptions;
+  } catch (e) {
+    console.error("Error fetching ForumOptions", e);
+    return { red: "Error fetching Forums" };
   }
 }
 

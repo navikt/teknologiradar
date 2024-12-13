@@ -44,12 +44,18 @@ Copy the token it gives you and paste as `TRELLO_API_TOKEN`
 node scripts/get-trello-lists.mjs
 ```
 
-look at the `config.ts` and then populate the list ID's into the config file based on the output of the previous command.
+look at the `src/lib/config.ts` and then populate the list ID's into the config file based on the output of the previous command.
 
 ## you should now be able to run the project and have it populated with the data from the trello board.
 
 ```shell
 npm run dev
+```
+
+## Test and explore the Trello API
+
+```shell
+npx ts-node -r tsconfig-paths/register src/lib/test-trello.ts
 ```
 
 ---

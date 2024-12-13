@@ -8,6 +8,7 @@ import {
   TableRow,
 } from "@navikt/ds-react/Table";
 import Link from "next/link";
+import { forumOptions } from "../pages/index";
 
 const colorMap = {
   Uavklart: "kandidat-color",
@@ -17,15 +18,6 @@ const colorMap = {
   Avstå: "hold-color",
   Omstridt: "omstridt-color",
 };
-
-// DRY: duplication of this on client & server side (get via API?)
-export const forumOptions = [
-  "Design",
-  "Frontend",
-  "Backend",
-  "Data science",
-  "Data engineering",
-] as const;
 
 const Label = ({ label }: { label: TechnologyLabel }) => {
   return (

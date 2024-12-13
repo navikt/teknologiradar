@@ -16,6 +16,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   return { props: { technologies, date } };
 };
 
+// DRY: duplication of this on client & server side (get via API?)
 export const forumOptions = [
   "Design",
   "Frontend",
@@ -26,6 +27,7 @@ export const forumOptions = [
 ] as const;
 export type ForumOptions = (typeof forumOptions)[number][];
 
+// DRY: duplication of this on client & server side (get via API?)
 const decisionOptions = ["Bruk", "Eksperimenter", "Avstå"] as const;
 type DecisionOptions = (typeof decisionOptions)[number][];
 

@@ -3,7 +3,7 @@
 // aka. if you set environment variables .env.local, you need to change these values as well
 
 export const listNameById: { [key: string]: string } = {
-  "675c086cf371ab1c1a76d353": "Bruk",
-  "675c086cf371ab1c1a76d354": "Eksperimenter",
-  "675c086cf371ab1c1a76d355": "Avstå",
+  "640e5031258e47b734f693df": "Eksperiment",
+  "640e502477b60be79eaccccc": "Bruk",
+  "640e50373232c0d86899a7f1": "Avstå",
 };

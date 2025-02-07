@@ -29,7 +29,7 @@ function MyHeader() {
             <circle cx="28" cy="5.8" r="2" />
             <circle cx="13" cy="24" r="2" />
           </svg>
-          <span className="font-semibold">Teknologiradar βeta</span>
+          <span className="font-semibold">Teknologiradar</span>
         </NextLink>
       </Header.Title>
     </Header>
